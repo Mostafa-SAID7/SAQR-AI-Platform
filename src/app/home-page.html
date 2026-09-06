@@ -46,6 +46,7 @@
         </div>
       </div>
       <div class="hero-visual" aria-label="Abstract Nexus AI orb visualization">
+        <img class="generated-hero-art" src="assets/generated_images/nexus-hero-intelligence.jpg" alt="" aria-hidden="true" fetchpriority="high">
         <div class="visual-glow"></div>
         <div class="orbital-ring ring-a"></div>
         <div class="orbital-ring ring-b"></div>
@@ -65,9 +66,9 @@
       </div>
     </section>
 
-    <section class="platform-intro section-dark" id="platform-overview">
+    <section class="platform-intro section-dark px-[7vw] py-36" id="platform-overview">
       <div class="section-kicker">01 / Platform</div>
-      <div class="intro-layout">
+      <div class="intro-layout flex flex-col gap-8 min-[851px]:flex-row min-[851px]:items-end min-[851px]:justify-between">
         <h2>One intelligent<br><span>layer.</span> Infinite<br>possibilities.</h2>
         <div class="intro-copy">
           <p>Move at the speed of the network. Nexus gives your team the context, automation, and clarity to turn raw blockchain activity into meaningful growth.</p>
@@ -88,13 +89,13 @@
       </div>
     </section>
 
-    <section class="agent-section" id="agents">
+    <section class="agent-section px-[7vw] py-36" id="agents">
       <div class="section-kicker">02 / AI Agents</div>
       <div class="agent-heading">
         <h2>Meet the minds<br>behind the <span>market.</span></h2>
         <p>Deploy specialized agents that never sleep, never miss a signal, and get smarter with every block.</p>
       </div>
-      <div class="agent-grid">
+      <div class="agent-grid grid grid-cols-1 gap-5 min-[501px]:grid-cols-2 min-[851px]:grid-cols-3">
         <article class="agent-card agent-card-featured">
           <div class="agent-card-visual"><div class="agent-glow"></div><div class="agent-avatar"><svg lucideBrainCircuit size="48" strokeWidth="1.25" aria-hidden="true"></svg></div><span class="status-pill"><i></i> Active now</span></div>
           <div class="agent-card-copy"><span class="agent-index">01</span><h3>ORACLE</h3><p>Market intelligence that sees around corners.</p><a routerLink="/agents">Explore agent <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg></a></div>
@@ -110,14 +111,14 @@
       </div>
     </section>
 
-    <section class="manifesto section-dark" id="ecosystem">
+    <section class="manifesto section-dark grid grid-cols-1 min-[851px]:grid-cols-[1.05fr_.95fr]" id="ecosystem">
       <div class="manifesto-art"><div class="manifesto-lines"></div><span>THE OPEN<br>NETWORK</span><div class="manifesto-orb"></div></div>
       <div class="manifesto-copy"><div class="section-kicker">03 / Ecosystem</div><h2>Not just a tool.<br>A <em>new</em> way<br>to see.</h2><p>The future belongs to the people who can connect the dots. Nexus brings every signal into focus so you can make the move before it becomes obvious.</p><a class="button button-outline" routerLink="/ecosystem">Enter the network <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg></a></div>
     </section>
 
-    <section class="metrics-section" id="insights">
+    <section class="metrics-section px-[7vw] py-36" id="insights">
       <div class="section-kicker">04 / By the numbers</div>
-      <div class="metrics-grid">
+      <div class="metrics-grid grid grid-cols-1 gap-4 min-[501px]:grid-cols-2 min-[851px]:grid-cols-4">
         <div class="metric"><strong>14.8<span>M</span></strong><p>Signals processed<br>every day</p></div>
         <div class="metric"><strong>99.9<span>%</span></strong><p>Network uptime<br>guaranteed</p></div>
         <div class="metric"><strong>02<span>s</span></strong><p>Average insight<br>delivery time</p></div>
@@ -125,8 +126,8 @@
       </div>
     </section>
 
-    <section class="contact-section" id="contact">
-      <div class="contact-panel">
+    <section class="contact-section px-[7vw] py-40" id="contact">
+      <div class="contact-panel grid grid-cols-1 gap-10 min-[851px]:grid-cols-[.8fr_1fr]">
         <div class="section-kicker">05 / Get started</div>
         @if (submitted()) {
           <div class="success-message"><span class="success-icon"><svg lucideCircleCheck size="30" strokeWidth="1.5" aria-hidden="true"></svg></span><h2>You're on the list.</h2><p>We'll be in touch with your access details soon.</p></div>

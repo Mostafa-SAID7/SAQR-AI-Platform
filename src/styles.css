@@ -1,4 +1,49 @@
-:root { --acid: #b9fa62; --ink: #0b0d0c; --page-bg: #0b0d0c; --muted: #90958d; --line: #292d29; --soft: #151915; --scroll-track: #0a0e0b; --scroll-thumb: #607e43; --scroll-thumb-hover: #b9fa62; --font-display: 'Space Grotesk', sans-serif; --font-body: 'DM Sans', sans-serif; }
+@import "tailwindcss";
+
+@theme {
+  --*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --color-acid: var(--acid);
+  --color-acid-hover: var(--acid-hover);
+  --color-page: var(--page-bg);
+  --color-surface: var(--surface-1);
+  --color-surface-raised: var(--surface-2);
+  --color-surface-panel: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-copy: var(--text-default);
+  --color-muted: var(--text-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+:root {
+  --acid: #b9fa62;
+  --acid-hover: #d0ff8f;
+  --text-on-accent: #11160f;
+  --ink: #0b0d0c;
+  --page-bg: #0b0d0c;
+  --surface-1: #0e120f;
+  --surface-2: #151915;
+  --surface-3: #161d15;
+  --surface-control: #0d130e;
+  --text-strong: #f5f7f0;
+  --text-default: #d8ded3;
+  --text-muted: #9da59a;
+  --text-subtle: #aeb8aa;
+  --line: #292d29;
+  --line-strong: #384832;
+  --soft: #151915;
+  --focus-ring: #b9fa62;
+  --scroll-track: #0a0e0b;
+  --scroll-thumb: #607e43;
+  --scroll-thumb-hover: #b9fa62;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -12,7 +57,7 @@ html {
   scrollbar-width: thin;
 }
 
-body { font-family: var(--font-body); color: #f5f7f0; background: var(--page-bg); line-height: 1.6; }
+body { font-family: var(--font-body); color: var(--text-strong); background: var(--page-bg); line-height: 1.6; }
 
 ::-webkit-scrollbar { width: 12px; }
 ::-webkit-scrollbar-track { background: var(--scroll-track); }
@@ -20,17 +65,136 @@ body { font-family: var(--font-body); color: #f5f7f0; background: var(--page-bg)
 ::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }
 
 html[data-theme='light'] {
+  --acid: #315527;
+  --acid-hover: #24451c;
+  --text-on-accent: #f5f7f0;
   --ink: #132014;
   --page-bg: #eef3e8;
-  --muted: #5b6859;
+  --surface-1: #e4eee0;
+  --surface-2: #dfe8dc;
+  --surface-3: #f4f8ef;
+  --surface-control: #e9f1e5;
+  --text-strong: #132014;
+  --text-default: #243324;
+  --text-muted: #52654f;
+  --text-subtle: #5b6859;
   --line: #c4d0be;
+  --line-strong: #a9bda1;
   --soft: #dfe8dc;
+  --focus-ring: #315527;
   --scroll-track: #e1e9df;
   --scroll-thumb: #75945a;
   --scroll-thumb-hover: #385c2a;
 }
 
-html[data-theme='light'] body { background: var(--page-bg); color: #132014; }
+html[data-theme='light'] body { background: var(--page-bg); color: var(--text-strong); }
+
+/*
+ * Theme selectors live globally because Angular component styles are scoped.
+ * Keeping these root-attribute rules here ensures every route responds to the
+ * same theme, including large surfaces and content owned by child components.
+ */
+html[data-theme='light'] .site-shell,
+html[data-theme='light'] .product-shell,
+html[data-theme='light'] .access-content { background: var(--page-bg); color: var(--text-strong); }
+html[data-theme='light'] .site-header { background: color-mix(in srgb, var(--surface-3) 88%, transparent); border-color: var(--line-strong); }
+html[data-theme='light'] .brand,
+html[data-theme='light'] .main-nav a,
+html[data-theme='light'] .login-link,
+html[data-theme='light'] .footer-links a { color: var(--text-default); }
+html[data-theme='light'] .main-nav a:hover,
+html[data-theme='light'] .login-link:hover,
+html[data-theme='light'] .footer-links a:hover { color: var(--acid); }
+html[data-theme='light'] .theme-toggle { background: var(--surface-2); border-color: var(--line-strong); color: var(--text-default); }
+html[data-theme='light'] .theme-toggle:hover { background: var(--surface-3); color: var(--acid); }
+html[data-theme='light'] .hero,
+html[data-theme='light'] .product-hero,
+html[data-theme='light'] .access-hero {
+  background: radial-gradient(circle at 75% 42%, #d5e9c5 0, var(--page-bg) 32%, transparent 58%), linear-gradient(115deg, #f5f8f0 16%, #e7f0e3 72%, #f1f6ed);
+  color: var(--text-strong);
+}
+html[data-theme='light'] .hero-grid { background-image: linear-gradient(#31552712 1px, transparent 1px), linear-gradient(90deg, #31552712 1px, transparent 1px); }
+html[data-theme='light'] .hero h1,
+html[data-theme='light'] .product-hero h1,
+html[data-theme='light'] .access-hero h1,
+html[data-theme='light'] .intro-layout h2,
+html[data-theme='light'] .manifesto-copy h2,
+html[data-theme='light'] .contact-copy h2,
+html[data-theme='light'] .success-message h2,
+html[data-theme='light'] .access-success h2 { color: var(--text-strong); }
+html[data-theme='light'] .hero-lede,
+html[data-theme='light'] .intro-copy p,
+html[data-theme='light'] .manifesto-copy > p,
+html[data-theme='light'] .contact-copy > p,
+html[data-theme='light'] .product-hero-layout p,
+html[data-theme='light'] .access-hero p,
+html[data-theme='light'] .product-section p,
+html[data-theme='light'] .toolkit-grid p,
+html[data-theme='light'] .security-section > p,
+html[data-theme='light'] .access-perks span { color: var(--text-muted); }
+html[data-theme='light'] .section-dark,
+html[data-theme='light'] .contact-section,
+html[data-theme='light'] .product-section { background: var(--surface-1); color: var(--text-strong); }
+html[data-theme='light'] .signal-card,
+html[data-theme='light'] .contact-panel,
+html[data-theme='light'] .access-form { background: var(--surface-3); border-color: var(--line-strong); }
+html[data-theme='light'] .signal-card-top,
+html[data-theme='light'] .signal-card-bottom,
+html[data-theme='light'] .orbit-label,
+html[data-theme='light'] .hero-footer p,
+html[data-theme='light'] .scroll-cue { color: var(--text-muted); }
+html[data-theme='light'] .agent-section,
+html[data-theme='light'] .metrics-section,
+html[data-theme='light'] .toolkit-section,
+html[data-theme='light'] .security-section,
+html[data-theme='light'] .insight-list { background: var(--surface-1); color: var(--text-strong); }
+html[data-theme='light'] .agent-heading h2,
+html[data-theme='light'] .metric strong,
+html[data-theme='light'] .agent-card h3,
+html[data-theme='light'] .metric-caption p,
+html[data-theme='light'] .product-section h2,
+html[data-theme='light'] .directory-card h3,
+html[data-theme='light'] .insight-feature h2,
+html[data-theme='light'] .insight-row h3 { color: var(--text-strong); }
+html[data-theme='light'] .agent-heading p,
+html[data-theme='light'] .agent-card-copy p,
+html[data-theme='light'] .metric p,
+html[data-theme='light'] .directory-card p,
+html[data-theme='light'] .insight-feature p { color: var(--text-muted); }
+html[data-theme='light'] .agent-card,
+html[data-theme='light'] .metric,
+html[data-theme='light'] .directory-card { background: var(--surface-2); border-color: var(--line-strong); }
+html[data-theme='light'] .agent-card-featured { background: #d5e7d0; }
+html[data-theme='light'] .feature-list,
+html[data-theme='light'] .feature-list div,
+html[data-theme='light'] .insight-row,
+html[data-theme='light'] .insight-row article { border-color: var(--line); }
+html[data-theme='light'] .site-footer { background: var(--surface-2); border-color: var(--line-strong); }
+html[data-theme='light'] .site-footer p,
+html[data-theme='light'] .footer-links span { color: var(--text-muted); }
+html[data-theme='light'] .form-group label,
+html[data-theme='light'] .access-form .form-group label { color: var(--text-muted); }
+html[data-theme='light'] .form-group input,
+html[data-theme='light'] .access-form .form-group input {
+  background: var(--surface-control);
+  border-color: var(--line-strong);
+  color: var(--text-strong);
+}
+html[data-theme='light'] .form-group input::placeholder,
+html[data-theme='light'] .access-form .form-group input::placeholder { color: var(--text-muted); }
+html[data-theme='light'] .form-group:focus-within input,
+html[data-theme='light'] .access-form .form-group input:focus {
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 24%, transparent);
+}
+html[data-theme='light'] .toolkit-grid article { border-color: var(--line-strong); }
+html[data-theme='light'] .toolkit-grid article:hover { background: var(--soft); }
+html[data-theme='light'] .partner-wall span { border-color: var(--line-strong); color: var(--text-muted); }
+html[data-theme='light'] .directory-card small,
+html[data-theme='light'] .insight-feature small,
+html[data-theme='light'] .insight-row small,
+html[data-theme='light'] .feature-number { color: var(--acid); }
+html[data-theme='light'] .access-success p { color: var(--text-muted); }
 
 .container {
   max-width: 1200px;
