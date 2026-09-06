@@ -1,10 +1,9 @@
 name: Release - Semantic Versioning & GitHub Release
 
 on:
-  workflow_run:
-    workflows: ['CI - Test & Build']
-    types: [completed]
+  push:
     branches: [main, develop]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,9 +14,6 @@ jobs:
   release:
     name: Semantic Release
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
-
-    # Release job only runs after ci-test-build completes successfully
 
     steps:
       - name: Checkout repository
