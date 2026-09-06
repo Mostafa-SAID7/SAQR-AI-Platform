@@ -1,0 +1,139 @@
+<div class="site-shell">
+  <header class="site-header">
+    <a class="brand" routerLink="/" aria-label="Nexus AI home">
+      <span class="brand-mark"><span></span><span></span><span></span></span>
+      <span>NEXUS<span class="brand-dot">.</span>AI</span>
+    </a>
+    <nav class="main-nav" [class.is-open]="menuOpen()">
+      <a routerLink="/platform" (click)="closeMenu()">Platform</a>
+      <a routerLink="/agents" (click)="closeMenu()">AI Agents</a>
+      <a routerLink="/ecosystem" (click)="closeMenu()">Ecosystem</a>
+      <a routerLink="/insights" (click)="closeMenu()">Insights</a>
+    </nav>
+    <div class="header-actions">
+      <a class="login-link" routerLink="/access">Log in</a>
+      <a class="button button-small button-light" routerLink="/access">Launch app <span>↗</span></a>
+    </div>
+    <button class="menu-toggle" type="button" aria-label="Toggle navigation" (click)="toggleMenu()">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="platform">
+      <div class="hero-grid"></div>
+      <div class="hero-orbit orbit-one"></div>
+      <div class="hero-orbit orbit-two"></div>
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse-dot"></span> The intelligence layer for Web3</div>
+        <h1>Build what's<br><em>next.</em></h1>
+        <p class="hero-lede">Nexus turns complex on-chain data into decisive action. An intelligent operating system for the open internet.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" routerLink="/access">Start building <span>↗</span></a>
+          <a class="text-link" href="#platform-overview">Explore the platform <span>↓</span></a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Abstract Nexus AI orb visualization">
+        <div class="visual-glow"></div>
+        <div class="orbital-ring ring-a"></div>
+        <div class="orbital-ring ring-b"></div>
+        <div class="orbital-ring ring-c"></div>
+        <div class="core-orb">
+          <div class="orb-surface"></div>
+          <div class="orb-highlight"></div>
+          <span class="orb-symbol">N</span>
+        </div>
+        <div class="orbit-label label-top"><span class="mini-line"></span> autonomous intelligence</div>
+        <div class="orbit-label label-bottom">01 <span>prediction engine</span></div>
+      </div>
+      <div class="hero-footer">
+        <div class="scroll-cue"><span class="scroll-line"></span> Scroll to explore</div>
+        <p>Trusted by teams building the decentralized future</p>
+        <div class="partner-row"><span>ARC</span><span>orbit</span><span>VANTA</span><span>◈ mΞta</span></div>
+      </div>
+    </section>
+
+    <section class="platform-intro section-dark" id="platform-overview">
+      <div class="section-kicker">01 / Platform</div>
+      <div class="intro-layout">
+        <h2>One intelligent<br><span>layer.</span> Infinite<br>possibilities.</h2>
+        <div class="intro-copy">
+          <p>Move at the speed of the network. Nexus gives your team the context, automation, and clarity to turn raw blockchain activity into meaningful growth.</p>
+          <a class="text-link" routerLink="/platform">Meet your new advantage <span>↗</span></a>
+        </div>
+      </div>
+      <div class="signal-card">
+        <div class="signal-card-top"><span>NETWORK ACTIVITY</span><span class="live-indicator">● LIVE</span></div>
+        <div class="signal-chart">
+          <div class="chart-grid"></div>
+          <svg viewBox="0 0 900 230" preserveAspectRatio="none" aria-label="Network activity chart">
+            <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#abf95e" stop-opacity=".34"/><stop offset="100%" stop-color="#abf95e" stop-opacity="0"/></linearGradient></defs>
+            <path class="chart-area" d="M0 190 C70 160 80 170 130 145 S210 125 260 152 S320 105 370 118 S425 160 470 108 S520 90 565 120 S640 80 685 90 S735 60 780 75 S845 28 900 42 V230 H0Z"></path>
+            <path class="chart-line" d="M0 190 C70 160 80 170 130 145 S210 125 260 152 S320 105 370 118 S425 160 470 108 S520 90 565 120 S640 80 685 90 S735 60 780 75 S845 28 900 42"></path>
+          </svg>
+        </div>
+        <div class="signal-card-bottom"><strong>+38.42%</strong><span>vs. last 24 hours</span><span class="chart-time">08:00 &nbsp; 12:00 &nbsp; 16:00 &nbsp; NOW</span></div>
+      </div>
+    </section>
+
+    <section class="agent-section" id="agents">
+      <div class="section-kicker">02 / AI Agents</div>
+      <div class="agent-heading">
+        <h2>Meet the minds<br>behind the <span>market.</span></h2>
+        <p>Deploy specialized agents that never sleep, never miss a signal, and get smarter with every block.</p>
+      </div>
+      <div class="agent-grid">
+        <article class="agent-card agent-card-featured">
+          <div class="agent-card-visual"><div class="agent-glow"></div><div class="agent-avatar"><span>◒</span></div><span class="status-pill"><i></i> Active now</span></div>
+          <div class="agent-card-copy"><span class="agent-index">01</span><h3>ORACLE</h3><p>Market intelligence that sees around corners.</p><a routerLink="/agents">Explore agent <span>↗</span></a></div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual visual-purple"><div class="agent-glow"></div><div class="agent-avatar"><span>✦</span></div><span class="status-pill"><i></i> Active now</span></div>
+          <div class="agent-card-copy"><span class="agent-index">02</span><h3>SENTINEL</h3><p>Risk monitoring for a world in motion.</p><a routerLink="/agents">Explore agent <span>↗</span></a></div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual visual-blue"><div class="agent-glow"></div><div class="agent-avatar"><span>⌁</span></div><span class="status-pill"><i></i> Active now</span></div>
+          <div class="agent-card-copy"><span class="agent-index">03</span><h3>ALCHEMIST</h3><p>Turn opportunity into on-chain reality.</p><a routerLink="/agents">Explore agent <span>↗</span></a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="manifesto section-dark" id="ecosystem">
+      <div class="manifesto-art"><div class="manifesto-lines"></div><span>THE OPEN<br>NETWORK</span><div class="manifesto-orb"></div></div>
+      <div class="manifesto-copy"><div class="section-kicker">03 / Ecosystem</div><h2>Not just a tool.<br>A <em>new</em> way<br>to see.</h2><p>The future belongs to the people who can connect the dots. Nexus brings every signal into focus so you can make the move before it becomes obvious.</p><a class="button button-outline" routerLink="/ecosystem">Enter the network <span>↗</span></a></div>
+    </section>
+
+    <section class="metrics-section" id="insights">
+      <div class="section-kicker">04 / By the numbers</div>
+      <div class="metrics-grid">
+        <div class="metric"><strong>14.8<span>M</span></strong><p>Signals processed<br>every day</p></div>
+        <div class="metric"><strong>99.9<span>%</span></strong><p>Network uptime<br>guaranteed</p></div>
+        <div class="metric"><strong>02<span>s</span></strong><p>Average insight<br>delivery time</p></div>
+        <div class="metric metric-caption"><p>Intelligence doesn't<br>wait. Neither should you.</p><a class="text-link" routerLink="/insights">Read the signal <span>↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-panel">
+        <div class="section-kicker">05 / Get started</div>
+        @if (submitted()) {
+          <div class="success-message"><span class="success-icon">✓</span><h2>You're on the list.</h2><p>We'll be in touch with your access details soon.</p></div>
+        } @else {
+          <div class="contact-copy"><h2>The next move<br>is <em>yours.</em></h2><p>Join the early access network and see what's possible when intelligence meets the open internet.</p></div>
+          <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <div class="form-group"><label for="name">Your name</label><input id="name" type="text" placeholder="Satoshi Nakamoto" formControlName="name"><span class="field-line"></span></div>
+            <div class="form-group"><label for="email">Work email</label><input id="email" type="email" placeholder="you@company.xyz" formControlName="email"><span class="field-line"></span></div>
+            <button class="button button-primary" type="submit" [disabled]="contactForm.invalid || isSubmitting()">{{ isSubmitting() ? 'Joining...' : 'Request access' }} <span>↗</span></button>
+            @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) { <small class="error-message">Enter a valid email to continue.</small> }
+          </form>
+        }
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" routerLink="/"><span class="brand-mark"><span></span><span></span><span></span></span><span>NEXUS<span class="brand-dot">.</span>AI</span></a>
+    <p>Intelligence for the open internet.</p>
+    <div class="footer-links"><a routerLink="/platform">Platform</a><a routerLink="/agents">Agents</a><a routerLink="/insights">Insights</a><a routerLink="/access">Contact</a><span>© 2026 Nexus AI</span></div>
+  </footer>
+</div>
