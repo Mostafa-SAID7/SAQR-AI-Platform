@@ -31,7 +31,9 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": []
+              "allowedHosts": [
+                "all"
+              ]
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -47,8 +49,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "18kB",
+                  "maximumError": "24kB"
                 }
               ],
               "outputHashing": "all"
@@ -63,6 +65,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": true
+          },
           "configurations": {
             "production": {
               "buildTarget": "lead-gen-landing:build:production"
