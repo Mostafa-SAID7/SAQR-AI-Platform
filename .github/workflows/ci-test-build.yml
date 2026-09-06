@@ -77,7 +77,7 @@ jobs:
         run: npm ci --legacy-peer-deps
       
       - name: Check code formatting with Prettier
-        run: npx prettier --check . --log-level=error
+        run: npm run lint:format
       
       - name: Generate format report
         if: failure()

@@ -9,7 +9,12 @@
     "test": "ng test",
     "serve:ssr:lead-gen-landing": "node dist/lead-gen-landing/server/server.mjs",
     "release": "semantic-release",
-    "commit": "cz commit"
+    "commit": "cz commit",
+    "lint:ts:strict": "tsc --noEmit --pretty",
+    "lint:templates": "ng build --configuration=development --aot",
+    "lint:format": "prettier --check . --log-level=error",
+    "lint:format:fix": "prettier --write .",
+    "audit:security:check": "npm audit --audit-level=high",
   },
   "private": true,
   "packageManager": "npm@10.9.2",

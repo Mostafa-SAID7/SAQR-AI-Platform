@@ -47,7 +47,7 @@ jobs:
           echo "✓ All strict mode flags verified in tsconfig.json"
       
       - name: TypeScript compilation check
-        run: npx tsc --noEmit --pretty
+        run: npm run lint:ts:strict
       
       - name: Report on failure
         if: failure()
@@ -73,7 +73,7 @@ jobs:
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
       
       - name: Build with AOT template checking
-        run: npx ng build --configuration=development --aot 2>&1 | tee template-check.log
+        run: npm run lint:templates 2>&1 | tee template-check.log
       
       - name: Validate no template errors
         run: |

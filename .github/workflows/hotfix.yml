@@ -80,7 +80,7 @@ jobs:
         run: npm ci --legacy-peer-deps
       
       - name: Quick security audit
-        run: npm audit --audit-level=high || true
+        run: npm run audit:security:check || true
       
       - name: Scan for secrets
         uses: trufflesecurity/trufflehog@v3.63.0
