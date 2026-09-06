@@ -14,7 +14,7 @@
     "lint:templates": "ng build --configuration=development --aot",
     "lint:format": "prettier --check . --log-level=error",
     "lint:format:fix": "prettier --write .",
-    "audit:security:check": "npm audit --audit-level=high",
+    "audit:security:check": "npm audit --audit-level=high"
   },
   "private": true,
   "packageManager": "npm@10.9.2",
