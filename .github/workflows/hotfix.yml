@@ -112,36 +112,56 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
       
-      - name: Install semantic-release
-        run: npm install --save-dev semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/npm @semantic-release/github @semantic-release/git
+      - name: Extract and validate version from branch
+        id: version
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          VERSION=${BRANCH#hotfix/}
+          
+          # Verify format
+          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Invalid version format: $VERSION"
+            exit 1
+          fi
+          
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "✓ Version validated: $VERSION"
       
       - name: Create hotfix release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="${{ github.ref_name }}"
-          VERSION=${BRANCH#hotfix/}
+          VERSION="${{ steps.version.outputs.version }}"
           
-          # Update package.json
-          npm version $VERSION --no-git-tag-version
+          # Update package.json with version (remove 'v' prefix for package.json)
+          PACKAGE_VERSION=${VERSION#v}
+          npm version $PACKAGE_VERSION --no-git-tag-version
           
-          # Create tag
+          # Create git commit and tag
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add package.json package-lock.json
           git commit -m "chore(hotfix): release $VERSION"
-          git tag -a $VERSION -m "Hotfix Release $VERSION"
-          git push origin $VERSION
+          
+          # Create annotated tag with full version string
+          git tag -a "$VERSION" -m "Hotfix Release $VERSION"
+          git push origin "$VERSION"
           
           echo "✓ Hotfix release $VERSION created and tagged"
       
       - name: Notify hotfix completed
         run: |
+          VERSION="${{ steps.version.outputs.version }}"
           echo "## 🔥 Hotfix Released" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Version**: ${{ env.VERSION }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: $VERSION" >> $GITHUB_STEP_SUMMARY
           echo "**Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "**Status**: ✅ Ready for production" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps**:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Verify deployment" >> $GITHUB_STEP_SUMMARY
+          echo "2. Create PR to backport to develop" >> $GITHUB_STEP_SUMMARY
+          echo "3. Delete hotfix branch after merge" >> $GITHUB_STEP_SUMMARY
 
   hotfix-merge-reminder:
     name: Merge Hotfix to Develop
@@ -150,19 +170,17 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/hotfix/')
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
       - name: Create merge notification
         run: |
           BRANCH="${{ github.ref_name }}"
           echo "## ⚠️ Hotfix Merge Required" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "After hotfix is deployed:" >> $GITHUB_STEP_SUMMARY
+          echo "Hotfix has been released to production. Now backport to develop:" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "1. Create PR: \`$BRANCH\` → \`develop\`" >> $GITHUB_STEP_SUMMARY
-          echo "2. Get approval" >> $GITHUB_STEP_SUMMARY
-          echo "3. Merge to develop" >> $GITHUB_STEP_SUMMARY
-          echo "4. Delete hotfix branch" >> $GITHUB_STEP_SUMMARY
+          echo "### Steps to Complete:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Create PR from \`$BRANCH\` to \`develop\`" >> $GITHUB_STEP_SUMMARY
+          echo "2. Request approval from team" >> $GITHUB_STEP_SUMMARY
+          echo "3. Merge PR to develop" >> $GITHUB_STEP_SUMMARY
+          echo "4. Delete hotfix branch: \`git push origin --delete $BRANCH\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "This ensures hotfix is backported to develop branch." >> $GITHUB_STEP_SUMMARY
+          echo "**Why?** Ensures hotfix changes are available in develop for next release." >> $GITHUB_STEP_SUMMARY
