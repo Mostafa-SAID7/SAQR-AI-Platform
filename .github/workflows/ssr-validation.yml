@@ -113,9 +113,9 @@ jobs:
 
           # Test home page
           echo "Testing GET /" >> server-tests.txt
-          RESPONSE=$(curl -s -w "%{http_code}" http://localhost:4000/)
-          HTTP_CODE="${RESPONSE: -3}"
-          BODY="${RESPONSE%???}"
+          FULL_RESPONSE=$(curl -s -w "\n%{http_code}" http://localhost:4000/)
+          HTTP_CODE=$(echo "$FULL_RESPONSE" | tail -1)
+          BODY=$(echo "$FULL_RESPONSE" | head -1)
 
           if [ "$HTTP_CODE" = "200" ]; then
             echo "✓ Home page returns 200 OK" >> server-tests.txt
