@@ -55,13 +55,17 @@ jobs:
           echo "Required for Angular 21: v20.19+ or v22.12+" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          # Extract numeric version
-          NODE_NUM=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f1,2)
+          # Extract major and minor version numbers
+          NODE_MAJOR=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f1)
+          NODE_MINOR=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f2)
           
-          if echo "$NODE_NUM" | grep -qE '^(20\.19|2[2-9]\.|[3-9][0-9]\.)'; then
-            echo "✓ Node.js version is compatible" >> $GITHUB_STEP_SUMMARY
+          # Check compatibility: 20.19+, 22.0+, or 23+
+          if [ "$NODE_MAJOR" -eq 20 ] && [ "$NODE_MINOR" -ge 19 ]; then
+            echo "✓ Node.js $NODE_VERSION is compatible" >> $GITHUB_STEP_SUMMARY
+          elif [ "$NODE_MAJOR" -ge 22 ]; then
+            echo "✓ Node.js $NODE_VERSION is compatible" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ Node.js version is incompatible" >> $GITHUB_STEP_SUMMARY
+            echo "❌ Node.js $NODE_VERSION is incompatible (need v20.19+ or v22+)" >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
 
