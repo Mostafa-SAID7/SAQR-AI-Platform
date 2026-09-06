@@ -1,25 +1,17 @@
 dependencies:
-  - package*.json
-  - .github/dependabot.yml
+  - any: ['package*.json', '.github/dependabot.yml']
 
 workflows:
-  - .github/workflows/**
+  - any: ['.github/workflows/**']
 
 ssr:
-  - src/server.ts
-  - src/main.server.ts
+  - any: ['src/server.ts', 'src/main.server.ts']
 
 tests:
-  - '**/*.spec.ts'
+  - any: ['**/*.spec.ts']
 
 documentation:
-  - docs/**
-  - README.md
-  - SECURITY.md
-  - CODE_OF_CONDUCT.md
+  - any: ['docs/**', 'README.md', 'SECURITY.md', 'CODE_OF_CONDUCT.md']
 
 config:
-  - angular.json
-  - tsconfig*.json
-  - .prettierrc
-  - postcss.config.json
+  - any: ['angular.json', 'tsconfig*.json', '.prettierrc', 'postcss.config.json']
