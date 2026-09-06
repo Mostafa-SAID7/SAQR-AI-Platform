@@ -38,6 +38,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
       
+      - name: Verify tsconfig.json exists
+        run: |
+          if [ ! -f "tsconfig.json" ]; then
+            echo "❌ tsconfig.json not found!"
+            exit 1
+          fi
+      
       - name: Validate strict mode configuration
         run: |
           echo "Verifying TypeScript strict mode enforcement..."
@@ -47,13 +54,21 @@ jobs:
           echo "✓ All strict mode flags verified in tsconfig.json"
       
       - name: TypeScript compilation check
-        run: npm run lint:ts:strict
+        run: npm run lint:ts:strict 2>&1 | tee ts-check.log
       
       - name: Report on failure
         if: failure()
         run: |
           echo "## TypeScript Strict Mode Violations" >> $GITHUB_STEP_SUMMARY
-          echo "Fix with: \`npx tsc --noEmit\` to see detailed errors" >> $GITHUB_STEP_SUMMARY
+          echo "Compilation failed. Details:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f ts-check.log ]; then
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            tail -50 ts-check.log >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Run locally: \`npm run lint:ts:strict\` to see full error details" >> $GITHUB_STEP_SUMMARY
+          fi
 
   template-validation:
     name: Angular Template Type Checking
@@ -72,22 +87,49 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
       
+      - name: Verify angular.json exists
+        run: |
+          if [ ! -f "angular.json" ]; then
+            echo "❌ angular.json not found!"
+            exit 1
+          fi
+      
       - name: Build with AOT template checking
         run: npm run lint:templates 2>&1 | tee template-check.log
       
       - name: Validate no template errors
         run: |
+          if [ ! -f template-check.log ]; then
+            echo "❌ Build output log not created!"
+            exit 1
+          fi
+          
           if grep -q "error NG" template-check.log; then
-            echo "❌ Angular template compilation errors found"
-            grep "error NG" template-check.log
+            echo "❌ Angular template compilation errors found:"
+            echo ""
+            grep "error NG" template-check.log || true
             exit 1
           fi
           if grep -q "ERROR in" template-check.log; then
-            echo "❌ Build errors found"
-            grep "ERROR in" template-check.log
+            echo "❌ Build errors found:"
+            echo ""
+            grep "ERROR in" template-check.log || true
             exit 1
           fi
           echo "✓ All templates validated successfully"
+      
+      - name: Report template errors
+        if: failure()
+        run: |
+          echo "## Angular Template Validation Failed" >> $GITHUB_STEP_SUMMARY
+          echo "Template compilation errors detected during AOT build." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f template-check.log ]; then
+            echo "### Build Output (last 50 lines):" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            tail -50 template-check.log >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
 
   secrets-scanning:
     name: Secrets & Credentials Scanning
@@ -116,6 +158,16 @@ jobs:
           base: ${{ github.event.before }}
           head: ${{ github.event.after }}
           extra_args: --debug
+      
+      - name: Log secrets scan result
+        if: always()
+        run: |
+          echo "## Secrets Scan Summary" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✓ No secrets detected in code changes" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠ Secrets scan completed (see job logs for details)" >> $GITHUB_STEP_SUMMARY
+          fi
       
       - name: Skip on initial commit
         if: github.event_name == 'push' && github.event.before == '0000000000000000000000000000000000000000'
