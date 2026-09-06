@@ -1,0 +1,13 @@
+# Global code owners
+* @Mostafa-SAID7
+
+# Workflow and automation
+.github/workflows/ @Mostafa-SAID7
+
+# Core application
+src/app/ @Mostafa-SAID7
+
+# Configuration
+angular.json @Mostafa-SAID7
+package.json @Mostafa-SAID7
+tsconfig*.json @Mostafa-SAID7

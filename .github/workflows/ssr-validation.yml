@@ -1,0 +1,195 @@
+name: SSR - Server Validation & Startup Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  ssr-build-validation:
+    name: SSR Build & Output Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build with SSR enabled
+        run: npm run build 2>&1 | tee ssr-build.log
+      
+      - name: Verify SSR output files
+        run: |
+          echo "=== SSR Build Output Validation ===" > ssr-validation.txt
+          
+          # Check server bundle
+          if [ -f "dist/lead-gen-landing/server/server.mjs" ]; then
+            echo "✓ Server bundle (server.mjs) created" >> ssr-validation.txt
+            SIZE=$(du -sh dist/lead-gen-landing/server/server.mjs | cut -f1)
+            echo "  Size: $SIZE" >> ssr-validation.txt
+          else
+            echo "❌ Server bundle missing!" >> ssr-validation.txt
+            exit 1
+          fi
+          
+          # Check browser bundle
+          if [ -f "dist/lead-gen-landing/browser/index.html" ]; then
+            echo "✓ Browser bundle (index.html) created" >> ssr-validation.txt
+          else
+            echo "❌ Browser index.html missing!" >> ssr-validation.txt
+            exit 1
+          fi
+          
+          # Check prerender manifest if exists
+          if [ -f "dist/lead-gen-landing/prerender-manifest.json" ]; then
+            echo "✓ Prerender manifest found" >> ssr-validation.txt
+            jq . dist/lead-gen-landing/prerender-manifest.json >> ssr-validation.txt
+          fi
+          
+          cat ssr-validation.txt
+
+  ssr-startup-test:
+    name: SSR Server Startup & Health Check
+    runs-on: ubuntu-latest
+    needs: ssr-build-validation
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Start SSR server in background
+        run: |
+          echo "Starting SSR server..."
+          PORT=4000 timeout 120 npm run serve:ssr:lead-gen-landing > server.log 2>&1 &
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+          
+          # Wait for server to start
+          echo "Waiting for server startup..."
+          for i in {1..30}; do
+            if curl -s http://localhost:4000/ > /dev/null 2>&1; then
+              echo "✓ Server is running (attempt $i/30)"
+              break
+            fi
+            if [ $i -eq 30 ]; then
+              echo "❌ Server failed to start within 30 seconds"
+              cat server.log
+              exit 1
+            fi
+            echo "Waiting... (attempt $i/30)"
+            sleep 1
+          done
+      
+      - name: Test server responds to requests
+        run: |
+          echo "=== Server Response Tests ===" > server-tests.txt
+          
+          # Test home page
+          echo "Testing GET /" >> server-tests.txt
+          RESPONSE=$(curl -s -w "%{http_code}" http://localhost:4000/)
+          HTTP_CODE="${RESPONSE: -3}"
+          BODY="${RESPONSE%???}"
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✓ Home page returns 200 OK" >> server-tests.txt
+            if echo "$BODY" | grep -q "html"; then
+              echo "✓ Response contains HTML" >> server-tests.txt
+            fi
+          else
+            echo "❌ Home page returned $HTTP_CODE" >> server-tests.txt
+            exit 1
+          fi
+          
+          # Test server handles multiple requests
+          echo "" >> server-tests.txt
+          echo "Testing request handling..." >> server-tests.txt
+          for i in {1..5}; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/)
+            echo "Request $i: HTTP $STATUS" >> server-tests.txt
+          done
+          
+          cat server-tests.txt
+      
+      - name: Test static asset serving
+        run: |
+          echo "Testing static asset serving..."
+          
+          # Check favicon
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/favicon.svg)
+          if [ "$STATUS" = "200" ]; then
+            echo "✓ Static assets served correctly (favicon.svg)"
+          else
+            echo "⚠ Static asset returned $STATUS (may be expected if not in public/)"
+          fi
+      
+      - name: Check server logs for errors
+        if: always()
+        run: |
+          echo "=== Server Logs ===" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          tail -50 server.log >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Upload server logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ssr-server-logs
+          path: server.log
+          retention-days: 7
+
+  hydration-compatibility:
+    name: Angular Hydration Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Check for hydration configuration
+        run: |
+          echo "Verifying Angular hydration setup..."
+          
+          if grep -r "withEventReplay\|withIncrementalHydration\|provideClientHydrationTestingUtils" src/ > /dev/null; then
+            echo "✓ Hydration event replay configured"
+          else
+            echo "⚠ Hydration event replay not found in config (may be configured elsewhere)"
+          fi
+          
+          if grep -r "SkipHydrationProvider\|ngSkipHydration" src/ > /dev/null; then
+            echo "⚠ Found ngSkipHydration markers (may cause hydration mismatches)"
+          else
+            echo "✓ No hydration skip markers detected"
+          fi
