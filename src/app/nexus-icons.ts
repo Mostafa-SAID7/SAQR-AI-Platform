@@ -17,7 +17,7 @@ import {
   LucideWaypoints,
   LucideX,
   LucideZap,
-  LucideMoon
+  LucideMoon,
 } from '@lucide/angular';
 
 export const NEXUS_ICONS = [
@@ -39,5 +39,5 @@ export const NEXUS_ICONS = [
   LucideWaypoints,
   LucideX,
   LucideZap,
-  LucideMoon
+  LucideMoon,
 ] as const;

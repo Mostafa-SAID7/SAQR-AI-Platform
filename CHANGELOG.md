@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## [Unreleased]
 
 ### Added
+
 - Initial Angular 21 SSR setup
 - GitHub workflows for CI/CD
 - Semantic versioning and automated releases
@@ -18,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ## Version History
 
 When releases are created, entries will appear here with the following sections:
+
 - **🚀 Features** - New features (feat:)
 - **🐛 Bug Fixes** - Bug fixes (fix:)
 - **📚 Documentation** - Documentation updates (docs:)

@@ -8,7 +8,7 @@ import { ThemeService } from './theme.service';
   selector: 'app-home-page',
   imports: [ReactiveFormsModule, RouterLink, ...NEXUS_ICONS],
   templateUrl: './home-page.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class HomePage {
   protected readonly theme = inject(ThemeService);
@@ -20,7 +20,7 @@ export class HomePage {
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 

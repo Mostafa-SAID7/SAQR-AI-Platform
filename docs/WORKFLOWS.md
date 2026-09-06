@@ -17,13 +17,13 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 
 ## Workflow Overview
 
-| Workflow | File | Trigger | Jobs | Status |
-|----------|------|---------|------|--------|
-| **CI - Test & Build** | ci-test-build.yml | Push/PR | 4 | Required ✅ |
-| **Code Quality** | code-quality.yml | Code changes | 7 | Required ✅ |
-| **Security Audit** | security-audit.yml | Daily 06:00 UTC | 5 | Informational ⚠ |
-| **SSR Validation** | ssr-validation.yml | Push/PR | 3 | Required ✅ |
-| **Dependency Management** | dependency-audit.yml | Weekly Mon | 3 | Informational ⚠ |
+| Workflow                  | File                 | Trigger         | Jobs | Status          |
+| ------------------------- | -------------------- | --------------- | ---- | --------------- |
+| **CI - Test & Build**     | ci-test-build.yml    | Push/PR         | 4    | Required ✅     |
+| **Code Quality**          | code-quality.yml     | Code changes    | 7    | Required ✅     |
+| **Security Audit**        | security-audit.yml   | Daily 06:00 UTC | 5    | Informational ⚠ |
+| **SSR Validation**        | ssr-validation.yml   | Push/PR         | 3    | Required ✅     |
+| **Dependency Management** | dependency-audit.yml | Weekly Mon      | 3    | Informational ⚠ |
 
 **Legend**: ✅ Required (blocks merge) | ⚠ Informational (alerts only)
 
@@ -33,7 +33,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 
 **File**: `.github/workflows/ci-test-build.yml`  
 **Triggers**: Push/PR to main or develop  
-**Runtime**: ~8-10 minutes  
+**Runtime**: ~8-10 minutes
 
 ### 4 Sequential Jobs:
 
@@ -43,10 +43,12 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 4. **build-application** → Production build (depends on format + tests)
 
 ### Bundle Budgets:
+
 - Browser: 500kB warning / 1MB error
 - Styles: 18kB warning / 24kB error
 
 ### Artifacts Uploaded:
+
 - `build-dist` (7-day retention)
 - `bundle-report.txt`
 - `test-logs`
@@ -57,7 +59,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 
 **File**: `.github/workflows/code-quality.yml`  
 **Triggers**: Source code/config changes to main or develop  
-**Runtime**: ~6-8 minutes  
+**Runtime**: ~6-8 minutes
 
 ### 7 Independent Jobs (all parallel):
 
@@ -74,7 +76,8 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 ## Security Audit
 
 **File**: `.github/workflows/security-audit.yml`  
-**Triggers**: 
+**Triggers**:
+
 - Daily 06:00 UTC
 - Package.json changes
 - Manual dispatch
@@ -88,6 +91,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 5. **outdated-packages-report** → Available updates summary
 
 ### Artifacts:
+
 - `npm-audit-report.json` (30-day retention)
 - `outdated-dependencies` (90-day retention)
 
@@ -109,6 +113,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 3. **hydration-compatibility** → Check Angular hydration configuration
 
 ### Artifacts:
+
 - `ssr-server-logs` (7-day retention)
 
 ---
@@ -116,7 +121,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 ## Dependency Management
 
 **File**: `.github/workflows/dependency-audit.yml`  
-**Triggers**: Weekly Monday 09:00 UTC, manual  
+**Triggers**: Weekly Monday 09:00 UTC, manual
 
 ### 3 Jobs:
 
@@ -125,6 +130,7 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 3. **npm-audit-report** → Production deps vulnerability scan
 
 ### Artifacts:
+
 - `outdated-dependencies` (90-day)
 - `npm-audit-prod` (90-day)
 
@@ -134,28 +140,28 @@ This document provides comprehensive documentation for all CI/CD workflows confi
 
 ### Build Failures
 
-| Error | Fix |
-|-------|-----|
-| Node.js version mismatch | Install Node 22.14.0 via nvm |
-| `npm ERR! code ERESOLVE` | `npm ci` or update dependencies |
-| `error NG*` | Fix template syntax in .html files |
-| `TS####` | `npx tsc --noEmit` to identify type errors |
-| Bundle > 1MB | Lazy-load routes, remove unused imports |
+| Error                    | Fix                                        |
+| ------------------------ | ------------------------------------------ |
+| Node.js version mismatch | Install Node 22.14.0 via nvm               |
+| `npm ERR! code ERESOLVE` | `npm ci` or update dependencies            |
+| `error NG*`              | Fix template syntax in .html files         |
+| `TS####`                 | `npx tsc --noEmit` to identify type errors |
+| Bundle > 1MB             | Lazy-load routes, remove unused imports    |
 
 ### Test Failures
 
-| Error | Fix |
-|-------|-----|
-| Tests fail | `npm test` locally, debug and fix |
+| Error          | Fix                                   |
+| -------------- | ------------------------------------- |
+| Tests fail     | `npm test` locally, debug and fix     |
 | Missing module | Check import path, verify file exists |
 
 ### Format/Security Failures
 
-| Error | Fix |
-|-------|-----|
-| Prettier fails | `npx prettier --write .` |
+| Error           | Fix                                          |
+| --------------- | -------------------------------------------- |
+| Prettier fails  | `npx prettier --write .`                     |
 | Secret detected | Remove credential, revoke, add to .gitignore |
-| Critical vuln | `npm audit fix` or `npm update package-name` |
+| Critical vuln   | `npm audit fix` or `npm update package-name` |
 
 ---
 
@@ -213,7 +219,7 @@ Code Quality (in parallel):
 ✅ **GitHub Summary Integration**: Reports in PR/workflow summary  
 ✅ **Security Focus**: Secrets scanning, audit tracking  
 ✅ **SSR Validation**: Server startup & hydration checks  
-✅ **Comprehensive Logging**: Test/build/server logs uploaded  
+✅ **Comprehensive Logging**: Test/build/server logs uploaded
 
 ---
 

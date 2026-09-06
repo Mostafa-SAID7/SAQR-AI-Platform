@@ -46,6 +46,7 @@ When reporting a security vulnerability, please provide:
 ## Known Vulnerabilities
 
 We track security advisories for our dependencies:
+
 - View current audit status: `npm audit`
 - View outdated packages: `npm outdated`
 - Details: See GitHub Security Advisories tab
@@ -74,7 +75,7 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
-  })
+  }),
 );
 ```
 
@@ -86,13 +87,15 @@ For production deployments, add security headers middleware:
 import helmet from 'helmet';
 
 app.use(helmet()); // Adds HSTS, X-Frame-Options, X-Content-Type-Options, etc.
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
-  }
-}));
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  }),
+);
 ```
 
 Install: `npm install helmet`

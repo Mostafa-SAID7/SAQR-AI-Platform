@@ -7,11 +7,13 @@ When production issues need immediate fixing without waiting for normal release 
 ## Hotfix Branch Strategy
 
 ### Branch Naming
+
 ```
 hotfix/v<major>.<minor>.<patch>
 ```
 
 Examples:
+
 - `hotfix/v1.0.1` - Patch fix for v1.0.0
 - `hotfix/v1.1.0` - Emergency minor feature
 - `hotfix/v2.0.0` - Critical breaking fix (rare)
@@ -56,12 +58,14 @@ git checkout -b hotfix/v1.0.1
 ### 2. Make Fix Commits
 
 Use conventional commits:
+
 ```bash
 git commit -m "fix: correct critical bug in SSR rendering"
 git commit -m "test: add regression test for bug"
 ```
 
 **Do NOT** include:
+
 - Feature additions
 - Refactoring
 - Large code changes
@@ -74,6 +78,7 @@ git push origin hotfix/v1.0.1
 ```
 
 GitHub Actions automatically:
+
 - Validates branch name
 - Runs fast-track CI (tests + build)
 - Security check (npm audit + secrets)
@@ -98,6 +103,7 @@ git push origin develop
 ```
 
 Or via GitHub PR:
+
 1. Create PR: `hotfix/v1.0.1` → `develop`
 2. Add description: "Backporting production hotfix"
 3. Get approval
@@ -114,6 +120,7 @@ git push origin --delete hotfix/v1.0.1
 ## What Gets Automated
 
 ✅ **Automatic** (no manual steps):
+
 - Branch name validation
 - Fast-track CI pipeline
 - Security checks
@@ -124,20 +131,21 @@ git push origin --delete hotfix/v1.0.1
 - Vercel deployment
 
 ⚠️ **Manual** (required):
+
 - Merge hotfix back to develop
 - Branch deletion
 - Post-deployment verification
 
 ## Hotfix vs Normal Release
 
-| Aspect | Hotfix | Normal |
-|--------|--------|--------|
-| Branch source | main | develop |
-| Trigger | Emergency | Scheduled/planned |
-| CI Speed | Fast-track (~2 min) | Full (~10 min) |
-| Version bump | PATCH | MINOR/MAJOR |
-| Deployment | Immediate | After merge to main |
-| Backport needed | YES (to develop) | NO |
+| Aspect          | Hotfix              | Normal              |
+| --------------- | ------------------- | ------------------- |
+| Branch source   | main                | develop             |
+| Trigger         | Emergency           | Scheduled/planned   |
+| CI Speed        | Fast-track (~2 min) | Full (~10 min)      |
+| Version bump    | PATCH               | MINOR/MAJOR         |
+| Deployment      | Immediate           | After merge to main |
+| Backport needed | YES (to develop)    | NO                  |
 
 ## Hotfix Checklist
 
@@ -164,6 +172,7 @@ After hotfix released:
 ## Security During Hotfix
 
 Hotfix workflow includes:
+
 - ✅ TruffleHog secrets scanning
 - ✅ npm audit for vulnerabilities
 - ✅ Full build validation
@@ -174,16 +183,19 @@ Hotfix workflow includes:
 ## Emergency Hotfix Scenarios
 
 ### Scenario 1: Production down
+
 ```
 hotfix/v1.0.1 → Fast CI → v1.0.1 release → Vercel deploy → Live (5 min)
 ```
 
 ### Scenario 2: Critical bug
+
 ```
 hotfix/v1.0.1 → All checks pass → Release → Backport to develop
 ```
 
 ### Scenario 3: Security issue
+
 ```
 hotfix/v1.0.1 → Security audit passes → Release → Notify security team
 ```
@@ -202,6 +214,7 @@ git push -f origin main
 ```
 
 **Then**:
+
 1. Investigate root cause
 2. Create new hotfix branch
 3. Fix properly

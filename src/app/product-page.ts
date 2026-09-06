@@ -10,7 +10,7 @@ type ProductPageKey = 'platform' | 'agents' | 'ecosystem' | 'insights' | 'access
   selector: 'app-product-page',
   imports: [RouterLink, ReactiveFormsModule, ...NEXUS_ICONS],
   templateUrl: './product-page.html',
-  styleUrls: ['./app.css', './product-page.css']
+  styleUrls: ['./app.css', './product-page.css'],
 })
 export class ProductPage {
   protected readonly theme = inject(ThemeService);
@@ -25,12 +25,16 @@ export class ProductPage {
     this.accessForm = fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      company: ['']
+      company: [''],
     });
   }
 
-  toggleMenu() { this.menuOpen.update((open) => !open); }
-  closeMenu() { this.menuOpen.set(false); }
+  toggleMenu() {
+    this.menuOpen.update((open) => !open);
+  }
+  closeMenu() {
+    this.menuOpen.set(false);
+  }
 
   requestAccess() {
     if (this.accessForm.valid) {

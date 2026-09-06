@@ -27,6 +27,7 @@ This Angular 21 SSR application is configured for seamless deployment on Vercel.
 #### 2. Environment Configuration
 
 Vercel reads configuration from:
+
 - **Node.js Version**: `.nvmrc` (22.14.0)
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist/lead-gen-landing/browser`
@@ -35,6 +36,7 @@ Vercel reads configuration from:
 #### 3. Build Process
 
 Vercel will:
+
 1. Install dependencies with `npm ci`
 2. Run `npm run build` to create production bundles
 3. Deploy static assets to CDN
@@ -45,6 +47,7 @@ Vercel will:
 #### `vercel.json`
 
 Specifies:
+
 - Framework: Angular
 - Build command and output directory
 - Node.js version: 22.14.0
@@ -79,12 +82,14 @@ dist/lead-gen-landing/
 No additional environment variables needed for default setup.
 
 **Optional environment variables:**
+
 - `NODE_ENV=production` (set automatically by Vercel)
 - Add custom vars in Vercel Dashboard → Project Settings → Environment Variables
 
 ### Deployment Triggers
 
 Vercel automatically deploys when:
+
 - Push to `main` branch → Production deployment
 - Push to `develop` branch → Preview deployment
 - Create pull request → Automatic preview URL
@@ -92,6 +97,7 @@ Vercel automatically deploys when:
 ### Monitoring & Logs
 
 In Vercel Dashboard:
+
 - **Deployments**: View all deployment history
 - **Functions**: Monitor serverless function execution
 - **Analytics**: Check performance metrics
@@ -102,6 +108,7 @@ In Vercel Dashboard:
 #### Build Failures
 
 Check Vercel build logs for:
+
 - Node version mismatch (ensure 22.14.0)
 - Missing dependencies (verify package-lock.json committed)
 - Build errors (run `npm run build` locally first)
@@ -109,6 +116,7 @@ Check Vercel build logs for:
 #### Runtime Issues
 
 Check Vercel function logs for:
+
 - SSR rendering errors
 - Port/environment variable issues
 - Express server errors
@@ -116,6 +124,7 @@ Check Vercel function logs for:
 #### Performance
 
 Monitor:
+
 - Edge Network cache hit rate
 - Function execution time
 - Bundle sizes in Analytics
@@ -143,6 +152,7 @@ npm run serve:ssr:lead-gen-landing
 ### Continuous Integration
 
 GitHub workflows validate:
+
 - Code formatting (Prettier)
 - TypeScript strict mode
 - Template validation (AOT)
@@ -155,6 +165,7 @@ GitHub workflows validate:
 ### Rollback
 
 To rollback to previous deployment:
+
 1. Vercel Dashboard → Deployments
 2. Click deployment version
 3. Click "Promote to Production"
@@ -169,6 +180,7 @@ To rollback to previous deployment:
 ### Performance Optimization
 
 Vercel provides:
+
 - Edge Network caching
 - Automatic image optimization
 - Compression (gzip/brotli)
@@ -177,11 +189,13 @@ Vercel provides:
 ### Cost Considerations
 
 Vercel pricing:
+
 - **Hobby (Free)**: Limited serverless invocations
 - **Pro**: Higher execution limits
 - **Enterprise**: Custom limits
 
 Current app metrics:
+
 - Bundle size: ~500KB (warning threshold)
 - SSR functions: Minimal overhead (fast)
 - Static assets: Optimized for CDN

@@ -96,6 +96,7 @@ This project is configured for automatic deployment on Netlify.
 3. Push to main branch to trigger deployment
 
 **Build Configuration:**
+
 - Build command: `npm run build`
 - Publish directory: `dist/lead-gen-landing/browser`
 

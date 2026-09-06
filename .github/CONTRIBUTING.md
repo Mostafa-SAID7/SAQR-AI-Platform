@@ -6,6 +6,7 @@ Thank you for considering contributing to this project!
 
 1. **Fork the repository**
 2. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -16,6 +17,7 @@ Thank you for considering contributing to this project!
    - Add tests if applicable
 
 4. **Test your changes**
+
    ```bash
    npm test
    npm run build
@@ -45,6 +47,7 @@ Use conventional commit format (enforced by commitlint):
 ```
 
 **Types**:
+
 - `feat:` New feature
 - `fix:` Bug fix
 - `docs:` Documentation changes
@@ -58,6 +61,7 @@ Use conventional commit format (enforced by commitlint):
 
 **Breaking Changes**:
 Add `BREAKING CHANGE:` in footer to trigger major version bump:
+
 ```
 feat: redesign authentication flow
 
@@ -65,6 +69,7 @@ BREAKING CHANGE: Old login endpoint removed, use OAuth 2.0 instead
 ```
 
 **Examples**:
+
 - `feat(auth): add two-factor authentication`
 - `fix(ssr): correct hydration mismatch on home page`
 - `docs(readme): add deployment guide`
@@ -74,11 +79,13 @@ BREAKING CHANGE: Old login endpoint removed, use OAuth 2.0 instead
 ## Semantic Versioning
 
 Versions follow [Semantic Versioning](https://semver.org/):
+
 - **MAJOR** (1.0.0): Breaking changes
 - **MINOR** (0.1.0): New features (backward compatible)
 - **PATCH** (0.0.1): Bug fixes (backward compatible)
 
 Versions are automatically bumped based on commit types:
+
 - `feat:` → MINOR version bump
 - `fix:` / `perf:` → PATCH version bump
 - `BREAKING CHANGE:` → MAJOR version bump

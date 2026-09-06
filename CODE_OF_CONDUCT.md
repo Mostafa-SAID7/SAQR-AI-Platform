@@ -7,6 +7,7 @@ In the interest of fostering an open and welcoming environment, we pledge to mak
 ## Our Standards
 
 Examples of behavior that contributes to a positive environment:
+
 - Using welcoming and inclusive language
 - Being respectful of differing opinions, viewpoints, and experiences
 - Gracefully accepting constructive criticism
@@ -14,6 +15,7 @@ Examples of behavior that contributes to a positive environment:
 - Showing empathy towards other community members
 
 Examples of unacceptable behavior:
+
 - Harassment, insulting/derogatory comments, personal or political attacks
 - Public or private harassment
 - Publishing others' private information without explicit permission

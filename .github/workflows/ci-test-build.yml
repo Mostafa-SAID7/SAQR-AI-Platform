@@ -17,17 +17,17 @@ jobs:
     strategy:
       matrix:
         node-version: ['22.14.0']
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
+
       - name: Verify Node.js version
         run: |
           NODE_VERSION=$(node --version | cut -d'v' -f2)
@@ -35,13 +35,13 @@ jobs:
           echo "Node.js version: $NODE_VERSION"
           echo "npm version: $(npm --version)"
           echo "Required Node.js: $REQUIRED_VERSION+"
-          
+
           # Extract major and minor version numbers
           NODE_MAJOR=$(echo "$NODE_VERSION" | cut -d'.' -f1)
           NODE_MINOR=$(echo "$NODE_VERSION" | cut -d'.' -f2)
           REQ_MAJOR=$(echo "$REQUIRED_VERSION" | cut -d'.' -f1)
           REQ_MINOR=$(echo "$REQUIRED_VERSION" | cut -d'.' -f2)
-          
+
           # Check if version meets requirement (22.14.0+)
           if [ "$NODE_MAJOR" -gt "$REQ_MAJOR" ] || ([ "$NODE_MAJOR" -eq "$REQ_MAJOR" ] && [ "$NODE_MINOR" -ge "$REQ_MINOR" ]); then
             echo "✓ Node.js version validated"
@@ -49,18 +49,18 @@ jobs:
             echo "❌ Node.js version $NODE_VERSION does not meet minimum requirement $REQUIRED_VERSION"
             exit 1
           fi
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Validate npm lock file integrity
         run: npm audit --audit-level=moderate || true
-      
+
       - name: Verify asset directories exist
         run: |
           test -d "public" || (echo "public/ directory missing!" && exit 1)
           echo "✓ All asset directories present"
-      
+
       - name: Verify build configuration
         run: |
           npm run ng -- version
@@ -70,23 +70,23 @@ jobs:
     name: Code Format & Style Check
     runs-on: ubuntu-latest
     needs: setup-and-verify
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Check code formatting with Prettier
         run: npm run lint:format
-      
+
       - name: Generate format report
         if: failure()
         run: |
@@ -97,23 +97,23 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     needs: setup-and-verify
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Run unit tests with Vitest
         run: npm run test -- --run --reporter=verbose 2>&1 | tee test-results.log
-      
+
       - name: Capture test results
         if: always()
         run: |
@@ -121,7 +121,7 @@ jobs:
           if [ -f test-results.log ]; then
             tail -30 test-results.log >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Upload test logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -134,23 +134,23 @@ jobs:
     name: Build Angular Application
     runs-on: ubuntu-latest
     needs: [code-format-check, unit-tests]
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Build production bundle
         run: npm run build 2>&1 | tee build-output.log
-      
+
       - name: Verify build output structure
         run: |
           echo "Checking build outputs..."
@@ -158,34 +158,34 @@ jobs:
           test -d "dist/lead-gen-landing/server" || (echo "❌ Server bundle missing!" && exit 1)
           test -f "dist/lead-gen-landing/server/server.mjs" || (echo "❌ SSR server.mjs missing!" && exit 1)
           echo "✓ All build bundles verified"
-      
+
       - name: Check for required assets in output
         run: |
           echo "Checking for compiled assets..."
           test -f "dist/lead-gen-landing/browser/index.html" || (echo "❌ index.html missing!" && exit 1)
           test -d "dist/lead-gen-landing/browser/assets/generated_images" || (echo "❌ Generated images not copied!" && exit 1)
           echo "✓ All required assets present in build"
-      
+
       - name: Analyze browser bundle size
         run: |
           echo "=== Bundle Size Analysis ===" > bundle-report.txt
           BROWSER_SIZE=$(du -sb dist/lead-gen-landing/browser | awk '{print $1}')
           SERVER_SIZE=$(du -sb dist/lead-gen-landing/server | awk '{print $1}')
           TOTAL_SIZE=$((BROWSER_SIZE + SERVER_SIZE))
-          
+
           BROWSER_KB=$((BROWSER_SIZE / 1024))
           SERVER_KB=$((SERVER_SIZE / 1024))
           TOTAL_KB=$((TOTAL_SIZE / 1024))
-          
+
           echo "Browser bundle: $BROWSER_KB KB" >> bundle-report.txt
           echo "Server bundle: $SERVER_KB KB" >> bundle-report.txt
           echo "Total size: $TOTAL_KB KB" >> bundle-report.txt
-          
+
           cat bundle-report.txt
-          
+
           MAX_BROWSER=$((1024 * 1024))
           WARN_BROWSER=$((500 * 1024))
-          
+
           if [ $BROWSER_SIZE -gt $MAX_BROWSER ]; then
             echo "❌ Browser bundle EXCEEDS 1MB hard limit! ($BROWSER_KB KB)" >&2
             exit 1
@@ -194,7 +194,7 @@ jobs:
           else
             echo "✓ Browser bundle size acceptable ($BROWSER_KB KB)"
           fi
-      
+
       - name: Verify no source maps in production
         run: |
           if find dist/lead-gen-landing/browser -name "*.js.map" | grep -q .; then
@@ -202,7 +202,7 @@ jobs:
             exit 1
           fi
           echo "✓ No source maps in production bundle"
-      
+
       - name: Check for build warnings
         if: always()
         run: |
@@ -211,14 +211,14 @@ jobs:
             echo "### Build Warnings Detected" >> $GITHUB_STEP_SUMMARY
             grep -i "warning" build-output.log >> $GITHUB_STEP_SUMMARY || true
           fi
-      
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-dist
           path: dist/lead-gen-landing/
           retention-days: 7
-      
+
       - name: Upload bundle report
         uses: actions/upload-artifact@v4
         with:

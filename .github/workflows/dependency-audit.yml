@@ -14,20 +14,20 @@ jobs:
   dependency-version-check:
     name: Critical Dependency Version Check
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Generate detailed dependency report
         run: |
           echo "## Critical Dependencies Report" >> $GITHUB_STEP_SUMMARY
@@ -35,18 +35,18 @@ jobs:
           echo "### Framework & Build" >> $GITHUB_STEP_SUMMARY
           npm list @angular/core @angular/cli typescript --depth=0 2>/dev/null | grep -E "@angular|typescript" >> $GITHUB_STEP_SUMMARY || true
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "### Runtime & SSR" >> $GITHUB_STEP_SUMMARY
           npm list @angular/ssr express --depth=0 2>/dev/null | grep -E "@angular/ssr|express" >> $GITHUB_STEP_SUMMARY || true
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "### Styling & Icons" >> $GITHUB_STEP_SUMMARY
           npm list tailwindcss @lucide/angular --depth=0 2>/dev/null | grep -E "tailwindcss|@lucide" >> $GITHUB_STEP_SUMMARY || true
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           echo "### Testing" >> $GITHUB_STEP_SUMMARY
           npm list vitest @angular/build --depth=0 2>/dev/null | grep -E "vitest|@angular/build" >> $GITHUB_STEP_SUMMARY || true
-      
+
       - name: Check Node.js version compatibility
         run: |
           echo "## Node.js Compatibility Check" >> $GITHUB_STEP_SUMMARY
@@ -54,11 +54,11 @@ jobs:
           echo "Current Node.js: $NODE_VERSION" >> $GITHUB_STEP_SUMMARY
           echo "Required for Angular 21: v20.19+ or v22.12+" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Extract major and minor version numbers
           NODE_MAJOR=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f1)
           NODE_MINOR=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f2)
-          
+
           # Check compatibility: 20.19+, 22.0+, or 23+
           if [ "$NODE_MAJOR" -eq 20 ] && [ "$NODE_MINOR" -ge 19 ]; then
             echo "✓ Node.js $NODE_VERSION is compatible" >> $GITHUB_STEP_SUMMARY
@@ -72,36 +72,36 @@ jobs:
   outdated-dependencies:
     name: Outdated Packages Analysis
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Analyze outdated packages
         run: |
           npm outdated --json > outdated-full.json 2>&1 || echo "{}" > outdated-full.json
-          
+
           if [ ! -f outdated-full.json ]; then
             echo "❌ Outdated packages report not generated!"
             exit 1
           fi
-          
+
           echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           OUTDATED_COUNT=$(jq 'length' outdated-full.json 2>/dev/null || echo 0)
           echo "**Total Outdated: $OUTDATED_COUNT**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "$OUTDATED_COUNT" -gt 0 ]; then
             echo "### Major Updates Available" >> $GITHUB_STEP_SUMMARY
             jq -r '.[]? | select(.type=="major") | "- **\(.name)**: \(.current) → \(.latest)"' outdated-full.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "(no major updates)" >> $GITHUB_STEP_SUMMARY
@@ -110,7 +110,7 @@ jobs:
             echo "### Minor & Patch Updates" >> $GITHUB_STEP_SUMMARY
             jq -r '.[]? | select(.type!="major") | "- \(.name): \(.current) → \(.latest) (\(.type))"' outdated-full.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "(no minor/patch updates)" >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Upload outdated report
         uses: actions/upload-artifact@v4
         with:
@@ -121,50 +121,50 @@ jobs:
   npm-audit-report:
     name: Comprehensive NPM Audit
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Run npm audit with production flag
         run: npm audit --production --json > audit-prod.json 2>&1 || true
-      
+
       - name: Parse vulnerability report
         run: |
           if [ ! -f audit-prod.json ]; then
             echo "❌ Audit report not generated!"
             exit 1
           fi
-          
+
           echo "## NPM Audit Report (Production Dependencies)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           CRITICAL=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-prod.json 2>/dev/null || echo 0)
           HIGH=$(jq '[.vulnerabilities[]? | select(.severity=="high")] | length' audit-prod.json 2>/dev/null || echo 0)
           MODERATE=$(jq '[.vulnerabilities[]? | select(.severity=="moderate")] | length' audit-prod.json 2>/dev/null || echo 0)
           LOW=$(jq '[.vulnerabilities[]? | select(.severity=="low")] | length' audit-prod.json 2>/dev/null || echo 0)
-          
+
           echo "### Vulnerability Summary" >> $GITHUB_STEP_SUMMARY
           echo "- 🔴 Critical: $CRITICAL" >> $GITHUB_STEP_SUMMARY
           echo "- 🟠 High: $HIGH" >> $GITHUB_STEP_SUMMARY
           echo "- 🟡 Moderate: $MODERATE" >> $GITHUB_STEP_SUMMARY
           echo "- 🔵 Low: $LOW" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Critical & High Severity Issues" >> $GITHUB_STEP_SUMMARY
             jq -r '.vulnerabilities[]? | select(.severity=="critical" or .severity=="high") | "- [\(.id)](https://www.npmjs.com/advisories/\(.id)): \(.title) in **\(.name)**"' audit-prod.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "See audit report for details" >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Upload audit report
         uses: actions/upload-artifact@v4
         with:

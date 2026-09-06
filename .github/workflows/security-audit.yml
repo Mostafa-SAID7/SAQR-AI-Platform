@@ -26,52 +26,52 @@ jobs:
   npm-security-audit:
     name: NPM Packages Security Audit
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Run full npm audit
         run: npm audit --json > audit-report.json 2>&1 || true
-      
+
       - name: Parse audit results for high severity
         run: |
           if [ ! -f audit-report.json ]; then
             echo "❌ Audit report not generated!"
             exit 1
           fi
-          
+
           echo "## NPM Security Audit Results" >> $GITHUB_STEP_SUMMARY
-          
+
           HIGH_VULNS=$(jq '[.vulnerabilities[]? | select(.severity=="high")] | length' audit-report.json 2>/dev/null || echo 0)
           CRITICAL_VULNS=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-report.json 2>/dev/null || echo 0)
-          
+
           echo "### Vulnerability Summary" >> $GITHUB_STEP_SUMMARY
           echo "- Critical: $CRITICAL_VULNS" >> $GITHUB_STEP_SUMMARY
           echo "- High: $HIGH_VULNS" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "$CRITICAL_VULNS" -gt 0 ] || [ "$HIGH_VULNS" -gt 0 ]; then
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Critical/High Vulnerabilities" >> $GITHUB_STEP_SUMMARY
             jq -r '.vulnerabilities[]? | select(.severity=="critical" or .severity=="high") | "\n**\(.id)**: \(.title)\n- Severity: \(.severity)\n- Package: \(.name)\n- Fix available: \(.fixAvailable)"' audit-report.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "See audit report for details" >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Fail on critical vulnerabilities
         run: |
           if [ ! -f audit-report.json ]; then
             echo "❌ Audit report not found!"
             exit 1
           fi
-          
+
           CRITICAL=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-report.json 2>/dev/null || echo 0)
           if [ "$CRITICAL" -gt 0 ]; then
             echo "❌ Critical security vulnerabilities detected!"
@@ -79,7 +79,7 @@ jobs:
             exit 1
           fi
           echo "✓ No critical vulnerabilities found"
-      
+
       - name: Upload audit report
         if: always()
         uses: actions/upload-artifact@v4
@@ -91,25 +91,25 @@ jobs:
   dependency-license-check:
     name: Dependency License Compliance
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Check for GPL/AGPL licenses
         run: |
           echo "Checking for restrictive licenses..."
           npx license-checker --json > licenses.json 2>&1 || echo "License check tool not available"
-          
+
           if [ -f licenses.json ]; then
             GPL_COUNT=$(jq 'to_entries[] | select(.value | contains("GPL") or contains("AGPL")) | length' licenses.json 2>/dev/null || echo "0")
             if [ "$GPL_COUNT" -gt 0 ]; then
@@ -121,11 +121,11 @@ jobs:
   package-lock-integrity:
     name: Package Lock File Integrity
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Validate package-lock.json exists
         run: |
           if [ ! -f "package-lock.json" ]; then
@@ -133,13 +133,13 @@ jobs:
             exit 1
           fi
           echo "✓ package-lock.json found"
-      
+
       - name: Validate package-lock.json signature
         run: |
           echo "Validating package-lock.json integrity..."
           npm ci --legacy-peer-deps 2>&1 | head -10
           echo "✓ package-lock.json is valid and consistent"
-      
+
       - name: Check for modifications to package-lock.json
         run: |
           if git diff --exit-code package-lock.json > /dev/null 2>&1; then
@@ -154,31 +154,31 @@ jobs:
   supply-chain-risk-check:
     name: Supply Chain Risk Assessment
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Check for recently updated high-risk packages
         run: |
           echo "## Supply Chain Risk Assessment" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Check critical packages for version info
           echo "### Critical Dependencies" >> $GITHUB_STEP_SUMMARY
           echo "- Angular Core: $(npm list @angular/core 2>/dev/null | grep @angular/core | head -1)" >> $GITHUB_STEP_SUMMARY
           echo "- Express: $(npm list express 2>/dev/null | grep express | head -1)" >> $GITHUB_STEP_SUMMARY
           echo "- TypeScript: $(npm list typescript 2>/dev/null | grep typescript | head -1)" >> $GITHUB_STEP_SUMMARY
-      
+
       - name: Verify npm registry source
         run: |
           echo "Verifying npm registry configuration..."
@@ -193,37 +193,37 @@ jobs:
   outdated-packages-report:
     name: Outdated Packages Report
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
-      
+
       - name: Generate outdated packages report
         run: |
           echo "## Outdated Packages Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           npm outdated --json > outdated.json 2>&1 || echo "{}" > outdated.json
-          
+
           OUTDATED_COUNT=$(jq 'length' outdated.json)
           echo "### Summary" >> $GITHUB_STEP_SUMMARY
           echo "Total outdated packages: $OUTDATED_COUNT" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "$OUTDATED_COUNT" -gt 0 ]; then
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Outdated Packages" >> $GITHUB_STEP_SUMMARY
             jq -r 'to_entries[] | "- **\(.key)**: current=\(.value.current), wanted=\(.value.wanted), latest=\(.value.latest)"' outdated.json >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Upload outdated report
         uses: actions/upload-artifact@v4
         with:

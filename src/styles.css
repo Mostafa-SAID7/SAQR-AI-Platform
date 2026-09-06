@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --*: initial;
@@ -45,7 +45,9 @@
   --font-body: 'DM Sans', sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -57,12 +59,27 @@ html {
   scrollbar-width: thin;
 }
 
-body { font-family: var(--font-body); color: var(--text-strong); background: var(--page-bg); line-height: 1.6; }
+body {
+  font-family: var(--font-body);
+  color: var(--text-strong);
+  background: var(--page-bg);
+  line-height: 1.6;
+}
 
-::-webkit-scrollbar { width: 12px; }
-::-webkit-scrollbar-track { background: var(--scroll-track); }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--scroll-thumb-hover), var(--scroll-thumb)); border: 3px solid var(--scroll-track); border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: var(--scroll-thumb-hover); }
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--scroll-thumb-hover), var(--scroll-thumb));
+  border: 3px solid var(--scroll-track);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
 
 html[data-theme='light'] {
   --acid: #315527;
@@ -87,7 +104,10 @@ html[data-theme='light'] {
   --scroll-thumb-hover: #385c2a;
 }
 
-html[data-theme='light'] body { background: var(--page-bg); color: var(--text-strong); }
+html[data-theme='light'] body {
+  background: var(--page-bg);
+  color: var(--text-strong);
+}
 
 /*
  * Theme selectors live globally because Angular component styles are scoped.
@@ -96,24 +116,47 @@ html[data-theme='light'] body { background: var(--page-bg); color: var(--text-st
  */
 html[data-theme='light'] .site-shell,
 html[data-theme='light'] .product-shell,
-html[data-theme='light'] .access-content { background: var(--page-bg); color: var(--text-strong); }
-html[data-theme='light'] .site-header { background: color-mix(in srgb, var(--surface-3) 88%, transparent); border-color: var(--line-strong); }
+html[data-theme='light'] .access-content {
+  background: var(--page-bg);
+  color: var(--text-strong);
+}
+html[data-theme='light'] .site-header {
+  background: color-mix(in srgb, var(--surface-3) 88%, transparent);
+  border-color: var(--line-strong);
+}
 html[data-theme='light'] .brand,
 html[data-theme='light'] .main-nav a,
 html[data-theme='light'] .login-link,
-html[data-theme='light'] .footer-links a { color: var(--text-default); }
+html[data-theme='light'] .footer-links a {
+  color: var(--text-default);
+}
 html[data-theme='light'] .main-nav a:hover,
 html[data-theme='light'] .login-link:hover,
-html[data-theme='light'] .footer-links a:hover { color: var(--acid); }
-html[data-theme='light'] .theme-toggle { background: var(--surface-2); border-color: var(--line-strong); color: var(--text-default); }
-html[data-theme='light'] .theme-toggle:hover { background: var(--surface-3); color: var(--acid); }
+html[data-theme='light'] .footer-links a:hover {
+  color: var(--acid);
+}
+html[data-theme='light'] .theme-toggle {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+  color: var(--text-default);
+}
+html[data-theme='light'] .theme-toggle:hover {
+  background: var(--surface-3);
+  color: var(--acid);
+}
 html[data-theme='light'] .hero,
 html[data-theme='light'] .product-hero,
 html[data-theme='light'] .access-hero {
-  background: radial-gradient(circle at 75% 42%, #d5e9c5 0, var(--page-bg) 32%, transparent 58%), linear-gradient(115deg, #f5f8f0 16%, #e7f0e3 72%, #f1f6ed);
+  background:
+    radial-gradient(circle at 75% 42%, #d5e9c5 0, var(--page-bg) 32%, transparent 58%),
+    linear-gradient(115deg, #f5f8f0 16%, #e7f0e3 72%, #f1f6ed);
   color: var(--text-strong);
 }
-html[data-theme='light'] .hero-grid { background-image: linear-gradient(#31552712 1px, transparent 1px), linear-gradient(90deg, #31552712 1px, transparent 1px); }
+html[data-theme='light'] .hero-grid {
+  background-image:
+    linear-gradient(#31552712 1px, transparent 1px),
+    linear-gradient(90deg, #31552712 1px, transparent 1px);
+}
 html[data-theme='light'] .hero h1,
 html[data-theme='light'] .product-hero h1,
 html[data-theme='light'] .access-hero h1,
@@ -121,7 +164,9 @@ html[data-theme='light'] .intro-layout h2,
 html[data-theme='light'] .manifesto-copy h2,
 html[data-theme='light'] .contact-copy h2,
 html[data-theme='light'] .success-message h2,
-html[data-theme='light'] .access-success h2 { color: var(--text-strong); }
+html[data-theme='light'] .access-success h2 {
+  color: var(--text-strong);
+}
 html[data-theme='light'] .hero-lede,
 html[data-theme='light'] .intro-copy p,
 html[data-theme='light'] .manifesto-copy > p,
@@ -131,23 +176,36 @@ html[data-theme='light'] .access-hero p,
 html[data-theme='light'] .product-section p,
 html[data-theme='light'] .toolkit-grid p,
 html[data-theme='light'] .security-section > p,
-html[data-theme='light'] .access-perks span { color: var(--text-muted); }
+html[data-theme='light'] .access-perks span {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .section-dark,
 html[data-theme='light'] .contact-section,
-html[data-theme='light'] .product-section { background: var(--surface-1); color: var(--text-strong); }
+html[data-theme='light'] .product-section {
+  background: var(--surface-1);
+  color: var(--text-strong);
+}
 html[data-theme='light'] .signal-card,
 html[data-theme='light'] .contact-panel,
-html[data-theme='light'] .access-form { background: var(--surface-3); border-color: var(--line-strong); }
+html[data-theme='light'] .access-form {
+  background: var(--surface-3);
+  border-color: var(--line-strong);
+}
 html[data-theme='light'] .signal-card-top,
 html[data-theme='light'] .signal-card-bottom,
 html[data-theme='light'] .orbit-label,
 html[data-theme='light'] .hero-footer p,
-html[data-theme='light'] .scroll-cue { color: var(--text-muted); }
+html[data-theme='light'] .scroll-cue {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .agent-section,
 html[data-theme='light'] .metrics-section,
 html[data-theme='light'] .toolkit-section,
 html[data-theme='light'] .security-section,
-html[data-theme='light'] .insight-list { background: var(--surface-1); color: var(--text-strong); }
+html[data-theme='light'] .insight-list {
+  background: var(--surface-1);
+  color: var(--text-strong);
+}
 html[data-theme='light'] .agent-heading h2,
 html[data-theme='light'] .metric strong,
 html[data-theme='light'] .agent-card h3,
@@ -155,25 +213,43 @@ html[data-theme='light'] .metric-caption p,
 html[data-theme='light'] .product-section h2,
 html[data-theme='light'] .directory-card h3,
 html[data-theme='light'] .insight-feature h2,
-html[data-theme='light'] .insight-row h3 { color: var(--text-strong); }
+html[data-theme='light'] .insight-row h3 {
+  color: var(--text-strong);
+}
 html[data-theme='light'] .agent-heading p,
 html[data-theme='light'] .agent-card-copy p,
 html[data-theme='light'] .metric p,
 html[data-theme='light'] .directory-card p,
-html[data-theme='light'] .insight-feature p { color: var(--text-muted); }
+html[data-theme='light'] .insight-feature p {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .agent-card,
 html[data-theme='light'] .metric,
-html[data-theme='light'] .directory-card { background: var(--surface-2); border-color: var(--line-strong); }
-html[data-theme='light'] .agent-card-featured { background: #d5e7d0; }
+html[data-theme='light'] .directory-card {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
+html[data-theme='light'] .agent-card-featured {
+  background: #d5e7d0;
+}
 html[data-theme='light'] .feature-list,
 html[data-theme='light'] .feature-list div,
 html[data-theme='light'] .insight-row,
-html[data-theme='light'] .insight-row article { border-color: var(--line); }
-html[data-theme='light'] .site-footer { background: var(--surface-2); border-color: var(--line-strong); }
+html[data-theme='light'] .insight-row article {
+  border-color: var(--line);
+}
+html[data-theme='light'] .site-footer {
+  background: var(--surface-2);
+  border-color: var(--line-strong);
+}
 html[data-theme='light'] .site-footer p,
-html[data-theme='light'] .footer-links span { color: var(--text-muted); }
+html[data-theme='light'] .footer-links span {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .form-group label,
-html[data-theme='light'] .access-form .form-group label { color: var(--text-muted); }
+html[data-theme='light'] .access-form .form-group label {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .form-group input,
 html[data-theme='light'] .access-form .form-group input {
   background: var(--surface-control);
@@ -181,20 +257,33 @@ html[data-theme='light'] .access-form .form-group input {
   color: var(--text-strong);
 }
 html[data-theme='light'] .form-group input::placeholder,
-html[data-theme='light'] .access-form .form-group input::placeholder { color: var(--text-muted); }
+html[data-theme='light'] .access-form .form-group input::placeholder {
+  color: var(--text-muted);
+}
 html[data-theme='light'] .form-group:focus-within input,
 html[data-theme='light'] .access-form .form-group input:focus {
   border-color: var(--focus-ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 24%, transparent);
 }
-html[data-theme='light'] .toolkit-grid article { border-color: var(--line-strong); }
-html[data-theme='light'] .toolkit-grid article:hover { background: var(--soft); }
-html[data-theme='light'] .partner-wall span { border-color: var(--line-strong); color: var(--text-muted); }
+html[data-theme='light'] .toolkit-grid article {
+  border-color: var(--line-strong);
+}
+html[data-theme='light'] .toolkit-grid article:hover {
+  background: var(--soft);
+}
+html[data-theme='light'] .partner-wall span {
+  border-color: var(--line-strong);
+  color: var(--text-muted);
+}
 html[data-theme='light'] .directory-card small,
 html[data-theme='light'] .insight-feature small,
 html[data-theme='light'] .insight-row small,
-html[data-theme='light'] .feature-number { color: var(--acid); }
-html[data-theme='light'] .access-success p { color: var(--text-muted); }
+html[data-theme='light'] .feature-number {
+  color: var(--acid);
+}
+html[data-theme='light'] .access-success p {
+  color: var(--text-muted);
+}
 
 .container {
   max-width: 1200px;
@@ -202,5 +291,12 @@ html[data-theme='light'] .access-success p { color: var(--text-muted); }
   padding: 0 1.5rem;
 }
 
-h1, h2, h3, p { margin: 0; }
-a { color: inherit; }
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+a {
+  color: inherit;
+}

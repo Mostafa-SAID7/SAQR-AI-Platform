@@ -24,27 +24,27 @@ jobs:
   typescript-strict-check:
     name: TypeScript Strict Mode Enforcement
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
-      
+
       - name: Verify tsconfig.json exists
         run: |
           if [ ! -f "tsconfig.json" ]; then
             echo "❌ tsconfig.json not found!"
             exit 1
           fi
-      
+
       - name: Validate strict mode configuration
         run: |
           echo "Verifying TypeScript strict mode enforcement..."
@@ -52,10 +52,10 @@ jobs:
           grep -q '"noImplicitReturns": true' tsconfig.json || (echo "❌ noImplicitReturns not enforced!" && exit 1)
           grep -q '"noImplicitOverride": true' tsconfig.json || (echo "❌ noImplicitOverride not enforced!" && exit 1)
           echo "✓ All strict mode flags verified in tsconfig.json"
-      
+
       - name: TypeScript compilation check
         run: npm run lint:ts:strict 2>&1 | tee ts-check.log
-      
+
       - name: Report on failure
         if: failure()
         run: |
@@ -73,37 +73,37 @@ jobs:
   template-validation:
     name: Angular Template Type Checking
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
-      
+
       - name: Verify angular.json exists
         run: |
           if [ ! -f "angular.json" ]; then
             echo "❌ angular.json not found!"
             exit 1
           fi
-      
+
       - name: Build with AOT template checking
         run: npm run lint:templates 2>&1 | tee template-check.log
-      
+
       - name: Validate no template errors
         run: |
           if [ ! -f template-check.log ]; then
             echo "❌ Build output log not created!"
             exit 1
           fi
-          
+
           if grep -q "error NG" template-check.log; then
             echo "❌ Angular template compilation errors found:"
             echo ""
@@ -117,7 +117,7 @@ jobs:
             exit 1
           fi
           echo "✓ All templates validated successfully"
-      
+
       - name: Report template errors
         if: failure()
         run: |
@@ -134,13 +134,13 @@ jobs:
   secrets-scanning:
     name: Secrets & Credentials Scanning
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: TruffleHog - Scan PR changes
         if: github.event_name == 'pull_request'
         uses: trufflesecurity/trufflehog@v3.63.0
@@ -149,7 +149,7 @@ jobs:
           base: ${{ github.event.pull_request.base.sha }}
           head: ${{ github.event.pull_request.head.sha }}
           extra_args: --debug
-      
+
       - name: TruffleHog - Scan push commits
         if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
         uses: trufflesecurity/trufflehog@v3.63.0
@@ -158,7 +158,7 @@ jobs:
           base: ${{ github.event.before }}
           head: ${{ github.event.after }}
           extra_args: --debug
-      
+
       - name: Log secrets scan result
         if: always()
         run: |
@@ -168,7 +168,7 @@ jobs:
           else
             echo "⚠ Secrets scan completed (see job logs for details)" >> $GITHUB_STEP_SUMMARY
           fi
-      
+
       - name: Skip on initial commit
         if: github.event_name == 'push' && github.event.before == '0000000000000000000000000000000000000000'
         run: echo "✓ Initial commit, skipping TruffleHog (no baseline)"

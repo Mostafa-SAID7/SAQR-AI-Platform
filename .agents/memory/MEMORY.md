@@ -1,2 +1,0 @@
-- [Angular preview host configuration](angular-preview-hosts.md) — Angular 21 needs the Replit-safe host setting on the serve target, not only the application security block.
-- [Theme selector scoping](theme-scoping.md) — root data-theme selectors must be global when themed elements belong to Angular component templates.
