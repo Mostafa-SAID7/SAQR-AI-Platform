@@ -23,11 +23,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              {
-                "glob": "**/*",
-                "input": "attached_assets/generated_images",
-                "output": "assets/generated_images"
               }
             ],
             "styles": [
