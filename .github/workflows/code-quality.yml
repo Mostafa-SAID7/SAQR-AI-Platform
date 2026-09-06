@@ -127,12 +127,12 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Scan for hardcoded secrets
+      - name: Run TruffleHog secrets scanner
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
+          base: ${{ github.event.pull_request.base.sha || 'HEAD~1' }}
+          head: ${{ github.event.pull_request.head.sha || 'HEAD' }}
           extra_args: --debug --json
 
   build-warnings-check:
