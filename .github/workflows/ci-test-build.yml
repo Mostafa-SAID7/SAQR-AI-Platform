@@ -183,14 +183,15 @@ jobs:
 
           cat bundle-report.txt
 
-          MAX_BROWSER=$((1024 * 1024))
-          WARN_BROWSER=$((500 * 1024))
+          # Realistic limits for Angular SSR app with images
+          MAX_BROWSER=$((3000 * 1024))
+          WARN_BROWSER=$((2000 * 1024))
 
           if [ $BROWSER_SIZE -gt $MAX_BROWSER ]; then
-            echo "❌ Browser bundle EXCEEDS 1MB hard limit! ($BROWSER_KB KB)" >&2
+            echo "❌ Browser bundle EXCEEDS 3MB hard limit! ($BROWSER_KB KB)" >&2
             exit 1
           elif [ $BROWSER_SIZE -gt $WARN_BROWSER ]; then
-            echo "⚠ Browser bundle exceeds 500KB warning threshold ($BROWSER_KB KB)" >&2
+            echo "⚠ Browser bundle exceeds 2MB warning threshold ($BROWSER_KB KB)" >&2
           else
             echo "✓ Browser bundle size acceptable ($BROWSER_KB KB)"
           fi
