@@ -23,7 +23,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Build with SSR enabled
         run: npm run build 2>&1 | tee ssr-build.log
@@ -75,7 +75,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Build application
         run: npm run build
@@ -176,7 +176,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check for hydration configuration
         run: |

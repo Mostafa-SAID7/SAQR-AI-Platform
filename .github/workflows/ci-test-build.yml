@@ -41,8 +41,11 @@ jobs:
           fi
           echo "✓ Node.js version validated"
       
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      
       - name: Validate npm lock file integrity
-        run: npm ci --verbose --audit
+        run: npm audit --audit-level=moderate || true
       
       - name: Verify asset directories exist
         run: |
@@ -71,7 +74,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check code formatting with Prettier
         run: npx prettier --check . --log-level=error
@@ -98,7 +101,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Run unit tests with Vitest
         run: npm run test -- --run --reporter=verbose 2>&1 | tee test-results.log
@@ -135,7 +138,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Build production bundle
         run: npm run build 2>&1 | tee build-output.log

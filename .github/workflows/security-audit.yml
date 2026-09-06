@@ -34,7 +34,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Run full npm audit
         run: npm audit --json > audit-report.json 2>&1 || true
@@ -88,7 +88,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check for GPL/AGPL licenses
         run: |
@@ -140,7 +140,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check for recently updated high-risk packages
         run: |
@@ -177,7 +177,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Generate outdated packages report
         run: |

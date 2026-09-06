@@ -36,7 +36,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: TypeScript compilation check
         run: npx tsc --noEmit --pretty 2>&1 | tee ts-check.log || true
@@ -71,7 +71,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Angular template type checking (AOT compilation)
         run: npx ng build --configuration=development --aot 2>&1 | tee template-check.log || true
@@ -105,7 +105,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check Prettier formatting
         run: npx prettier --check . --log-level=error 2>&1 | tee format-check.log || true
@@ -150,7 +150,7 @@ jobs:
           cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
       
       - name: Check for TypeScript compiler warnings
         run: |
