@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:lead-gen-landing": "node dist/lead-gen-landing/server/server.mjs"
+    "serve:ssr:lead-gen-landing": "node dist/lead-gen-landing/server/server.mjs",
+    "release": "semantic-release",
+    "commit": "cz commit"
   },
   "private": true,
   "packageManager": "npm@10.9.2",
@@ -32,10 +34,21 @@
     "@angular/build": "^21.2.6",
     "@angular/cli": "^21.2.6",
     "@angular/compiler-cli": "^21.2.0",
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^10.0.0",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^14.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.0",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
+    "semantic-release": "^23.0.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
