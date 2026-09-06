@@ -35,11 +35,20 @@ jobs:
           echo "Node.js version: $NODE_VERSION"
           echo "npm version: $(npm --version)"
           echo "Required Node.js: $REQUIRED_VERSION+"
-          if ! node -e "const ver='$NODE_VERSION'; const req='$REQUIRED_VERSION'; process.exit(require('semver').gte(ver, req) ? 0 : 1)" 2>/dev/null; then
+          
+          # Extract major and minor version numbers
+          NODE_MAJOR=$(echo "$NODE_VERSION" | cut -d'.' -f1)
+          NODE_MINOR=$(echo "$NODE_VERSION" | cut -d'.' -f2)
+          REQ_MAJOR=$(echo "$REQUIRED_VERSION" | cut -d'.' -f1)
+          REQ_MINOR=$(echo "$REQUIRED_VERSION" | cut -d'.' -f2)
+          
+          # Check if version meets requirement (22.14.0+)
+          if [ "$NODE_MAJOR" -gt "$REQ_MAJOR" ] || ([ "$NODE_MAJOR" -eq "$REQ_MAJOR" ] && [ "$NODE_MINOR" -ge "$REQ_MINOR" ]); then
+            echo "✓ Node.js version validated"
+          else
             echo "❌ Node.js version $NODE_VERSION does not meet minimum requirement $REQUIRED_VERSION"
             exit 1
           fi
-          echo "✓ Node.js version validated"
       
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
