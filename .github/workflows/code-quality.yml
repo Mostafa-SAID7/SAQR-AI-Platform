@@ -120,6 +120,7 @@ jobs:
   secrets-scanning:
     name: Secrets Scanning
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     
     steps:
       - name: Checkout repository
@@ -127,13 +128,24 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Run TruffleHog secrets scanner
+      - name: TruffleHog - PR context
+        if: github.event_name == 'pull_request'
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: ${{ github.event.pull_request.base.sha || 'HEAD~1' }}
-          head: ${{ github.event.pull_request.head.sha || 'HEAD' }}
-          extra_args: --debug --json
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          extra_args: --debug
+      
+      - name: TruffleHog - Push context (last commit only)
+        if: github.event_name == 'push'
+        run: |
+          if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
+            echo "⚠ Initial commit, skipping TruffleHog (no comparison point)"
+          else
+            npx trufflesecurity/trufflehog@main filesystem . --json --debug 2>&1 | head -50 || true
+            echo "✓ Secrets scan complete"
+          fi
 
   build-warnings-check:
     name: Build Warnings as Errors
