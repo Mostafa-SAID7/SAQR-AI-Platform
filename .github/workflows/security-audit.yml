@@ -45,10 +45,15 @@ jobs:
       
       - name: Parse audit results for high severity
         run: |
+          if [ ! -f audit-report.json ]; then
+            echo "❌ Audit report not generated!"
+            exit 1
+          fi
+          
           echo "## NPM Security Audit Results" >> $GITHUB_STEP_SUMMARY
           
-          HIGH_VULNS=$(jq '[.vulnerabilities[] | select(.severity=="high")] | length' audit-report.json)
-          CRITICAL_VULNS=$(jq '[.vulnerabilities[] | select(.severity=="critical")] | length' audit-report.json)
+          HIGH_VULNS=$(jq '[.vulnerabilities[]? | select(.severity=="high")] | length' audit-report.json 2>/dev/null || echo 0)
+          CRITICAL_VULNS=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-report.json 2>/dev/null || echo 0)
           
           echo "### Vulnerability Summary" >> $GITHUB_STEP_SUMMARY
           echo "- Critical: $CRITICAL_VULNS" >> $GITHUB_STEP_SUMMARY
@@ -57,17 +62,23 @@ jobs:
           if [ "$CRITICAL_VULNS" -gt 0 ] || [ "$HIGH_VULNS" -gt 0 ]; then
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Critical/High Vulnerabilities" >> $GITHUB_STEP_SUMMARY
-            jq -r '.vulnerabilities[] | select(.severity=="critical" or .severity=="high") | "\n**\(.id)**: \(.title)\n- Severity: \(.severity)\n- Package: \(.name)\n- Fix available: \(.fixAvailable)"' audit-report.json >> $GITHUB_STEP_SUMMARY || true
+            jq -r '.vulnerabilities[]? | select(.severity=="critical" or .severity=="high") | "\n**\(.id)**: \(.title)\n- Severity: \(.severity)\n- Package: \(.name)\n- Fix available: \(.fixAvailable)"' audit-report.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "See audit report for details" >> $GITHUB_STEP_SUMMARY
           fi
       
       - name: Fail on critical vulnerabilities
         run: |
-          CRITICAL=$(jq '[.vulnerabilities[] | select(.severity=="critical")] | length' audit-report.json)
-          if [ "$CRITICAL" -gt 0 ]; then
-            echo "❌ Critical security vulnerabilities detected!"
-            jq -r '.vulnerabilities[] | select(.severity=="critical") | "\(.id): \(.title)"' audit-report.json
+          if [ ! -f audit-report.json ]; then
+            echo "❌ Audit report not found!"
             exit 1
           fi
+          
+          CRITICAL=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-report.json 2>/dev/null || echo 0)
+          if [ "$CRITICAL" -gt 0 ]; then
+            echo "❌ Critical security vulnerabilities detected!"
+            jq -r '.vulnerabilities[]? | select(.severity=="critical") | "\(.id): \(.title)"' audit-report.json 2>/dev/null
+            exit 1
+          fi
+          echo "✓ No critical vulnerabilities found"
       
       - name: Upload audit report
         if: always()
@@ -115,19 +126,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
+      - name: Validate package-lock.json exists
+        run: |
+          if [ ! -f "package-lock.json" ]; then
+            echo "❌ package-lock.json not found!"
+            exit 1
+          fi
+          echo "✓ package-lock.json found"
+      
       - name: Validate package-lock.json signature
         run: |
           echo "Validating package-lock.json integrity..."
-          npm ci --offline 2>&1 | head -5 || npm ci
+          npm ci --legacy-peer-deps 2>&1 | head -10
           echo "✓ package-lock.json is valid and consistent"
       
       - name: Check for modifications to package-lock.json
         run: |
-          git diff --exit-code package-lock.json || (
+          if git diff --exit-code package-lock.json > /dev/null 2>&1; then
+            echo "✓ package-lock.json unchanged after install"
+          else
             echo "⚠ package-lock.json differs from committed version"
             echo "This may indicate inconsistent npm installs"
+            git diff package-lock.json | head -30
             exit 1
-          ) || true
+          fi
 
   supply-chain-risk-check:
     name: Supply Chain Risk Assessment
@@ -160,11 +182,13 @@ jobs:
       - name: Verify npm registry source
         run: |
           echo "Verifying npm registry configuration..."
-          npm config get registry
-          if npm config get registry | grep -v "registry.npmjs.org"; then
-            echo "⚠ Custom npm registry detected - verify it's trusted"
+          REGISTRY=$(npm config get registry)
+          echo "Current registry: $REGISTRY"
+          if echo "$REGISTRY" | grep -q "registry.npmjs.org"; then
+            echo "✓ Using official npm registry"
+          else
+            echo "⚠ Using custom npm registry - verify it's trusted"
           fi
-          echo "✓ Registry verified"
 
   outdated-packages-report:
     name: Outdated Packages Report

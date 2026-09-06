@@ -50,21 +50,20 @@ jobs:
       - name: Check Node.js version compatibility
         run: |
           echo "## Node.js Compatibility Check" >> $GITHUB_STEP_SUMMARY
-          echo "Current Node.js: $(node --version)" >> $GITHUB_STEP_SUMMARY
+          NODE_VERSION=$(node --version)
+          echo "Current Node.js: $NODE_VERSION" >> $GITHUB_STEP_SUMMARY
           echo "Required for Angular 21: v20.19+ or v22.12+" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          NODE_VERSION=$(node --version | cut -d'v' -f2)
-          node -e "
-            const semver = require('semver');
-            const current = '$NODE_VERSION';
-            if (semver.gte(current, '20.19.0') || semver.gte(current, '22.12.0')) {
-              console.log('✓ Node.js version is compatible');
-            } else {
-              console.log('❌ Node.js version is incompatible');
-              process.exit(1);
-            }
-          " >> $GITHUB_STEP_SUMMARY
+          # Extract numeric version
+          NODE_NUM=$(echo "$NODE_VERSION" | cut -d'v' -f2 | cut -d'.' -f1,2)
+          
+          if echo "$NODE_NUM" | grep -qE '^(20\.19|2[2-9]\.|[3-9][0-9]\.)'; then
+            echo "✓ Node.js version is compatible" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Node.js version is incompatible" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
 
   outdated-dependencies:
     name: Outdated Packages Analysis
@@ -87,6 +86,11 @@ jobs:
         run: |
           npm outdated --json > outdated-full.json 2>&1 || echo "{}" > outdated-full.json
           
+          if [ ! -f outdated-full.json ]; then
+            echo "❌ Outdated packages report not generated!"
+            exit 1
+          fi
+          
           echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
@@ -96,11 +100,11 @@ jobs:
           
           if [ "$OUTDATED_COUNT" -gt 0 ]; then
             echo "### Major Updates Available" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | select(.type=="major") | "- **\(.name)**: \(.current) → \(.latest)"' outdated-full.json >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+            jq -r '.[]? | select(.type=="major") | "- **\(.name)**: \(.current) → \(.latest)"' outdated-full.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "(no major updates)" >> $GITHUB_STEP_SUMMARY
             
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Minor & Patch Updates" >> $GITHUB_STEP_SUMMARY
-            jq -r '.[] | select(.type!="major") | "- \(.name): \(.current) → \(.latest) (\(.type))"' outdated-full.json >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+            jq -r '.[]? | select(.type!="major") | "- \(.name): \(.current) → \(.latest) (\(.type))"' outdated-full.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "(no minor/patch updates)" >> $GITHUB_STEP_SUMMARY
           fi
       
       - name: Upload outdated report
@@ -132,13 +136,18 @@ jobs:
       
       - name: Parse vulnerability report
         run: |
+          if [ ! -f audit-prod.json ]; then
+            echo "❌ Audit report not generated!"
+            exit 1
+          fi
+          
           echo "## NPM Audit Report (Production Dependencies)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          CRITICAL=$(jq '[.vulnerabilities[] | select(.severity=="critical")] | length' audit-prod.json 2>/dev/null || echo 0)
-          HIGH=$(jq '[.vulnerabilities[] | select(.severity=="high")] | length' audit-prod.json 2>/dev/null || echo 0)
-          MODERATE=$(jq '[.vulnerabilities[] | select(.severity=="moderate")] | length' audit-prod.json 2>/dev/null || echo 0)
-          LOW=$(jq '[.vulnerabilities[] | select(.severity=="low")] | length' audit-prod.json 2>/dev/null || echo 0)
+          CRITICAL=$(jq '[.vulnerabilities[]? | select(.severity=="critical")] | length' audit-prod.json 2>/dev/null || echo 0)
+          HIGH=$(jq '[.vulnerabilities[]? | select(.severity=="high")] | length' audit-prod.json 2>/dev/null || echo 0)
+          MODERATE=$(jq '[.vulnerabilities[]? | select(.severity=="moderate")] | length' audit-prod.json 2>/dev/null || echo 0)
+          LOW=$(jq '[.vulnerabilities[]? | select(.severity=="low")] | length' audit-prod.json 2>/dev/null || echo 0)
           
           echo "### Vulnerability Summary" >> $GITHUB_STEP_SUMMARY
           echo "- 🔴 Critical: $CRITICAL" >> $GITHUB_STEP_SUMMARY
@@ -149,7 +158,7 @@ jobs:
           if [ "$CRITICAL" -gt 0 ] || [ "$HIGH" -gt 0 ]; then
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "### Critical & High Severity Issues" >> $GITHUB_STEP_SUMMARY
-            jq -r '.vulnerabilities[] | select(.severity=="critical" or .severity=="high") | "- [\(.id)](https://www.npmjs.com/advisories/\(.id)): \(.title) in **\(.name)**"' audit-prod.json >> $GITHUB_STEP_SUMMARY 2>/dev/null || true
+            jq -r '.vulnerabilities[]? | select(.severity=="critical" or .severity=="high") | "- [\(.id)](https://www.npmjs.com/advisories/\(.id)): \(.title) in **\(.name)**"' audit-prod.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "See audit report for details" >> $GITHUB_STEP_SUMMARY
           fi
       
       - name: Upload audit report
