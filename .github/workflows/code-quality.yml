@@ -16,9 +16,9 @@ on:
       - 'tsconfig*.json'
       - 'angular.json'
 
-# Note: This workflow is complementary to CI - Test & Build
-# CI handles: format checks (Prettier), unit tests, build, package.json validation
-# This workflow handles: TypeScript strict mode enforcement, template validation, secrets scanning
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   typescript-strict-check:
