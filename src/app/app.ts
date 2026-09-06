@@ -12,6 +12,7 @@ export class App {
   protected contactForm: FormGroup;
   protected isSubmitting = signal(false);
   protected submitted = signal(false);
+  protected menuOpen = signal(false);
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
@@ -35,5 +36,13 @@ export class App {
 
   scrollToContact() {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  toggleMenu() {
+    this.menuOpen.update((open) => !open);
+  }
+
+  closeMenu() {
+    this.menuOpen.set(false);
   }
 }

@@ -1,14 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Nexus AI</title>
+  <desc id="desc">The Nexus AI orbital signal mark</desc>
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    <linearGradient id="tile" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#182419"/>
+      <stop offset="1" stop-color="#090d0a"/>
     </linearGradient>
+    <linearGradient id="signal" x1="14" y1="17" x2="49" y2="49" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d6ff9a"/>
+      <stop offset=".48" stop-color="#b9fa62"/>
+      <stop offset="1" stop-color="#79bd3b"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  
-  <!-- Background circle -->
-  <circle cx="50" cy="50" r="48" fill="url(#grad)"/>
-  
-  <!-- LG Text -->
-  <text x="50" y="68" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="white" text-anchor="middle">LG</text>
+  <rect width="64" height="64" rx="17" fill="url(#tile)"/>
+  <rect x="1" y="1" width="62" height="62" rx="16" fill="none" stroke="#b9fa62" stroke-opacity=".18"/>
+  <path d="M-8 39C14 15 38 10 72 25" fill="none" stroke="#b9fa62" stroke-opacity=".16" stroke-width="1.5"/>
+  <path d="M-4 50C18 28 43 21 68 34" fill="none" stroke="#b9fa62" stroke-opacity=".12" stroke-width="1"/>
+  <g filter="url(#glow)" fill="url(#signal)">
+    <path d="M16 19h7L15 45H8l8-26Z"/>
+    <path d="M27 13h7L26 39h-7l8-26Z" opacity=".72"/>
+    <path d="M38 8h7L37 34h-7l8-26Z" opacity=".38"/>
+  </g>
+  <circle cx="50" cy="46" r="2.5" fill="#d6ff9a"/>
 </svg>

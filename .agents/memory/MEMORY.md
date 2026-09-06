@@ -1,0 +1,1 @@
+- [Angular preview host configuration](angular-preview-hosts.md) — Angular 21 needs the Replit-safe host setting on the serve target, not only the application security block.
