@@ -1,0 +1,43 @@
+import {
+  LucideActivity,
+  LucideArrowDown,
+  LucideArrowUpRight,
+  LucideBot,
+  LucideBrainCircuit,
+  LucideCheck,
+  LucideCircleCheck,
+  LucideCompass,
+  LucideDatabaseZap,
+  LucideLockKeyhole,
+  LucideMenu,
+  LucideNetwork,
+  LucideShieldCheck,
+  LucideSparkles,
+  LucideSun,
+  LucideWaypoints,
+  LucideX,
+  LucideZap,
+  LucideMoon
+} from '@lucide/angular';
+
+export const NEXUS_ICONS = [
+  LucideActivity,
+  LucideArrowDown,
+  LucideArrowUpRight,
+  LucideBot,
+  LucideBrainCircuit,
+  LucideCheck,
+  LucideCircleCheck,
+  LucideCompass,
+  LucideDatabaseZap,
+  LucideLockKeyhole,
+  LucideMenu,
+  LucideNetwork,
+  LucideShieldCheck,
+  LucideSparkles,
+  LucideSun,
+  LucideWaypoints,
+  LucideX,
+  LucideZap,
+  LucideMoon
+] as const;

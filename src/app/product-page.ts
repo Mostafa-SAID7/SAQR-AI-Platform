@@ -1,16 +1,19 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NEXUS_ICONS } from './nexus-icons';
+import { ThemeService } from './theme.service';
 
 type ProductPageKey = 'platform' | 'agents' | 'ecosystem' | 'insights' | 'access';
 
 @Component({
   selector: 'app-product-page',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, ...NEXUS_ICONS],
   templateUrl: './product-page.html',
   styleUrls: ['./app.css', './product-page.css']
 })
 export class ProductPage {
+  protected readonly theme = inject(ThemeService);
   protected readonly page: ProductPageKey;
   protected menuOpen = signal(false);
   protected submitted = signal(false);

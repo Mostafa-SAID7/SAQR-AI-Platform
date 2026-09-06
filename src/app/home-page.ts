@@ -1,14 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { NEXUS_ICONS } from './nexus-icons';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, ...NEXUS_ICONS],
   templateUrl: './home-page.html',
   styleUrl: './app.css'
 })
 export class HomePage {
+  protected readonly theme = inject(ThemeService);
   protected contactForm: FormGroup;
   protected isSubmitting = signal(false);
   protected submitted = signal(false);

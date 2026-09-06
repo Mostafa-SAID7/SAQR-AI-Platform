@@ -46,3 +46,64 @@
   .console-stats strong { font-size: 1.3rem; }
   .product-section, .access-hero { padding-left: 6vw; padding-right: 6vw; }
 }
+
+/* Lucide icon alignment */
+.console-top .live-indicator,
+.console-stats small,
+.toolkit-grid article > span,
+.directory-icon,
+.directory-card a,
+.map-node,
+.access-perks span {
+  align-items: center;
+  display: inline-flex;
+}
+.console-top .live-indicator,
+.console-stats small,
+.map-node,
+.access-perks span { gap: .35rem; }
+.console-top .live-indicator svg,
+.console-stats small svg,
+.toolkit-grid article > span svg,
+.directory-icon svg,
+.directory-card a svg,
+.map-node svg,
+.access-perks svg {
+  flex: 0 0 auto;
+  stroke: currentColor;
+}
+.toolkit-grid article > span { color: var(--acid); }
+.directory-icon { color: #4d7830; }
+.directory-sentinel .directory-icon { color: #7b5fa7; }
+.directory-alchemist .directory-icon { color: #398694; }
+.directory-card a { gap: .45rem; }
+.access-perks svg { color: var(--acid); }
+
+html[data-theme='light'] .product-hero,
+html[data-theme='light'] .access-hero { background: radial-gradient(circle at 75% 40%, #d5e8c8 0, #eef3e8 35%, transparent 64%), #eef3e8; }
+html[data-theme='light'] .product-hero h1,
+html[data-theme='light'] .access-hero h1 { color: #132014; }
+html[data-theme='light'] .product-hero-layout p,
+html[data-theme='light'] .access-hero p,
+html[data-theme='light'] .product-section p { color: #5d6e5b; }
+html[data-theme='light'] .platform-console { background: #f4f8ef; border-color: #a9bda1; box-shadow: 0 28px 80px #35532a1c; }
+html[data-theme='light'] .console-sidebar { border-color: #c6d4c0; }
+html[data-theme='light'] .console-main { color: #19301a; }
+html[data-theme='light'] .console-top,
+html[data-theme='light'] .console-stats span,
+html[data-theme='light'] .graph-label { color: #60725d; }
+html[data-theme='light'] .console-stats strong { color: #19301a; }
+html[data-theme='light'] .console-graph { border-color: #cad8c4; }
+html[data-theme='light'] .product-section { background: #f2f6ef; color: #132014; }
+html[data-theme='light'] .feature-list,
+html[data-theme='light'] .feature-list div { border-color: #c4d0be; }
+html[data-theme='light'] .toolkit-section,
+html[data-theme='light'] .security-section { background: #e1ecdd; color: #132014; }
+html[data-theme='light'] .toolkit-grid article { border-color: #afc2a9; }
+html[data-theme='light'] .toolkit-grid article:hover { background: #d5e7d0; }
+html[data-theme='light'] .directory-card { border-color: #bdcbb8; }
+html[data-theme='light'] .partner-wall span { border-color: #b9c9b3; color: #52674f; }
+html[data-theme='light'] .insight-art { box-shadow: 0 20px 50px #35532a1c; }
+html[data-theme='light'] .insight-row { border-color: #c4d0be; }
+html[data-theme='light'] .insight-row article { border-color: #c4d0be; }
+html[data-theme='light'] .access-form { background: #f4f8ef; border-color: #a9bda1; box-shadow: 0 24px 70px #35532a1c; }
