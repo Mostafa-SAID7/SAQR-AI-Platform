@@ -1,4 +1,4 @@
-name: Code Quality - TypeScript, Security & Standards
+name: Code Quality - TypeScript Strict & Secrets
 
 on:
   pull_request:
@@ -7,22 +7,22 @@ on:
       - 'src/**/*.ts'
       - 'src/**/*.html'
       - 'tsconfig*.json'
-      - '.prettierrc'
       - 'angular.json'
-      - 'package.json'
   push:
     branches: [main, develop]
     paths:
       - 'src/**/*.ts'
       - 'src/**/*.html'
       - 'tsconfig*.json'
-      - '.prettierrc'
       - 'angular.json'
-      - 'package.json'
+
+# Note: This workflow is complementary to CI - Test & Build
+# CI handles: format checks (Prettier), unit tests, build, package.json validation
+# This workflow handles: TypeScript strict mode enforcement, template validation, secrets scanning
 
 jobs:
   typescript-strict-check:
-    name: TypeScript Strict Type Checking
+    name: TypeScript Strict Mode Enforcement
     runs-on: ubuntu-latest
     
     steps:
@@ -38,30 +38,25 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
       
-      - name: TypeScript compilation check
-        run: npx tsc --noEmit --pretty 2>&1 | tee ts-check.log || true
-      
-      - name: Validate strict mode enabled
+      - name: Validate strict mode configuration
         run: |
-          echo "Validating TypeScript strict mode configuration..."
+          echo "Verifying TypeScript strict mode enforcement..."
           grep -q '"strict": true' tsconfig.json || (echo "❌ TypeScript strict mode not enabled!" && exit 1)
           grep -q '"noImplicitReturns": true' tsconfig.json || (echo "❌ noImplicitReturns not enforced!" && exit 1)
           grep -q '"noImplicitOverride": true' tsconfig.json || (echo "❌ noImplicitOverride not enforced!" && exit 1)
-          echo "✓ All strict mode checks enabled"
+          echo "✓ All strict mode flags verified in tsconfig.json"
       
-      - name: Report type errors
+      - name: TypeScript compilation check
+        run: npx tsc --noEmit --pretty
+      
+      - name: Report on failure
         if: failure()
         run: |
-          echo "## TypeScript Violations Found" >> $GITHUB_STEP_SUMMARY
-          echo "These prevent merge. Run locally: \`npx tsc --noEmit\`" >> $GITHUB_STEP_SUMMARY
-          if [ -f ts-check.log ]; then
-            head -30 ts-check.log >> $GITHUB_STEP_SUMMARY
-          else
-            echo "Run \`npx tsc --noEmit\` locally to see full error details" >> $GITHUB_STEP_SUMMARY
-          fi
+          echo "## TypeScript Strict Mode Violations" >> $GITHUB_STEP_SUMMARY
+          echo "Fix with: \`npx tsc --noEmit\` to see detailed errors" >> $GITHUB_STEP_SUMMARY
 
-  template-syntax-check:
-    name: Angular Template Validation
+  template-validation:
+    name: Angular Template Type Checking
     runs-on: ubuntu-latest
     
     steps:
@@ -77,54 +72,26 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
       
-      - name: Angular template type checking (AOT compilation)
-        run: npx ng build --configuration=development --aot 2>&1 | tee template-check.log || true
+      - name: Build with AOT template checking
+        run: npx ng build --configuration=development --aot 2>&1 | tee template-check.log
       
-      - name: Parse build output for template errors
+      - name: Validate no template errors
         run: |
           if grep -q "error NG" template-check.log; then
-            echo "❌ Angular template compilation errors detected"
-            cat template-check.log
+            echo "❌ Angular template compilation errors found"
+            grep "error NG" template-check.log
             exit 1
           fi
           if grep -q "ERROR in" template-check.log; then
-            echo "❌ Build errors detected"
-            cat template-check.log
+            echo "❌ Build errors found"
+            grep "ERROR in" template-check.log
             exit 1
           fi
-          echo "✓ All templates pass validation"
-
-  format-consistency:
-    name: Prettier Format Enforcement
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.14.0'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
-      
-      - name: Check Prettier formatting
-        run: npx prettier --check . --log-level=error 2>&1 | tee format-check.log || true
-      
-      - name: Report format violations
-        if: failure()
-        run: |
-          echo "## Code Format Issues" >> $GITHUB_STEP_SUMMARY
-          echo "Run locally: \`npx prettier --write .\`" >> $GITHUB_STEP_SUMMARY
-          head -20 format-check.log >> $GITHUB_STEP_SUMMARY || true
+          echo "✓ All templates validated successfully"
 
   secrets-scanning:
-    name: Secrets Scanning
+    name: Secrets & Credentials Scanning
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event_name == 'push'
     
     steps:
       - name: Checkout repository
@@ -132,98 +99,24 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: TruffleHog - PR context
+      - name: TruffleHog - Scan PR changes
         if: github.event_name == 'pull_request'
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@v3.63.0
         with:
           path: ./
           base: ${{ github.event.pull_request.base.sha }}
           head: ${{ github.event.pull_request.head.sha }}
           extra_args: --debug
       
-      - name: TruffleHog - Push context (last commit only)
-        if: github.event_name == 'push'
-        run: |
-          if [ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]; then
-            echo "⚠ Initial commit, skipping TruffleHog (no comparison point)"
-          else
-            npx trufflesecurity/trufflehog@main filesystem . --json --debug 2>&1 | head -50 || true
-            echo "✓ Secrets scan complete"
-          fi
-
-  build-warnings-check:
-    name: Build Warnings as Errors
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: TruffleHog - Scan push commits
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        uses: trufflesecurity/trufflehog@v3.63.0
         with:
-          node-version: '22.14.0'
-          cache: 'npm'
+          path: ./
+          base: ${{ github.event.before }}
+          head: ${{ github.event.after }}
+          extra_args: --debug
       
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
-      
-      - name: Check for TypeScript compiler warnings
-        run: |
-          echo "Checking for TypeScript warnings..."
-          WARNINGS=$(npx tsc --noEmit 2>&1 | grep -i "warning" | wc -l)
-          if [ $WARNINGS -gt 0 ]; then
-            echo "⚠ Found $WARNINGS TypeScript warnings"
-            npx tsc --noEmit 2>&1 | grep -i "warning"
-          else
-            echo "✓ No TypeScript warnings found"
-          fi
-
-  dependency-consistency:
-    name: Dependency Validation
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.14.0'
-          cache: 'npm'
-      
-      - name: Validate package-lock.json
-        run: |
-          echo "Validating package-lock.json integrity..."
-          npm ci --prefer-offline --no-audit 2>&1 | head -20 || npm install --legacy-peer-deps
-          echo "✓ Dependencies locked and consistent"
-      
-      - name: Check for duplicate dependencies
-        run: |
-          echo "Checking for duplicate dependencies..."
-          npx npm-check-duplicates 2>&1 || echo "Note: Some duplicates may be expected"
-
-  config-validation:
-    name: Configuration Files Validation
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Validate angular.json syntax
-        run: |
-          node -e "require('fs').readFileSync('angular.json', 'utf8')" > /dev/null && echo "✓ angular.json valid" || exit 1
-      
-      - name: Validate tsconfig.json syntax
-        run: |
-          node -e "require('fs').readFileSync('tsconfig.json', 'utf8')" > /dev/null && echo "✓ tsconfig.json valid" || exit 1
-      
-      - name: Validate package.json syntax
-        run: |
-          node -e "require('fs').readFileSync('package.json', 'utf8')" > /dev/null && echo "✓ package.json valid" || exit 1
-      
-      - name: Validate .prettierrc syntax
-        run: |
-          node -e "require('fs').readFileSync('.prettierrc', 'utf8')" > /dev/null && echo "✓ .prettierrc valid" || exit 1
+      - name: Skip on initial commit
+        if: github.event_name == 'push' && github.event.before == '0000000000000000000000000000000000000000'
+        run: echo "✓ Initial commit, skipping TruffleHog (no baseline)"
