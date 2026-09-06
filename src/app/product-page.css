@@ -17,3 +17,32 @@
 .current { color: var(--acid) !important; }
 @media (max-width: 850px) { .product-content { padding-top: 74px; }.product-hero, .access-hero { padding: 5rem 7vw; }.product-hero-layout, .directory-heading { align-items: flex-start; flex-direction: column; gap: 2.5rem; }.platform-console { margin-top: 5rem; }.split-section, .insight-feature, .access-layout { gap: 3rem; grid-template-columns: 1fr; }.toolkit-grid, .directory-grid { grid-template-columns: 1fr; }.directory-card { min-height: 280px; }.insight-feature { margin-top: 3rem; }.insight-row { grid-template-columns: 1fr; }.insight-row article, .insight-row article:first-child { border-bottom: 1px solid #bdc4b8; border-right: 0; padding: 1.4rem 0; }.insight-row article:last-child { border-bottom: 0; }.access-layout { margin-top: 2rem; } }
 @media (max-width: 500px) { .console-stats strong { font-size: 1.3rem; }.console-main { padding: 1rem; }.console-sidebar { padding: 1rem .65rem; width: 44px; }.partner-wall { grid-template-columns: 1fr 1fr; }.map-node { font-size: .48rem; }.map-orbit { width: 450px; }.map-orbit-two { width: 340px; }.insight-art { height: 250px; } }
+
+/* Shared rounded surface language for routed product screens */
+.platform-console { border-radius: 26px; box-shadow: 0 28px 80px #00000038; overflow: hidden; }
+.toolkit-grid { gap: 1rem; }
+.toolkit-grid article { border-radius: 20px; transition: background .25s ease, transform .25s ease, box-shadow .25s ease; }
+.toolkit-grid article:hover { background: #1d281b; box-shadow: 0 18px 34px #00000025; transform: translateY(-5px); }
+.directory-card { border: 1px solid #c7d0c0; border-radius: 24px; transition: box-shadow .25s ease, transform .25s ease; }
+.directory-card:hover { box-shadow: 0 20px 40px #29321f1f; transform: translateY(-6px); }
+.insight-art { border-radius: 26px; overflow: hidden; }
+.access-form { background: #131b13; border-radius: 24px; box-shadow: 0 24px 70px #00000036; }
+.access-form .form-group input { background: #0d130e80; border: 1px solid #33452d; border-radius: 10px; padding: .8rem .9rem; width: 100%; }
+.access-form .form-group input:focus { border-color: var(--acid); box-shadow: 0 0 0 3px #b9fa6220; outline: none; }
+.access-form .field-line { display: none; }
+
+@media (max-width: 850px) {
+  .product-content { padding-top: 80px; }
+  .product-hero, .access-hero { min-height: auto; }
+  .toolkit-grid, .directory-grid { gap: 1rem; grid-template-columns: 1fr; }
+  .directory-card { min-height: 280px; }
+  .insight-row article, .insight-row article:first-child { padding: 1.4rem 0; }
+}
+
+@media (max-width: 500px) {
+  .product-hero h1, .access-hero h1 { font-size: clamp(3.4rem, 16vw, 5rem); }
+  .product-hero-layout .button { width: 100%; }
+  .console-stats { gap: .55rem; }
+  .console-stats strong { font-size: 1.3rem; }
+  .product-section, .access-hero { padding-left: 6vw; padding-right: 6vw; }
+}
