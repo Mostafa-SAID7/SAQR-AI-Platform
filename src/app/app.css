@@ -176,6 +176,20 @@ html[data-theme='light'] .form-group input::placeholder { color: #8a9a86; }
 html[data-theme='light'] .form-group:focus-within input { border-color: #54813c; box-shadow: 0 0 0 3px #54813c22; }
 html[data-theme='light'] .site-footer { background: #dce8d8; border-color: #b8c9b2; }
 html[data-theme='light'] .site-footer p { color: #64745f; }
+html[data-theme='light'] .agent-heading h2,
+html[data-theme='light'] .metric strong,
+html[data-theme='light'] .agent-card h3,
+html[data-theme='light'] .metric-caption p { color: #132014; }
+html[data-theme='light'] .agent-heading p,
+html[data-theme='light'] .agent-card-copy p,
+html[data-theme='light'] .metric p { color: #52654f; }
+html[data-theme='light'] .form-group input::placeholder { color: #62745e; }
+html[data-theme='light'] .footer-links span { color: #5a6d56; }
+
+/* Keep secondary text readable on the default night surfaces. */
+.form-group input::placeholder { color: #71816f; }
+.site-footer p,
+.footer-links span { color: #8e9d89; }
 
 @media (max-width: 850px) {
   .site-header { height: 64px; padding: 0 1rem; }.main-nav { background: #0d120e; border: 1px solid #33412f; border-radius: 16px; box-shadow: 0 18px 40px #0008; display: none; flex-direction: column; gap: 1.4rem; left: 0; margin: 0; padding: 1.5rem; position: absolute; right: 0; top: 70px; }.main-nav.is-open { display: flex; }.header-actions { display: none; }.theme-toggle { margin-left: auto; margin-right: .35rem; }.theme-toggle span { display: none; }.menu-toggle { display: block; }
