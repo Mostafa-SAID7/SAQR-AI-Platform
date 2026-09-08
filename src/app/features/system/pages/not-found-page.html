@@ -1,0 +1,25 @@
+<app-product-layout>
+  <main class="motion-hero relative min-h-[calc(100vh-5rem)] overflow-hidden bg-cover bg-center [background:var(--hero-ecosystem)] px-5 pb-20 pt-40 sm:px-8 lg:px-12 lg:pb-28 lg:pt-52">
+    <div class="pointer-events-none absolute inset-0 opacity-40 [background-image:linear-gradient(var(--line)_1px,transparent_1px),linear-gradient(90deg,var(--line)_1px,transparent_1px)] [background-size:72px_72px]"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1fr_.8fr]">
+      <div>
+        <p class="motion-reveal mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">Error / 404</p>
+        <h1 class="motion-reveal motion-reveal-delay-1 font-display text-[clamp(5rem,16vw,12rem)] font-medium leading-[0.75] tracking-[-0.1em] text-copy">Signal<br /><em class="not-italic text-acid">lost.</em></h1>
+        <p class="motion-reveal motion-reveal-delay-2 mt-8 max-w-md text-sm leading-7 text-muted">This route is outside the current network. Return to the command center or continue exploring the Nexus intelligence layer.</p>
+        <div class="motion-reveal motion-reveal-delay-3 mt-8 flex flex-col gap-3 sm:flex-row">
+          <a routerLink="/" class="inline-flex min-h-12 items-center justify-between gap-6 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover">Back to home <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a>
+          <a routerLink="/access" class="inline-flex min-h-12 items-center justify-between gap-6 rounded-xl border border-line-strong px-5 py-3 text-sm font-semibold text-copy transition hover:-translate-y-1 hover:border-acid hover:text-acid">Request access <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a>
+        </div>
+      </div>
+      <div class="motion-reveal motion-reveal-delay-2 relative mx-auto flex aspect-square w-full max-w-md items-center justify-center">
+        <div class="absolute inset-[12%] rounded-full border border-acid/30 motion-float"></div>
+        <div class="absolute inset-[22%] rotate-45 rounded-full border border-acid/20"></div>
+        <div class="motion-pulse flex h-36 w-36 items-center justify-center rounded-full bg-[radial-gradient(circle_at_35%_25%,#d1ff97,#26533c_42%,#0a1715_73%)] text-acid shadow-[0_0_90px_#75c1b044] sm:h-48 sm:w-48">
+          <span class="font-display text-5xl tracking-[-0.1em]">N.</span>
+        </div>
+        <span class="absolute left-[9%] top-[20%] text-[0.6rem] uppercase tracking-[0.16em] text-muted">No route</span>
+        <span class="absolute bottom-[18%] right-[5%] text-[0.6rem] uppercase tracking-[0.16em] text-acid">Recalibrate</span>
+      </div>
+    </div>
+  </main>
+</app-product-layout>
