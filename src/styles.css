@@ -38,10 +38,10 @@
   --line: #292d29;
   --line-strong: #384832;
   --focus-ring: #b9fa62;
-  --hero-platform: radial-gradient(circle at 78% 38%, #2d4b26 0%, #111911 24%, transparent 56%), linear-gradient(120deg, #090d0b 10%, #121b12 70%, #0a0f0b);
-  --hero-agents: radial-gradient(circle at 78% 38%, #4a3473 0%, #171421 24%, transparent 56%), linear-gradient(120deg, #090d0b 10%, #151321 70%, #0a0f0b);
-  --hero-insights: radial-gradient(circle at 78% 38%, #4a6a28 0%, #172015 24%, transparent 56%), linear-gradient(120deg, #090d0b 10%, #121b12 70%, #0a0f0b);
-  --hero-access: radial-gradient(circle at 78% 38%, #2d4b26 0%, #111911 24%, transparent 56%), linear-gradient(120deg, #090d0b 10%, #121b12 70%, #0a0f0b);
+  --hero-platform: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b80 76%, #090d0bd9 100%), url('/images/nexus-hero-intelligence.jpg');
+  --hero-agents: linear-gradient(90deg, #0b0d0ff7 8%, #0b0d0fd9 43%, #0b0d0f70 76%, #0b0d0fcf 100%), url('/images/nexus-agent-oracle.jpg');
+  --hero-insights: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b78 76%, #090d0bd2 100%), url('/images/nexus-insight-signal.jpg');
+  --hero-access: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b72 76%, #090d0bd8 100%), url('/images/nexus-ecosystem-network.jpg');
   --hero-ecosystem: linear-gradient(90deg, #0b0f0ce8 8%, #0b0f0c90 58%, #0b0f0cbd), url('/images/nexus-ecosystem-network.jpg');
   --image-blend: screen;
   --scroll-track: #0a0e0b;
@@ -71,10 +71,10 @@ html[data-theme='light'] {
   --scroll-track: #e1e9df;
   --scroll-thumb: #75945a;
   --scroll-thumb-hover: #385c2a;
-  --hero-platform: radial-gradient(circle at 78% 38%, #d1e6c3 0%, #edf5e9 28%, transparent 60%), linear-gradient(120deg, #f7faf4 10%, #e9f2e5 70%, #f3f8ef);
-  --hero-agents: radial-gradient(circle at 78% 38%, #ddd2f0 0%, #f4f0fa 28%, transparent 60%), linear-gradient(120deg, #f7faf4 10%, #eee9f7 70%, #f3f8ef);
-  --hero-insights: radial-gradient(circle at 78% 38%, #d4e8b9 0%, #f1f6e8 28%, transparent 60%), linear-gradient(120deg, #f7faf4 10%, #eaf2e2 70%, #f3f8ef);
-  --hero-access: radial-gradient(circle at 78% 38%, #d1e6c3 0%, #edf5e9 28%, transparent 60%), linear-gradient(120deg, #f7faf4 10%, #e9f2e5 70%, #f3f8ef);
+  --hero-platform: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/nexus-hero-intelligence.jpg');
+  --hero-agents: linear-gradient(90deg, #f1eef8f7 8%, #f1eef8df 43%, #f1eef8a8 76%, #f1eef8e8 100%), url('/images/nexus-agent-oracle.jpg');
+  --hero-insights: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/nexus-insight-signal.jpg');
+  --hero-access: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/nexus-ecosystem-network.jpg');
   --hero-ecosystem: linear-gradient(90deg, #eef3e8f2 8%, #eef3e8c9 58%, #eef3e8dc), url('/images/nexus-ecosystem-network.jpg');
   --image-blend: multiply;
 }
@@ -99,6 +99,141 @@ body {
   color: var(--text-strong);
   font-family: var(--font-body);
   line-height: 1.6;
+}
+
+@keyframes nexus-hero-drift {
+  0% {
+    background-position: 50% 35%;
+  }
+  100% {
+    background-position: 58% 42%;
+  }
+}
+
+@keyframes nexus-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nexus-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(2deg);
+  }
+}
+
+@keyframes nexus-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--acid) 0%, transparent);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 12px color-mix(in srgb, var(--acid) 0%, transparent);
+  }
+}
+
+@keyframes nexus-scan {
+  0% {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  15%,
+  75% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(520%);
+    opacity: 0;
+  }
+}
+
+.motion-hero {
+  position: relative;
+  isolation: isolate;
+  animation: nexus-hero-drift 16s ease-in-out infinite alternate;
+}
+
+.motion-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--acid) 8%, transparent) 47%,
+    transparent 48%,
+    transparent 100%
+  );
+  background-size: 100% 34%;
+  content: '';
+  pointer-events: none;
+  animation: nexus-scan 9s ease-in-out infinite;
+}
+
+.motion-reveal {
+  opacity: 0;
+  animation: nexus-reveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.motion-reveal-delay-1 {
+  animation-delay: 120ms;
+}
+
+.motion-reveal-delay-2 {
+  animation-delay: 240ms;
+}
+
+.motion-reveal-delay-3 {
+  animation-delay: 360ms;
+}
+
+.motion-float {
+  animation: nexus-float 7s ease-in-out infinite;
+}
+
+.motion-pulse {
+  animation: nexus-pulse 2.8s ease-in-out infinite;
+}
+
+.motion-signal {
+  position: relative;
+  overflow: hidden;
+}
+
+.motion-signal::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 11%,
+    color-mix(in srgb, var(--acid) 11%, transparent) 11.2%,
+    transparent 11.5%
+  );
+  content: '';
+  pointer-events: none;
+  animation: nexus-hero-drift 8s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 button,
