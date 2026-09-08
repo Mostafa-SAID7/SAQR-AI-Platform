@@ -1,41 +1,5 @@
 <div class="min-h-screen overflow-hidden bg-page text-copy">
-  <header
-    class="absolute inset-x-4 top-4 z-20 mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-line-strong/80 bg-surface-panel/80 px-4 py-3 shadow-2xl shadow-black/20 backdrop-blur-xl sm:inset-x-6 sm:px-5 lg:inset-x-8 lg:top-6 lg:px-6"
-  >
-    <a routerLink="/" class="flex shrink-0 items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy sm:text-base" aria-label="Nexus AI home">
-      <span class="flex -skew-x-12 gap-0.5" aria-hidden="true">
-        <i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i>
-      </span>
-      <span>NEXUS<span class="text-acid">.</span>AI</span>
-    </a>
-
-    <nav
-      class="absolute left-0 right-0 top-[calc(100%+0.75rem)] hidden flex-col gap-1 rounded-2xl border border-line-strong bg-surface-panel p-2 shadow-2xl shadow-black/30 md:static md:flex md:flex-row md:items-center md:gap-7 md:border-0 md:bg-transparent md:p-0 md:shadow-none"
-      [class.!flex]="menuOpen()"
-    >
-      @for (item of navigation; track item.path) {
-        <a [routerLink]="item.path" (click)="closeMenu()" class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent">{{ item.label }}</a>
-      }
-    </nav>
-
-    <div class="flex items-center gap-2 sm:gap-3">
-      <button
-        type="button"
-        class="inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong bg-surface-raised px-3 text-xs font-semibold tracking-wide text-copy transition hover:-translate-y-0.5 hover:border-acid hover:text-acid"
-        [attr.aria-label]="theme.isLight() ? 'Switch to dark theme' : 'Switch to light theme'"
-        (click)="theme.toggle()"
-      >
-        @if (theme.isLight()) { <svg lucideMoon size="16" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideSun size="16" strokeWidth="1.8" aria-hidden="true"></svg> }
-        <span class="hidden sm:inline">{{ theme.isLight() ? 'Light' : 'Night' }}</span>
-      </button>
-      <a routerLink="/access" class="hidden items-center gap-3 rounded-xl bg-copy px-4 py-3 text-xs font-semibold tracking-wide text-ink transition hover:-translate-y-0.5 hover:bg-acid sm:inline-flex">
-        Launch app <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg>
-      </a>
-      <button type="button" class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl border border-line-strong text-copy transition hover:border-acid hover:text-acid md:hidden" aria-label="Toggle navigation" [attr.aria-expanded]="menuOpen()" (click)="toggleMenu()">
-        @if (menuOpen()) { <svg lucideX size="19" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideMenu size="19" strokeWidth="1.8" aria-hidden="true"></svg> }
-      </button>
-    </div>
-  </header>
+  <app-site-header />
 
   <main id="top">
     <section class="relative isolate min-h-[760px] overflow-hidden [background:var(--hero-platform)] px-5 pb-12 pt-40 sm:px-8 lg:min-h-[880px] lg:px-12 lg:pt-52">
@@ -185,9 +149,5 @@
     </section>
   </main>
 
-  <footer class="flex flex-col gap-6 border-t border-line bg-ink px-5 py-8 sm:px-8 lg:flex-row lg:items-center lg:px-12">
-    <a routerLink="/" class="flex items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy"><span class="flex -skew-x-12 gap-0.5" aria-hidden="true"><i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i></span>NEXUS<span class="text-acid">.</span>AI</a>
-    <p class="text-xs text-muted lg:ml-auto lg:mr-8">Intelligence for the open internet.</p>
-    <div class="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-muted">@for (item of navigation; track item.path) { <a [routerLink]="item.path" class="transition hover:text-acid">{{ item.label }}</a> }<a routerLink="/access" class="transition hover:text-acid">Contact</a><span class="text-subtle">© 2026 Nexus AI</span></div>
-  </footer>
+  <app-site-footer />
 </div>

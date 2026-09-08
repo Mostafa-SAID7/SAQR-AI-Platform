@@ -17,15 +17,17 @@ src/
     ├── app.routes.server.ts        # Server render modes
     ├── core/
     │   ├── layout/                 # Application shell
-    │   ├── models/                 # Cross-feature domain types
     │   ├── navigation/             # Site-wide navigation definitions
     │   └── services/               # Singleton application services
     ├── features/
     │   ├── home/pages/             # Home feature page
-    │   └── product/pages/          # Product and access page variants
+    │   └── product/
+    │       ├── layout/             # Product route shell
+    │       └── pages/              # Platform, agents, ecosystem, insights, access
     └── shared/
         ├── forms/                  # Reusable form composition and validators
-        └── icons/                  # Shared icon registration
+        ├── icons/                  # Shared icon registration
+        └── layout/                 # Site header and footer
 ```
 
 ## Dependency rules
@@ -37,10 +39,7 @@ src/
    feature's private files.
 4. **Shared contains reusable, product-agnostic building blocks.** It should
    not depend on route-specific page state.
-5. **Route data is validated at the feature boundary.** Product pages narrow
-   route metadata through `isProductPageKey` instead of spreading unchecked
-   casts through templates.
-6. **Cross-page values have one source of truth.** Navigation entries,
+5. **Cross-page values have one source of truth.** Navigation entries,
    validators, icons, and theme storage behavior are defined once and consumed
    by pages.
 
@@ -53,8 +52,9 @@ For a new user-facing area:
 3. Promote a utility to `shared/` only when it is genuinely reusable and has no
    feature-specific meaning.
 4. Promote a singleton concern to `core/` only when it is application-wide.
-5. Register routes in `app.routes.ts` and keep route-specific metadata typed.
+5. Register each public page in `app.routes.ts`; keep route behavior inside
+   that page's feature folder.
 
-The existing visual templates remain unchanged in this cleanup pass; the page
-classes now live under their feature boundaries and reference those templates
-as their single canonical view files.
+Shared site chrome lives in `shared/layout`, while each feature page owns its
+own template. This prevents layout markup, navigation state, and route-specific
+content from being copied across pages.
