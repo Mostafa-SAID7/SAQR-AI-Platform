@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './home-page';
-import { ProductPage } from './product-page';
+import { HomePage } from './features/home/pages/home-page';
+import { ProductPage } from './features/product/pages/product-page';
 
 export const routes: Routes = [
   { path: '', component: HomePage, title: 'Nexus AI — Intelligence for the open internet' },

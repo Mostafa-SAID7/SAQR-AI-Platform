@@ -1,1 +1,2 @@
 - [Tailwind theme tokens](tailwind-theme-tokens.md) — avoid resetting built-in Tailwind tokens unless spacing, radius, and layout scales are redefined.
+- [Angular build resource limits](angular-build-memory.md) — avoid overlapping manual Angular builds with the managed preview workflow.
