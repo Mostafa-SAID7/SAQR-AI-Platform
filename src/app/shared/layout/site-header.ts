@@ -1,5 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { SITE_NAVIGATION } from '../../core/navigation/site-navigation';
 import { ThemeService } from '../../core/services/theme.service';
@@ -7,7 +7,7 @@ import { NEXUS_ICONS } from '../icons/nexus-icons';
 
 @Component({
   selector: 'app-site-header',
-  imports: [RouterLink, ...NEXUS_ICONS],
+  imports: [RouterLink, RouterLinkActive, ...NEXUS_ICONS],
   templateUrl: './site-header.html',
 })
 export class SiteHeader {
