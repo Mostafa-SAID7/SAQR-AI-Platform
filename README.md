@@ -82,6 +82,7 @@ lead-gen-landing/
 
 - [Setup Guide](docs/SETUP.md) - Detailed installation and setup instructions
 - [Project Structure](docs/PROJECT_STRUCTURE.md) - Architecture and file organization
+- [Architecture Guide](docs/ARCHITECTURE.md) - Feature boundaries and dependency rules
 - [Deployment Guide](docs/DEPLOYMENT.md) - How to deploy to Netlify
 - [Contributing](.github/CONTRIBUTING.md) - Guidelines for contributors
 
