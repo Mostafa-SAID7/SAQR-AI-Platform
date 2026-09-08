@@ -8,7 +8,6 @@ import { ThemeService } from './theme.service';
   selector: 'app-home-page',
   imports: [ReactiveFormsModule, RouterLink, ...NEXUS_ICONS],
   templateUrl: './home-page.html',
-  styleUrl: './app.css',
 })
 export class HomePage {
   protected readonly theme = inject(ThemeService);

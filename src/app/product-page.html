@@ -1,456 +1,70 @@
-<div class="product-shell">
-  <header class="site-header">
-    <a class="brand" routerLink="/" aria-label="Nexus AI home"
-      ><span class="brand-mark"><span></span><span></span><span></span></span
-      ><span>NEXUS<span class="brand-dot">.</span>AI</span></a
-    >
-    <nav class="main-nav" [class.is-open]="menuOpen()">
-      <a routerLink="/platform" [class.current]="page === 'platform'" (click)="closeMenu()"
-        >Platform</a
-      >
-      <a routerLink="/agents" [class.current]="page === 'agents'" (click)="closeMenu()"
-        >AI Agents</a
-      >
-      <a routerLink="/ecosystem" [class.current]="page === 'ecosystem'" (click)="closeMenu()"
-        >Ecosystem</a
-      >
-      <a routerLink="/insights" [class.current]="page === 'insights'" (click)="closeMenu()"
-        >Insights</a
-      >
+<div class="min-h-screen overflow-hidden bg-page text-copy">
+  <header class="absolute inset-x-4 top-4 z-20 mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-line-strong/80 bg-surface-panel/80 px-4 py-3 shadow-2xl shadow-black/20 backdrop-blur-xl sm:inset-x-6 sm:px-5 lg:inset-x-8 lg:top-6 lg:px-6">
+    <a routerLink="/" class="flex shrink-0 items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy sm:text-base" aria-label="Nexus AI home">
+      <span class="flex -skew-x-12 gap-0.5" aria-hidden="true"><i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i></span>NEXUS<span class="text-acid">.</span>AI
+    </a>
+    <nav class="absolute left-0 right-0 top-[calc(100%+0.75rem)] hidden flex-col gap-1 rounded-2xl border border-line-strong bg-surface-panel p-2 shadow-2xl shadow-black/30 md:static md:flex md:flex-row md:items-center md:gap-7 md:border-0 md:bg-transparent md:p-0 md:shadow-none" [class.!flex]="menuOpen()">
+      <a routerLink="/platform" [class.text-acid]="page === 'platform'" (click)="closeMenu()" class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent">Platform</a>
+      <a routerLink="/agents" [class.text-acid]="page === 'agents'" (click)="closeMenu()" class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent">AI Agents</a>
+      <a routerLink="/ecosystem" [class.text-acid]="page === 'ecosystem'" (click)="closeMenu()" class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent">Ecosystem</a>
+      <a routerLink="/insights" [class.text-acid]="page === 'insights'" (click)="closeMenu()" class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent">Insights</a>
     </nav>
-    <button
-      class="theme-toggle"
-      type="button"
-      [attr.aria-label]="theme.isLight() ? 'Switch to dark theme' : 'Switch to light theme'"
-      (click)="theme.toggle()"
-    >
-      @if (theme.isLight()) {
-        <svg lucideMoon size="17" strokeWidth="1.8" aria-hidden="true"></svg>
-      } @else {
-        <svg lucideSun size="17" strokeWidth="1.8" aria-hidden="true"></svg>
-      }
-      <span>{{ theme.isLight() ? 'Light' : 'Night' }}</span>
-    </button>
-    <div class="header-actions">
-      <a class="login-link" routerLink="/access">Log in</a
-      ><a class="button button-small button-light" routerLink="/access"
-        >Launch app <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-      ></a>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button type="button" class="inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong bg-surface-raised px-3 text-xs font-semibold tracking-wide text-copy transition hover:-translate-y-0.5 hover:border-acid hover:text-acid" [attr.aria-label]="theme.isLight() ? 'Switch to dark theme' : 'Switch to light theme'" (click)="theme.toggle()">
+        @if (theme.isLight()) { <svg lucideMoon size="16" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideSun size="16" strokeWidth="1.8" aria-hidden="true"></svg> }
+        <span class="hidden sm:inline">{{ theme.isLight() ? 'Light' : 'Night' }}</span>
+      </button>
+      <a routerLink="/access" class="hidden items-center gap-3 rounded-xl bg-copy px-4 py-3 text-xs font-semibold tracking-wide text-ink transition hover:-translate-y-0.5 hover:bg-acid sm:inline-flex">Launch app <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg></a>
+      <button type="button" class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl border border-line-strong text-copy transition hover:border-acid hover:text-acid md:hidden" aria-label="Toggle navigation" [attr.aria-expanded]="menuOpen()" (click)="toggleMenu()">
+        @if (menuOpen()) { <svg lucideX size="19" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideMenu size="19" strokeWidth="1.8" aria-hidden="true"></svg> }
+      </button>
     </div>
-    <button
-      class="menu-toggle"
-      type="button"
-      aria-label="Toggle navigation"
-      [attr.aria-expanded]="menuOpen()"
-      (click)="toggleMenu()"
-    >
-      @if (menuOpen()) {
-        <svg lucideX size="20" strokeWidth="1.8" aria-hidden="true"></svg>
-      } @else {
-        <svg lucideMenu size="20" strokeWidth="1.8" aria-hidden="true"></svg>
-      }
-    </button>
   </header>
 
   @if (page === 'platform') {
-    <main class="product-content">
-      <section class="product-hero">
-        <div class="section-kicker">01 / Platform</div>
-        <div
-          class="product-hero-layout flex flex-col gap-10 min-[851px]:flex-row min-[851px]:items-end min-[851px]:justify-between"
-        >
-          <h1>Intelligence<br />in <em>motion.</em></h1>
-          <div>
-            <p>
-              One command center for every signal, strategy, and smart action across the open
-              network.
-            </p>
-            <a class="button button-primary" routerLink="/access"
-              >Start building
-              <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
+    <main>
+      <section class="[background:var(--hero-platform)] px-5 pb-16 pt-40 sm:px-8 lg:px-12 lg:pb-24 lg:pt-52">
+        <div class="mx-auto max-w-7xl">
+          <p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">01 / Platform</p>
+          <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <h1 class="font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Intelligence<br />in <em class="not-italic text-acid">motion.</em></h1>
+            <div class="max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">One command center for every signal, strategy, and smart action across the open network.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Start building <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div>
           </div>
-        </div>
-        <div class="platform-console">
-          <div class="console-sidebar">
-            <span class="console-logo">N.</span><span class="console-dot active"></span
-            ><span class="console-dot"></span><span class="console-dot"></span>
-          </div>
-          <div class="console-main">
-            <div class="console-top">
-              <span>OVERVIEW / ALL NETWORKS</span
-              ><span class="live-indicator"
-                ><svg lucideActivity size="12" strokeWidth="2" aria-hidden="true"></svg> LIVE</span
-              >
-            </div>
-            <div class="console-stats">
-              <div>
-                <span>Total volume</span><strong>$2.84B</strong
-                ><small
-                  >+14.8% <svg lucideArrowUpRight size="12" strokeWidth="2" aria-hidden="true"></svg
-                ></small>
-              </div>
-              <div>
-                <span>Active signals</span><strong>8,492</strong
-                ><small
-                  >+38.4% <svg lucideArrowUpRight size="12" strokeWidth="2" aria-hidden="true"></svg
-                ></small>
-              </div>
-              <div>
-                <span>Agent actions</span><strong>12.6K</strong
-                ><small
-                  >+9.2% <svg lucideArrowUpRight size="12" strokeWidth="2" aria-hidden="true"></svg
-                ></small>
-              </div>
-            </div>
-            <div class="console-graph">
-              <div class="console-graph-line"></div>
-              <span class="graph-label">NETWORK ACTIVITY / 24H</span>
-            </div>
+          <div class="mt-16 flex min-h-[290px] overflow-hidden rounded-3xl border border-line-strong bg-surface-panel shadow-2xl shadow-black/25 sm:mt-24">
+            <aside class="hidden w-16 shrink-0 flex-col items-center gap-7 border-r border-line p-5 sm:flex"><span class="font-display text-xl font-semibold text-acid">N.</span><i class="h-2 w-2 rounded-full bg-acid shadow-[0_0_12px_var(--acid)]"></i><i class="h-2 w-2 rounded-full border border-muted"></i><i class="h-2 w-2 rounded-full border border-muted"></i></aside>
+            <div class="min-w-0 flex-1 p-5 sm:p-8"><div class="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.15em] text-muted"><span>Overview / all networks</span><span class="flex items-center gap-2 text-acid"><i class="h-1.5 w-1.5 rounded-full bg-acid"></i> Live</span></div><div class="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3"><div class="border-l border-acid/50 pl-3"><span class="text-[0.6rem] text-muted">Total volume</span><strong class="mt-1 block font-display text-2xl text-copy sm:text-3xl">$2.84B</strong><small class="text-xs text-acid">+14.8%</small></div><div class="border-l border-acid/50 pl-3"><span class="text-[0.6rem] text-muted">Active signals</span><strong class="mt-1 block font-display text-2xl text-copy sm:text-3xl">8,492</strong><small class="text-xs text-acid">+38.4%</small></div><div class="border-l border-acid/50 pl-3"><span class="text-[0.6rem] text-muted">Agent actions</span><strong class="mt-1 block font-display text-2xl text-copy sm:text-3xl">12.6K</strong><small class="text-xs text-acid">+9.2%</small></div></div><div class="relative mt-8 h-20 overflow-hidden border-t border-line pt-4"><div class="h-full opacity-70 [background:linear-gradient(135deg,transparent_2%,var(--acid)_2.5%,transparent_3%,transparent_15%,var(--acid)_15.5%,transparent_16%,transparent_31%,var(--acid)_31.5%,transparent_32%,transparent_47%,var(--acid)_47.5%,transparent_48%,transparent_62%,var(--acid)_62.5%,transparent_63%,transparent_81%,var(--acid)_81.5%,transparent_82%)] [transform:skewY(-8deg)]"></div><span class="absolute bottom-0 left-0 text-[0.55rem] uppercase tracking-[0.12em] text-muted">Network activity / 24h</span></div></div>
           </div>
         </div>
       </section>
-      <section
-        class="product-section split-section grid grid-cols-1 gap-12 min-[851px]:grid-cols-2 min-[851px]:gap-36"
-      >
-        <div>
-          <span class="feature-number">01</span>
-          <h2>See the signal<br />inside the noise.</h2>
-        </div>
-        <div>
-          <p>
-            Connect your data sources once. Nexus continuously scans markets, communities,
-            protocols, and transactions to surface the moments that matter.
-          </p>
-          <div class="feature-list">
-            <div><strong>01</strong><span>Unified data layer</span></div>
-            <div><strong>02</strong><span>Real-time intelligence</span></div>
-            <div><strong>03</strong><span>Decision-ready context</span></div>
-          </div>
-        </div>
-      </section>
-      <section class="product-section toolkit-section">
-        <div class="section-kicker">02 / Built for momentum</div>
-        <div class="toolkit-grid grid grid-cols-1 gap-4 min-[851px]:grid-cols-3">
-          <article>
-            <span><svg lucideActivity size="25" strokeWidth="1.5" aria-hidden="true"></svg></span>
-            <h3>Command center</h3>
-            <p>Watch every market move from one focused workspace.</p>
-          </article>
-          <article>
-            <span><svg lucideWaypoints size="25" strokeWidth="1.5" aria-hidden="true"></svg></span>
-            <h3>Open by default</h3>
-            <p>Bring your stack with first-class APIs and composable data.</p>
-          </article>
-          <article>
-            <span><svg lucideZap size="25" strokeWidth="1.5" aria-hidden="true"></svg></span>
-            <h3>Actionable output</h3>
-            <p>Turn a signal into an automated decision in seconds.</p>
-          </article>
-        </div>
-      </section>
+      <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:gap-28"><div><span class="text-[0.65rem] uppercase tracking-[0.16em] text-acid">01 / Signal</span><h2 class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy">See the signal<br />inside the noise.</h2></div><div class="self-end lg:max-w-md"><p class="text-sm leading-7 text-muted">Connect your data sources once. Nexus continuously scans markets, communities, protocols, and transactions to surface the moments that matter.</p><div class="mt-10 border-t border-line">@for (feature of ['Unified data layer', 'Real-time intelligence', 'Decision-ready context']; track feature; let i = $index) {<div class="flex justify-between border-b border-line py-4 text-sm"><strong class="font-normal text-acid">0{{ i + 1 }}</strong><span>{{ feature }}</span></div>}</div></div></div></section>
+      <section class="bg-surface-raised px-5 py-20 sm:px-8 lg:px-12 lg:py-28"><div class="mx-auto max-w-7xl"><p class="mb-10 text-[0.65rem] uppercase tracking-[0.2em] text-acid">02 / Built for momentum</p><div class="grid gap-4 md:grid-cols-3">@for (item of [{icon:'activity',title:'Command center',copy:'Watch every market move from one focused workspace.'},{icon:'waypoints',title:'Open by default',copy:'Bring your stack with first-class APIs and composable data.'},{icon:'zap',title:'Actionable output',copy:'Turn a signal into an automated decision in seconds.'}]; track item.title) {<article class="rounded-2xl border border-line-strong p-6 transition hover:-translate-y-1 hover:bg-surface-panel"><span class="text-acid">@if (item.icon === 'activity') {<svg lucideActivity size="25" strokeWidth="1.5" aria-hidden="true"></svg>} @else if (item.icon === 'waypoints') {<svg lucideWaypoints size="25" strokeWidth="1.5" aria-hidden="true"></svg>} @else {<svg lucideZap size="25" strokeWidth="1.5" aria-hidden="true"></svg>}</span><h3 class="mt-12 font-display text-xl text-copy">{{ item.title }}</h3><p class="mt-3 text-sm leading-6 text-muted">{{ item.copy }}</p></article>}</div></div></section>
     </main>
   } @else if (page === 'agents') {
-    <main class="product-content">
-      <section class="product-hero agents-hero">
-        <div class="section-kicker">02 / AI Agents</div>
-        <div
-          class="product-hero-layout flex flex-col gap-10 min-[851px]:flex-row min-[851px]:items-end min-[851px]:justify-between"
-        >
-          <h1>Your team<br />at <em>machine speed.</em></h1>
-          <div>
-            <p>
-              Specialized intelligence that learns your context, watches the network, and acts with
-              permission.
-            </p>
-            <a class="button button-primary" routerLink="/access"
-              >Deploy an agent
-              <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </div>
-        </div>
-      </section>
-      <section class="product-section agent-directory">
-        <div
-          class="directory-heading flex flex-col gap-10 min-[851px]:flex-row min-[851px]:items-end min-[851px]:justify-between"
-        >
-          <div>
-            <span class="feature-number">03 agents</span>
-            <h2>Choose your<br />point of view.</h2>
-          </div>
-          <p>
-            Every agent is purpose-built. Combine them to create a decision system that feels like
-            your unfair advantage.
-          </p>
-        </div>
-        <div class="directory-grid grid grid-cols-1 gap-4 min-[851px]:grid-cols-3">
-          <article class="directory-card directory-oracle">
-            <span class="directory-icon"
-              ><svg lucideBrainCircuit size="70" strokeWidth="1.15" aria-hidden="true"></svg
-            ></span>
-            <div>
-              <small>01 / Intelligence</small>
-              <h3>Oracle</h3>
-              <p>Finds the edge before it becomes consensus.</p>
-              <a routerLink="/access"
-                >Deploy Oracle
-                <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg
-              ></a>
-            </div>
-          </article>
-          <article class="directory-card directory-sentinel">
-            <span class="directory-icon"
-              ><svg lucideShieldCheck size="70" strokeWidth="1.15" aria-hidden="true"></svg
-            ></span>
-            <div>
-              <small>02 / Protection</small>
-              <h3>Sentinel</h3>
-              <p>Monitors risk across every position and protocol.</p>
-              <a routerLink="/access"
-                >Deploy Sentinel
-                <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg
-              ></a>
-            </div>
-          </article>
-          <article class="directory-card directory-alchemist">
-            <span class="directory-icon"
-              ><svg lucideSparkles size="70" strokeWidth="1.15" aria-hidden="true"></svg
-            ></span>
-            <div>
-              <small>03 / Execution</small>
-              <h3>Alchemist</h3>
-              <p>Transforms a thesis into an on-chain strategy.</p>
-              <a routerLink="/access"
-                >Deploy Alchemist
-                <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg
-              ></a>
-            </div>
-          </article>
-        </div>
-      </section>
-      <section class="quote-strip">
-        <p>
-          “The best interface is the one that gives you the answer before you know the question.”
-        </p>
-        <span>NEXUS / AGENT PRINCIPLE 001</span>
-      </section>
+    <main>
+      <section class="[background:var(--hero-agents)] px-5 pb-20 pt-40 sm:px-8 lg:px-12 lg:pb-28 lg:pt-52"><div class="mx-auto max-w-7xl"><p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">02 / AI Agents</p><div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"><h1 class="font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Your team<br />at <em class="not-italic text-acid">machine speed.</em></h1><div class="max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">Specialized intelligence that learns your context, watches the network, and acts with permission.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Deploy an agent <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div></div></div></section>
+      <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto max-w-7xl"><div class="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><span class="text-[0.65rem] uppercase tracking-[0.16em] text-acid">03 agents</span><h2 class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy">Choose your<br />point of view.</h2></div><p class="max-w-xs text-sm leading-7 text-muted">Every agent is purpose-built. Combine them to create a decision system that feels like your unfair advantage.</p></div><div class="grid gap-4 md:grid-cols-3">@for (agent of [{name:'Oracle',type:'Intelligence',copy:'Finds the edge before it becomes consensus.',image:'/images/nexus-agent-oracle.jpg',icon:'brain'},{name:'Sentinel',type:'Protection',copy:'Monitors risk across every position and protocol.',image:'/images/nexus-agent-sentinel.jpg',icon:'shield'},{name:'Alchemist',type:'Execution',copy:'Transforms a thesis into an on-chain strategy.',image:'/images/nexus-agent-alchemist.jpg',icon:'sparkles'}]; track agent.name) {<article class="group relative min-h-[390px] overflow-hidden rounded-3xl border border-line-strong bg-surface-raised p-6"><img [src]="agent.image" [alt]="agent.name + ' agent visual'" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-35 transition duration-500 group-hover:scale-105 group-hover:opacity-50" /><div class="absolute inset-0 bg-gradient-to-t from-surface-raised via-surface-raised/30 to-transparent"></div><span class="absolute right-6 top-6 text-[0.6rem] text-muted">0{{ $index + 1 }}</span><span class="relative flex h-24 w-24 items-center justify-center rounded-full border border-acid/50 bg-ink/30 text-acid">@if (agent.icon === 'brain') {<svg lucideBrainCircuit size="46" strokeWidth="1.15" aria-hidden="true"></svg>} @else if (agent.icon === 'shield') {<svg lucideShieldCheck size="46" strokeWidth="1.15" aria-hidden="true"></svg>} @else {<svg lucideSparkles size="46" strokeWidth="1.15" aria-hidden="true"></svg>}</span><div class="relative mt-28"><small class="text-[0.6rem] uppercase tracking-[0.14em] text-acid">0{{ $index + 1 }} / {{ agent.type }}</small><h3 class="mt-2 font-display text-3xl text-copy">{{ agent.name }}</h3><p class="mt-2 max-w-xs text-sm leading-6 text-muted">{{ agent.copy }}</p><a routerLink="/access" class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-acid">Deploy {{ agent.name }} <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg></a></div></article>}</div></div></section>
+      <section class="bg-acid px-5 py-16 text-[var(--text-on-accent)] sm:px-8 lg:px-12 lg:py-24"><div class="mx-auto max-w-7xl"><p class="max-w-4xl font-display text-[clamp(2rem,5vw,4.5rem)] font-medium leading-none tracking-[-0.07em]">“The best interface is the one that gives you the answer before you know the question.”</p><span class="mt-8 block text-[0.6rem] font-semibold uppercase tracking-[0.15em]">Nexus / Agent principle 001</span></div></section>
     </main>
   } @else if (page === 'ecosystem') {
-    <main class="product-content">
-      <section class="product-hero ecosystem-hero">
-        <div class="section-kicker">03 / Ecosystem</div>
-        <div class="product-hero-layout">
-          <h1>Open systems.<br /><em>Shared upside.</em></h1>
-          <div>
-            <p>
-              Nexus is designed to connect the builders, protocols, and communities moving the
-              network forward.
-            </p>
-            <a class="button button-primary" routerLink="/access"
-              >Join the network
-              <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </div>
-        </div>
-        <div class="ecosystem-map">
-          <div class="map-orbit map-orbit-one"></div>
-          <div class="map-orbit map-orbit-two"></div>
-          <div class="map-core">
-            <svg lucideNetwork size="42" strokeWidth="1.25" aria-hidden="true"></svg>
-          </div>
-          <span class="map-node node-a"
-            ><svg lucideDatabaseZap size="12" strokeWidth="1.8" aria-hidden="true"></svg> DATA</span
-          ><span class="map-node node-b"
-            ><svg lucideBot size="12" strokeWidth="1.8" aria-hidden="true"></svg> BUILDERS</span
-          ><span class="map-node node-c"
-            ><svg lucideActivity size="12" strokeWidth="1.8" aria-hidden="true"></svg> CAPITAL</span
-          ><span class="map-node node-d"
-            ><svg lucideWaypoints size="12" strokeWidth="1.8" aria-hidden="true"></svg>
-            COMMUNITY</span
-          >
-        </div>
-      </section>
-      <section class="product-section split-section">
-        <div>
-          <span class="feature-number">NETWORK</span>
-          <h2>Everything<br />connected.</h2>
-        </div>
-        <div>
-          <p>
-            From your first signal to your final execution, Nexus keeps the whole loop visible.
-            Build alongside a network that gets more useful with every connection.
-          </p>
-          <div class="partner-wall">
-            <span>ARC</span><span>orbit</span><span>VANTA</span><span>mΞta</span><span>NODE 07</span
-            ><span>lumen</span>
-          </div>
-        </div>
-      </section>
-      <section class="product-section security-section">
-        <div class="section-kicker">TRUST LAYER</div>
-        <h2>Private by design.<br /><em>Open when ready.</em></h2>
-        <p>
-          Your data belongs to you. Role-based access, encrypted connections, and transparent
-          permissions keep every action accountable.
-        </p>
-        <a class="text-link" routerLink="/access"
-          >Read the trust principles
-          <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-        ></a>
-      </section>
+    <main>
+      <section class="[background:var(--hero-ecosystem)] bg-cover bg-center px-5 pb-12 pt-40 sm:px-8 lg:px-12 lg:pb-20 lg:pt-52"><div class="mx-auto max-w-7xl"><p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">03 / Ecosystem</p><div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"><h1 class="font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Open systems.<br /><em class="not-italic text-acid">Shared upside.</em></h1><div class="max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">Nexus is designed to connect the builders, protocols, and communities moving the network forward.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Join the network <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div></div><div class="relative mt-10 flex h-64 max-w-4xl items-center justify-center sm:h-80"><div class="absolute h-48 w-[92%] rotate-12 scale-y-[0.35] rounded-full border border-teal-200/30 sm:h-64"></div><div class="absolute h-36 w-[70%] -rotate-[28deg] scale-y-[0.35] rounded-full border border-acid/25"></div><div class="relative flex h-24 w-24 items-center justify-center rounded-full bg-[radial-gradient(circle_at_35%_25%,#d1ff97,#26533c_42%,#0a1715_73%)] text-acid shadow-[0_0_70px_#75c1b044]"><svg lucideNetwork size="40" strokeWidth="1.25" aria-hidden="true"></svg></div><span class="absolute left-[10%] top-[13%] text-[0.6rem] tracking-[0.14em] text-teal-100">DATA</span><span class="absolute right-[8%] top-[27%] text-[0.6rem] tracking-[0.14em] text-teal-100">BUILDERS</span><span class="absolute bottom-[8%] left-[25%] text-[0.6rem] tracking-[0.14em] text-teal-100">CAPITAL</span><span class="absolute bottom-[18%] right-[18%] text-[0.6rem] tracking-[0.14em] text-teal-100">COMMUNITY</span></div></div></section>
+      <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:gap-28"><div><span class="text-[0.65rem] uppercase tracking-[0.16em] text-acid">Network</span><h2 class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy">Everything<br />connected.</h2></div><div class="self-end"><p class="text-sm leading-7 text-muted">From your first signal to your final execution, Nexus keeps the whole loop visible. Build alongside a network that gets more useful with every connection.</p><div class="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3">@for (partner of ['ARC','orbit','VANTA','mΞta','NODE 07','lumen']; track partner) {<span class="border border-line-strong p-4 font-display text-xs font-semibold tracking-[0.12em] text-muted">{{ partner }}</span>}</div></div></div></section>
+      <section class="bg-surface-raised px-5 py-20 sm:px-8 lg:px-12 lg:py-28"><div class="mx-auto max-w-7xl"><p class="text-[0.65rem] uppercase tracking-[0.2em] text-acid">Trust layer</p><h2 class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy">Private by design.<br /><em class="not-italic text-acid">Open when ready.</em></h2><p class="mt-8 max-w-md text-sm leading-7 text-muted">Your data belongs to you. Role-based access, encrypted connections, and transparent permissions keep every action accountable.</p><a routerLink="/access" class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid">Read the trust principles <svg lucideArrowUpRight size="15" strokeWidth="2" class="text-acid" aria-hidden="true"></svg></a></div></section>
     </main>
   } @else if (page === 'insights') {
-    <main class="product-content">
-      <section class="product-hero insights-hero">
-        <div class="section-kicker">04 / Insights</div>
-        <div class="product-hero-layout">
-          <h1>Signal over<br /><em>speculation.</em></h1>
-          <div>
-            <p>
-              Ideas, frameworks, and field notes from the people building at the edge of the
-              network.
-            </p>
-            <a class="button button-primary" routerLink="/access"
-              >Get the briefing
-              <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </div>
-        </div>
-      </section>
-      <section class="product-section insight-list" id="read">
-        <div class="section-kicker">LATEST SIGNALS</div>
-        <article class="insight-feature">
-          <div class="insight-art">
-            <span>01</span
-            ><strong
-              ><svg lucideArrowUpRight size="28" strokeWidth="1.5" aria-hidden="true"></svg
-            ></strong>
-          </div>
-          <div>
-            <small>FIELD NOTE / 06.12.26</small>
-            <h2>The new interface<br />is intelligence.</h2>
-            <p>
-              Why the next generation of Web3 products will be defined by the quality of their
-              context, not the number of features on the screen.
-            </p>
-            <a class="text-link" href="#read"
-              >Read the signal
-              <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </div>
-        </article>
-        <div class="insight-row">
-          <article>
-            <small>RESEARCH / 05.28.26</small>
-            <h3>From dashboard to decision system</h3>
-            <a class="text-link" href="#read"
-              >Read more <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </article>
-          <article>
-            <small>NETWORK / 05.09.26</small>
-            <h3>What builders can learn from liquidity</h3>
-            <a class="text-link" href="#read"
-              >Read more <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </article>
-          <article>
-            <small>AGENTS / 04.21.26</small>
-            <h3>The rise of the autonomous operator</h3>
-            <a class="text-link" href="#read"
-              >Read more <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg
-            ></a>
-          </article>
-        </div>
-      </section>
+    <main>
+      <section class="[background:var(--hero-insights)] px-5 pb-20 pt-40 sm:px-8 lg:px-12 lg:pb-28 lg:pt-52"><div class="mx-auto max-w-7xl"><p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">04 / Insights</p><div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"><h1 class="font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Signal over<br /><em class="not-italic text-acid">speculation.</em></h1><div class="max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">Ideas, frameworks, and field notes from the people building at the edge of the network.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Get the briefing <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div></div></div></section>
+      <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto max-w-7xl"><p class="text-[0.65rem] uppercase tracking-[0.2em] text-acid">Latest signals</p><article class="mt-12 grid gap-10 lg:grid-cols-[.85fr_1fr] lg:gap-20"><div class="relative flex h-72 items-end justify-between overflow-hidden rounded-3xl bg-[#1b3018] p-6 sm:h-96"><img src="/images/nexus-insight-signal.jpg" alt="Abstract signal visualization" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-screen" /><span class="relative font-display text-6xl text-acid">01</span><span class="relative text-acid"><svg lucideArrowUpRight size="30" strokeWidth="1.5" aria-hidden="true"></svg></span></div><div class="self-center"><small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid">Field note / 06.12.26</small><h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.08em] text-copy">The new interface<br />is intelligence.</h2><p class="mt-6 max-w-md text-sm leading-7 text-muted">Why the next generation of Web3 products will be defined by the quality of their context, not the number of features on the screen.</p><a href="#read" class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid">Read the signal <svg lucideArrowUpRight size="15" strokeWidth="2" class="text-acid" aria-hidden="true"></svg></a></div></article><div id="read" class="mt-16 grid border-t border-line md:grid-cols-3">@for (item of ['From dashboard to decision system','What builders can learn from liquidity','The rise of the autonomous operator']; track item; let i = $index) {<article class="border-b border-line py-6 md:border-b-0 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0"><small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid">{{ ['Research','Network','Agents'][i] }} / 05.28.26</small><h3 class="mt-5 font-display text-xl leading-tight text-copy">{{ item }}</h3><a href="#read" class="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid">Read more <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg></a></article>}</div></div></section>
     </main>
   } @else {
-    <main class="product-content access-content">
-      <section class="access-hero">
-        <div class="section-kicker">05 / Access</div>
-        <div class="access-layout">
-          <div>
-            <h1>The next move<br />is <em>yours.</em></h1>
-            <p>
-              Join the early access network and get a front-row seat to the intelligence layer for
-              Web3.
-            </p>
-            <div class="access-perks">
-              <span
-                ><svg lucideCheck size="15" strokeWidth="2" aria-hidden="true"></svg> Private beta
-                access</span
-              ><span
-                ><svg lucideCheck size="15" strokeWidth="2" aria-hidden="true"></svg> Founding
-                network updates</span
-              ><span
-                ><svg lucideCheck size="15" strokeWidth="2" aria-hidden="true"></svg> Direct line to
-                the team</span
-              >
-            </div>
-          </div>
-          @if (submitted()) {
-            <div class="access-success">
-              <span class="success-icon"
-                ><svg lucideCircleCheck size="30" strokeWidth="1.5" aria-hidden="true"></svg
-              ></span>
-              <h2>You're on the list.</h2>
-              <p>We'll be in touch with your access details soon.</p>
-            </div>
-          } @else {
-            <form class="access-form" [formGroup]="accessForm" (ngSubmit)="requestAccess()">
-              <div class="section-kicker">REQUEST INVITE</div>
-              <div class="form-group">
-                <label for="access-name">Your name</label
-                ><input
-                  id="access-name"
-                  type="text"
-                  placeholder="Satoshi Nakamoto"
-                  formControlName="name"
-                /><span class="field-line"></span>
-              </div>
-              <div class="form-group">
-                <label for="access-email">Work email</label
-                ><input
-                  id="access-email"
-                  type="email"
-                  placeholder="you@company.xyz"
-                  formControlName="email"
-                /><span class="field-line"></span>
-              </div>
-              <div class="form-group">
-                <label for="access-company">Company / project</label
-                ><input
-                  id="access-company"
-                  type="text"
-                  placeholder="Nexus Labs"
-                  formControlName="company"
-                /><span class="field-line"></span>
-              </div>
-              <button
-                class="button button-primary"
-                type="submit"
-                [disabled]="accessForm.invalid || isSubmitting()"
-              >
-                {{ isSubmitting() ? 'Sending request...' : 'Request access' }}
-                <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg>
-              </button>
-            </form>
-          }
-        </div>
-      </section>
+    <main class="[background:var(--hero-access)] px-5 pb-20 pt-40 sm:px-8 lg:min-h-screen lg:px-12 lg:pb-28 lg:pt-52">
+      <div class="mx-auto max-w-7xl"><p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">05 / Access</p><div class="grid gap-12 lg:grid-cols-[1fr_.7fr] lg:gap-28"><div><h1 class="font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">The next move<br />is <em class="not-italic text-acid">yours.</em></h1><p class="mt-8 max-w-sm text-sm leading-7 text-muted">Join the early access network and get a front-row seat to the intelligence layer for Web3.</p><div class="mt-8 grid gap-3 text-sm text-muted"><span class="flex items-center gap-2"><svg lucideCheck size="15" class="text-acid" aria-hidden="true"></svg> Private beta access</span><span class="flex items-center gap-2"><svg lucideCheck size="15" class="text-acid" aria-hidden="true"></svg> Founding network updates</span><span class="flex items-center gap-2"><svg lucideCheck size="15" class="text-acid" aria-hidden="true"></svg> Direct line to the team</span></div></div>@if (submitted()) {<div class="self-center rounded-3xl border border-line-strong bg-surface-panel p-7 sm:p-10"><span class="inline-flex h-16 w-16 items-center justify-center rounded-full border border-acid text-acid"><svg lucideCircleCheck size="30" strokeWidth="1.5" aria-hidden="true"></svg></span><h2 class="mt-6 font-display text-4xl leading-none tracking-[-0.06em] text-copy">You're on the list.</h2><p class="mt-4 text-sm text-muted">We'll be in touch with your access details soon.</p></div>} @else {<form class="rounded-3xl border border-line-strong bg-surface-panel p-6 shadow-2xl shadow-black/25 sm:p-8" [formGroup]="accessForm" (ngSubmit)="requestAccess()"><p class="mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">Request invite</p><div class="mb-5"><label for="access-name" class="mb-2 block text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-subtle">Your name</label><input id="access-name" type="text" placeholder="Satoshi Nakamoto" formControlName="name" class="w-full rounded-xl border border-line-strong bg-surface-control px-4 py-3 text-sm text-copy outline-none transition placeholder:text-muted focus:border-acid focus:ring-4 focus:ring-acid/15" /></div><div class="mb-5"><label for="access-email" class="mb-2 block text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-subtle">Work email</label><input id="access-email" type="email" placeholder="you@company.xyz" formControlName="email" class="w-full rounded-xl border border-line-strong bg-surface-control px-4 py-3 text-sm text-copy outline-none transition placeholder:text-muted focus:border-acid focus:ring-4 focus:ring-acid/15" /></div><div class="mb-6"><label for="access-company" class="mb-2 block text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-subtle">Company / project</label><input id="access-company" type="text" placeholder="Nexus Labs" formControlName="company" class="w-full rounded-xl border border-line-strong bg-surface-control px-4 py-3 text-sm text-copy outline-none transition placeholder:text-muted focus:border-acid focus:ring-4 focus:ring-acid/15" /></div><button type="submit" [disabled]="accessForm.invalid || isSubmitting()" class="inline-flex min-h-12 w-full items-center justify-between gap-4 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover disabled:cursor-not-allowed disabled:opacity-50">{{ isSubmitting() ? 'Sending request...' : 'Request access' }}<svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></button></form>}</div></div>
     </main>
   }
 
-  <footer class="site-footer">
-    <a class="brand" routerLink="/"
-      ><span class="brand-mark"><span></span><span></span><span></span></span
-      ><span>NEXUS<span class="brand-dot">.</span>AI</span></a
-    >
-    <p>Intelligence for the open internet.</p>
-    <div class="footer-links">
-      <a routerLink="/platform">Platform</a><a routerLink="/agents">Agents</a
-      ><a routerLink="/ecosystem">Ecosystem</a><a routerLink="/access">Contact</a
-      ><span>© 2026 Nexus AI</span>
-    </div>
+  <footer class="flex flex-col gap-6 border-t border-line bg-ink px-5 py-8 sm:px-8 lg:flex-row lg:items-center lg:px-12">
+    <a routerLink="/" class="flex items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy"><span class="flex -skew-x-12 gap-0.5" aria-hidden="true"><i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i></span>NEXUS<span class="text-acid">.</span>AI</a>
+    <p class="text-xs text-muted lg:ml-auto lg:mr-8">Intelligence for the open internet.</p>
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-muted"><a routerLink="/platform" class="transition hover:text-acid">Platform</a><a routerLink="/agents" class="transition hover:text-acid">Agents</a><a routerLink="/ecosystem" class="transition hover:text-acid">Ecosystem</a><a routerLink="/access" class="transition hover:text-acid">Contact</a><span class="text-subtle">© 2026 Nexus AI</span></div>
   </footer>
 </div>
