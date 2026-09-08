@@ -1,6 +1,106 @@
 <app-product-layout activePage="insights">
   <main>
-    <section class="motion-hero bg-cover bg-center [background:var(--hero-insights)] px-5 pb-20 pt-40 sm:px-8 lg:bg-[center_35%] lg:px-12 lg:pb-28 lg:pt-52"><div class="mx-auto max-w-7xl"><p class="motion-reveal mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">04 / Insights</p><div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"><h1 class="motion-reveal motion-reveal-delay-1 font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Signal over<br /><em class="not-italic text-acid">speculation.</em></h1><div class="motion-reveal motion-reveal-delay-2 max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">Ideas, frameworks, and field notes from the people building at the edge of the network.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Get the briefing <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div></div></div></section>
-    <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto max-w-7xl"><p class="text-[0.65rem] uppercase tracking-[0.2em] text-acid">Latest signals</p><article class="mt-12 grid gap-10 lg:grid-cols-[.85fr_1fr] lg:gap-20"><div class="relative flex h-72 items-end justify-between overflow-hidden rounded-3xl bg-[#1b3018] p-6 sm:h-96"><img src="/images/saqr-insight-signal.jpg" alt="Abstract signal visualization" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-screen" /><span class="relative font-display text-6xl text-acid">01</span><span class="relative text-acid"><svg lucideArrowUpRight size="30" strokeWidth="1.5" aria-hidden="true"></svg></span></div><div class="self-center"><small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid">Field note / 06.12.26</small><h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.08em] text-copy">The new interface<br />is intelligence.</h2><p class="mt-6 max-w-md text-sm leading-7 text-muted">Why the next generation of Web3 products will be defined by the quality of their context, not the number of features on the screen.</p><a href="#read" class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid">Read the signal <svg lucideArrowUpRight size="15" strokeWidth="2" class="text-acid" aria-hidden="true"></svg></a></div></article><div id="read" class="mt-16 grid border-t border-line md:grid-cols-3">@for (item of ['From dashboard to decision system','What builders can learn from liquidity','The rise of the autonomous operator']; track item; let i = $index) {<article class="border-b border-line py-6 md:border-b-0 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0"><small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid">{{ ['Research','Network','Agents'][i] }} / 05.28.26</small><h3 class="mt-5 font-display text-xl leading-tight text-copy">{{ item }}</h3><a href="#read" class="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid">Read more <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg></a></article>}</div></div></section>
+    <section
+      class="motion-hero bg-cover bg-center [background:var(--hero-insights)] px-5 pb-20 pt-40 sm:px-8 lg:px-12 lg:pb-28 lg:pt-52"
+    >
+      <div class="mx-auto max-w-7xl">
+        <p
+          class="motion-reveal mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid"
+        >
+          04 / Insights
+        </p>
+        <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <h1
+            class="motion-reveal motion-reveal-delay-1 font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy"
+          >
+            Signal over<br /><em class="not-italic text-acid">speculation.</em>
+          </h1>
+          <div class="motion-reveal motion-reveal-delay-2 max-w-xs">
+            <p class="mb-7 text-sm leading-7 text-muted">
+              Ideas, frameworks, and field notes from the people building at the edge of the
+              network.
+            </p>
+            <a
+              routerLink="/access"
+              class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto"
+              >Get the briefing
+              <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32">
+      <div class="mx-auto max-w-7xl">
+        <p class="text-[0.65rem] uppercase tracking-[0.2em] text-acid">Latest signals</p>
+        <article class="mt-12 grid gap-10 lg:grid-cols-[.85fr_1fr] lg:gap-20">
+          <div
+            class="relative flex h-72 items-end justify-between overflow-hidden rounded-3xl bg-[#1b3018] p-6 sm:h-96"
+          >
+            <img
+              src="/images/saqr-insight-signal.jpg"
+              alt="Abstract signal visualization"
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-screen"
+            /><span class="relative font-display text-6xl text-acid">01</span
+            ><span class="relative text-acid"
+              ><svg lucideArrowUpRight size="30" strokeWidth="1.5" aria-hidden="true"></svg
+            ></span>
+          </div>
+          <div class="self-center">
+            <small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid"
+              >Field note / 06.12.26</small
+            >
+            <h2
+              class="mt-4 font-display text-[clamp(2.5rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.08em] text-copy"
+            >
+              The new interface<br />is intelligence.
+            </h2>
+            <p class="mt-6 max-w-md text-sm leading-7 text-muted">
+              Why the next generation of Web3 products will be defined by the quality of their
+              context, not the number of features on the screen.
+            </p>
+            <a
+              href="#read"
+              class="mt-7 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid"
+              >Read the signal
+              <svg
+                lucideArrowUpRight
+                size="15"
+                strokeWidth="2"
+                class="text-acid"
+                aria-hidden="true"
+              ></svg
+            ></a>
+          </div>
+        </article>
+        <div id="read" class="mt-16 grid border-t border-line md:grid-cols-3">
+          @for (
+            item of [
+              'From dashboard to decision system',
+              'What builders can learn from liquidity',
+              'The rise of the autonomous operator',
+            ];
+            track item;
+            let i = $index
+          ) {
+            <article
+              class="border-b border-line py-6 md:border-b-0 md:border-r md:px-6 md:first:pl-0 md:last:border-r-0"
+            >
+              <small class="text-[0.6rem] uppercase tracking-[0.15em] text-acid"
+                >{{ ['Research', 'Network', 'Agents'][i] }} / 05.28.26</small
+              >
+              <h3 class="mt-5 font-display text-xl leading-tight text-copy">{{ item }}</h3>
+              <a
+                href="#read"
+                class="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-copy transition hover:text-acid"
+                >Read more
+                <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg
+              ></a>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
   </main>
 </app-product-layout>

@@ -23,7 +23,7 @@ export const SAQR_AGENTS: Record<string, Agent> = {
       text: '#d9ffa6',
     },
   },
-  
+
   hares: {
     id: 'hares',
     name: 'HARES',
@@ -41,7 +41,7 @@ export const SAQR_AGENTS: Record<string, Agent> = {
       text: '#b289ff',
     },
   },
-  
+
   kimiya: {
     id: 'kimiya',
     name: 'KIMIYA',
@@ -66,5 +66,6 @@ export const AGENTS_ARRAY = Object.values(SAQR_AGENTS).sort((a, b) => a.order - 
 export const AGENTS_SECTION = {
   badge: '02 / AI Agents',
   heading: 'Meet the minds that never miss a signal.',
-  description: 'Deploy specialized agents that never sleep, never miss an opportunity, and get smarter with every transaction.',
+  description:
+    'Deploy specialized agents that never sleep, never miss an opportunity, and get smarter with every transaction.',
 } as const;

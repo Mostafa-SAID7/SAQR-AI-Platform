@@ -41,11 +41,21 @@
   --line: #292d29;
   --line-strong: #384832;
   --focus-ring: #b9fa62;
-  --hero-platform: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b80 76%, #090d0bd9 100%), url('/images/saqr-hero-intelligence.jpg');
-  --hero-agents: linear-gradient(90deg, #0b0d0ff7 8%, #0b0d0fd9 43%, #0b0d0f70 76%, #0b0d0fcf 100%), url('/images/saqr-agent-rassed.jpg');
-  --hero-insights: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b78 76%, #090d0bd2 100%), url('/images/saqr-insight-signal.jpg');
-  --hero-access: linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b72 76%, #090d0bd8 100%), url('/images/saqr-ecosystem-network.jpg');
-  --hero-ecosystem: linear-gradient(90deg, #0b0f0ce8 8%, #0b0f0c90 58%, #0b0f0cbd), url('/images/saqr-ecosystem-network.jpg');
+  --hero-platform:
+    linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b80 76%, #090d0bd9 100%),
+    url('/images/saqr-hero-intelligence.jpg');
+  --hero-agents:
+    linear-gradient(90deg, #0b0d0ff7 8%, #0b0d0fd9 43%, #0b0d0f70 76%, #0b0d0fcf 100%),
+    url('/images/saqr-agent-rassed.jpg');
+  --hero-insights:
+    linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b78 76%, #090d0bd2 100%),
+    url('/images/saqr-insight-signal.jpg');
+  --hero-access:
+    linear-gradient(90deg, #090d0bf7 8%, #090d0bd9 43%, #090d0b72 76%, #090d0bd8 100%),
+    url('/images/saqr-ecosystem-network.jpg');
+  --hero-ecosystem:
+    linear-gradient(90deg, #0b0f0ce8 8%, #0b0f0c90 58%, #0b0f0cbd),
+    url('/images/saqr-ecosystem-network.jpg');
   --image-blend: screen;
   --scroll-track: #0a0e0b;
   --scroll-thumb: #607e43;
@@ -77,11 +87,21 @@ html[data-theme='light'] {
   --scroll-track: #e1e9df;
   --scroll-thumb: #75945a;
   --scroll-thumb-hover: #385c2a;
-  --hero-platform: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/saqr-hero-intelligence.jpg');
-  --hero-agents: linear-gradient(90deg, #f1eef8f7 8%, #f1eef8df 43%, #f1eef8a8 76%, #f1eef8e8 100%), url('/images/saqr-agent-rassed.jpg');
-  --hero-insights: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/saqr-insight-signal.jpg');
-  --hero-access: linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%), url('/images/saqr-ecosystem-network.jpg');
-  --hero-ecosystem: linear-gradient(90deg, #eef3e8f2 8%, #eef3e8c9 58%, #eef3e8dc), url('/images/saqr-ecosystem-network.jpg');
+  --hero-platform:
+    linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%),
+    url('/images/saqr-hero-intelligence.jpg');
+  --hero-agents:
+    linear-gradient(90deg, #f1eef8f7 8%, #f1eef8df 43%, #f1eef8a8 76%, #f1eef8e8 100%),
+    url('/images/saqr-agent-rassed.jpg');
+  --hero-insights:
+    linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%),
+    url('/images/saqr-insight-signal.jpg');
+  --hero-access:
+    linear-gradient(90deg, #eef3e8f7 8%, #eef3e8df 43%, #eef3e8a8 76%, #eef3e8e8 100%),
+    url('/images/saqr-ecosystem-network.jpg');
+  --hero-ecosystem:
+    linear-gradient(90deg, #eef3e8f2 8%, #eef3e8c9 58%, #eef3e8dc),
+    url('/images/saqr-ecosystem-network.jpg');
   --image-blend: multiply;
 }
 

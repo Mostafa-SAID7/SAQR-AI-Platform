@@ -32,9 +32,7 @@ export const SITE_NAVIGATION: NavigationItem[] = [
   },
 ];
 
-export const FOOTER_NAVIGATION: NavigationItem[] = [
-  ...SITE_NAVIGATION,
-];
+export const FOOTER_NAVIGATION: NavigationItem[] = [...SITE_NAVIGATION];
 
 export const SECTION_NAVIGATION = {
   platform: '/platform',

@@ -71,5 +71,4 @@ export class HomePage {
       this.contactForm.reset();
     }, 1000);
   }
-
 }

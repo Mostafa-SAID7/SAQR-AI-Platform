@@ -68,7 +68,7 @@ export function getAgentImage(agentId: string): ImageAsset {
     hares: IMAGE_PATHS.agents.hares,
     kimiya: IMAGE_PATHS.agents.kimiya,
   };
-  
+
   return imageMap[agentId] || IMAGE_PATHS.agents.rassed;
 }
 

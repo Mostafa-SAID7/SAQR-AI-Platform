@@ -1,7 +1,131 @@
 <app-product-layout activePage="agents">
   <main>
-    <section class="motion-hero bg-cover bg-center [background:var(--hero-agents)] px-5 pb-20 pt-40 sm:px-8 lg:bg-[center_35%] lg:px-12 lg:pb-28 lg:pt-52"><div class="mx-auto max-w-7xl"><p class="motion-reveal mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid">02 / AI Agents</p><div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between"><h1 class="motion-reveal motion-reveal-delay-1 font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy">Your team<br />at <em class="not-italic text-acid">machine speed.</em></h1><div class="motion-reveal motion-reveal-delay-2 max-w-xs"><p class="mb-7 text-sm leading-7 text-muted">Specialized intelligence that learns your context, watches the network, and acts with permission.</p><a routerLink="/access" class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto">Deploy an agent <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg></a></div></div></div></section>
-    <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32"><div class="mx-auto max-w-7xl"><div class="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><div><span class="text-[0.65rem] uppercase tracking-[0.16em] text-acid">03 agents</span><h2 class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy">Choose your<br />point of view.</h2></div><p class="max-w-xs text-sm leading-7 text-muted">Every agent is purpose-built. Combine them to create a decision system that feels like your unfair advantage.</p></div><div class="grid gap-4 md:grid-cols-3">@for (agent of [{name:'RASSED',type:'Intelligence',copy:'Finds the edge before it becomes consensus.',image:'/images/saqr-agent-rassed.jpg',icon:'brain'},{name:'HARES',type:'Protection',copy:'Monitors risk across every position and protocol.',image:'/images/saqr-agent-hares.jpg',icon:'shield'},{name:'KIMIYA',type:'Execution',copy:'Transforms a thesis into an on-chain strategy.',image:'/images/saqr-agent-kimiya.jpg',icon:'sparkles'}]; track agent.name) {<article class="group relative min-h-[390px] overflow-hidden rounded-3xl border border-line-strong bg-surface-raised p-6"><img [src]="agent.image" [alt]="agent.name + ' agent visual'" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-35 transition duration-500 group-hover:scale-105 group-hover:opacity-50" /><div class="absolute inset-0 bg-gradient-to-t from-surface-raised via-surface-raised/30 to-transparent"></div><span class="absolute right-6 top-6 text-[0.6rem] text-muted">0{{ $index + 1 }}</span><span class="relative flex h-24 w-24 items-center justify-center rounded-full border border-acid/50 bg-ink/30 text-acid">@if (agent.icon === 'brain') {<svg lucideBrainCircuit size="46" strokeWidth="1.15" aria-hidden="true"></svg>} @else if (agent.icon === 'shield') {<svg lucideShieldCheck size="46" strokeWidth="1.15" aria-hidden="true"></svg>} @else {<svg lucideSparkles size="46" strokeWidth="1.15" aria-hidden="true"></svg>}</span><div class="relative mt-28"><small class="text-[0.6rem] uppercase tracking-[0.14em] text-acid">0{{ $index + 1 }} / {{ agent.type }}</small><h3 class="mt-2 font-display text-3xl text-copy">{{ agent.name }}</h3><p class="mt-2 max-w-xs text-sm leading-6 text-muted">{{ agent.copy }}</p><a routerLink="/access" class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-acid">Deploy {{ agent.name }} <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg></a></div></article>}</div></div></section>
-    <section class="bg-acid px-5 py-16 text-[var(--text-on-accent)] sm:px-8 lg:px-12 lg:py-24"><div class="mx-auto max-w-7xl"><p class="max-w-4xl font-display text-[clamp(2rem,5vw,4.5rem)] font-medium leading-none tracking-[-0.07em]">“The best interface is the one that gives you the answer before you know the question.”</p><span class="mt-8 block text-[0.6rem] font-semibold uppercase tracking-[0.15em]">SAQR / Agent principle 001</span></div></section>
+    <section
+      class="motion-hero bg-cover bg-center [background:var(--hero-agents)] px-5 pb-20 pt-40 sm:px-8 lg:px-12 lg:pb-28 lg:pt-52"
+    >
+      <div class="mx-auto max-w-7xl">
+        <p
+          class="motion-reveal mb-8 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-acid"
+        >
+          02 / AI Agents
+        </p>
+        <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <h1
+            class="motion-reveal motion-reveal-delay-1 font-display text-[clamp(4rem,11vw,8.5rem)] font-medium leading-[0.82] tracking-[-0.09em] text-copy"
+          >
+            Your team<br />at <em class="not-italic text-acid">machine speed.</em>
+          </h1>
+          <div class="motion-reveal motion-reveal-delay-2 max-w-xs">
+            <p class="mb-7 text-sm leading-7 text-muted">
+              Specialized intelligence that learns your context, watches the network, and acts with
+              permission.
+            </p>
+            <a
+              routerLink="/access"
+              class="inline-flex min-h-12 w-full items-center justify-between gap-5 rounded-xl bg-acid px-5 py-3 text-sm font-semibold text-[var(--text-on-accent)] transition hover:-translate-y-1 hover:bg-acid-hover sm:w-auto"
+              >Deploy an agent
+              <svg lucideArrowUpRight size="16" strokeWidth="2" aria-hidden="true"></svg
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-surface px-5 py-20 sm:px-8 lg:px-12 lg:py-32">
+      <div class="mx-auto max-w-7xl">
+        <div class="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <span class="text-[0.65rem] uppercase tracking-[0.16em] text-acid">03 agents</span>
+            <h2
+              class="mt-5 font-display text-[clamp(3rem,7vw,5.8rem)] font-medium leading-[0.88] tracking-[-0.08em] text-copy"
+            >
+              Choose your<br />point of view.
+            </h2>
+          </div>
+          <p class="max-w-xs text-sm leading-7 text-muted">
+            Every agent is purpose-built. Combine them to create a decision system that feels like
+            your unfair advantage.
+          </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-3">
+          @for (
+            agent of [
+              {
+                name: 'RASSED',
+                type: 'Intelligence',
+                copy: 'Finds the edge before it becomes consensus.',
+                image: '/images/saqr-agent-rassed.jpg',
+                icon: 'brain',
+              },
+              {
+                name: 'HARES',
+                type: 'Protection',
+                copy: 'Monitors risk across every position and protocol.',
+                image: '/images/saqr-agent-hares.jpg',
+                icon: 'shield',
+              },
+              {
+                name: 'KIMIYA',
+                type: 'Execution',
+                copy: 'Transforms a thesis into an on-chain strategy.',
+                image: '/images/saqr-agent-kimiya.jpg',
+                icon: 'sparkles',
+              },
+            ];
+            track agent.name
+          ) {
+            <article
+              class="group relative min-h-[390px] overflow-hidden rounded-3xl border border-line-strong bg-surface-raised p-6"
+            >
+              <img
+                [src]="agent.image"
+                [alt]="agent.name + ' agent visual'"
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover opacity-35 transition duration-500 group-hover:scale-105 group-hover:opacity-50"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-surface-raised via-surface-raised/30 to-transparent"
+              ></div>
+              <span class="absolute right-6 top-6 text-[0.6rem] text-muted">0{{ $index + 1 }}</span
+              ><span
+                class="relative flex h-24 w-24 items-center justify-center rounded-full border border-acid/50 bg-ink/30 text-acid"
+              >
+                @if (agent.icon === 'brain') {
+                  <svg lucideBrainCircuit size="46" strokeWidth="1.15" aria-hidden="true"></svg>
+                } @else if (agent.icon === 'shield') {
+                  <svg lucideShieldCheck size="46" strokeWidth="1.15" aria-hidden="true"></svg>
+                } @else {
+                  <svg lucideSparkles size="46" strokeWidth="1.15" aria-hidden="true"></svg>
+                }
+              </span>
+              <div class="relative mt-28">
+                <small class="text-[0.6rem] uppercase tracking-[0.14em] text-acid"
+                  >0{{ $index + 1 }} / {{ agent.type }}</small
+                >
+                <h3 class="mt-2 font-display text-3xl text-copy">{{ agent.name }}</h3>
+                <p class="mt-2 max-w-xs text-sm leading-6 text-muted">{{ agent.copy }}</p>
+                <a
+                  routerLink="/access"
+                  class="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-acid"
+                  >Deploy {{ agent.name }}
+                  <svg lucideArrowUpRight size="14" strokeWidth="2" aria-hidden="true"></svg
+                ></a>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+    <section class="bg-acid px-5 py-16 text-[var(--text-on-accent)] sm:px-8 lg:px-12 lg:py-24">
+      <div class="mx-auto max-w-7xl">
+        <p
+          class="max-w-4xl font-display text-[clamp(2rem,5vw,4.5rem)] font-medium leading-none tracking-[-0.07em]"
+        >
+          “The best interface is the one that gives you the answer before you know the question.”
+        </p>
+        <span class="mt-8 block text-[0.6rem] font-semibold uppercase tracking-[0.15em]"
+          >SAQR / Agent principle 001</span
+        >
+      </div>
+    </section>
   </main>
 </app-product-layout>

@@ -1,9 +1,14 @@
 <header
   class="absolute inset-x-4 top-4 z-20 mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-line-strong/80 bg-surface-panel/80 px-4 py-3 shadow-2xl shadow-black/20 backdrop-blur-xl sm:inset-x-6 sm:px-5 lg:inset-x-8 lg:top-6 lg:px-6"
 >
-  <a routerLink="/" class="flex shrink-0 items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy sm:text-base" aria-label="SAQR home">
+  <a
+    routerLink="/"
+    class="flex shrink-0 items-center gap-2.5 font-display text-sm font-semibold tracking-[0.16em] text-copy sm:text-base"
+    aria-label="SAQR home"
+  >
     <span class="flex -skew-x-12 gap-0.5" aria-hidden="true">
-      <i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i>
+      <i class="h-4 w-1.5 bg-acid"></i><i class="h-4 translate-y-1 w-1.5 bg-acid/60"></i
+      ><i class="h-4 translate-y-2 w-1.5 bg-acid/30"></i>
     </span>
     <span>SAQR<span class="text-acid">.</span>AI</span>
   </a>
@@ -20,7 +25,8 @@
         ariaCurrentWhenActive="page"
         (click)="closeMenu()"
         class="site-nav-link rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent"
-      >{{ item.label }}</a>
+        >{{ item.label }}</a
+      >
     }
   </nav>
 
@@ -31,14 +37,31 @@
       [attr.aria-label]="theme.isLight() ? 'Switch to dark theme' : 'Switch to light theme'"
       (click)="theme.toggle()"
     >
-      @if (theme.isLight()) { <svg lucideMoon size="16" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideSun size="16" strokeWidth="1.8" aria-hidden="true"></svg> }
+      @if (theme.isLight()) {
+        <svg lucideMoon size="16" strokeWidth="1.8" aria-hidden="true"></svg>
+      } @else {
+        <svg lucideSun size="16" strokeWidth="1.8" aria-hidden="true"></svg>
+      }
       <span class="hidden sm:inline">{{ theme.isLight() ? 'Light' : 'Night' }}</span>
     </button>
-    <a routerLink="/access" class="site-header-cta hidden items-center gap-3 rounded-xl px-4 py-3 text-xs font-semibold tracking-wide transition hover:-translate-y-0.5 sm:inline-flex">
+    <a
+      routerLink="/access"
+      class="site-header-cta hidden items-center gap-3 rounded-xl px-4 py-3 text-xs font-semibold tracking-wide transition hover:-translate-y-0.5 sm:inline-flex"
+    >
       Launch app <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg>
     </a>
-    <button type="button" class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl border border-line-strong text-copy transition hover:border-acid hover:text-acid md:hidden" aria-label="Toggle navigation" [attr.aria-expanded]="menuOpen()" (click)="toggleMenu()">
-      @if (menuOpen()) { <svg lucideX size="19" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideMenu size="19" strokeWidth="1.8" aria-hidden="true"></svg> }
+    <button
+      type="button"
+      class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl border border-line-strong text-copy transition hover:border-acid hover:text-acid md:hidden"
+      aria-label="Toggle navigation"
+      [attr.aria-expanded]="menuOpen()"
+      (click)="toggleMenu()"
+    >
+      @if (menuOpen()) {
+        <svg lucideX size="19" strokeWidth="1.8" aria-hidden="true"></svg>
+      } @else {
+        <svg lucideMenu size="19" strokeWidth="1.8" aria-hidden="true"></svg>
+      }
     </button>
   </div>
 </header>

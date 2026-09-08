@@ -21,11 +21,7 @@ export type {
 } from './branding.interface';
 
 // Agent interfaces
-export type {
-  AgentColor,
-  Agent,
-  AgentsSectionMetadata,
-} from './agents.interface';
+export type { AgentColor, Agent, AgentsSectionMetadata } from './agents.interface';
 
 // Navigation interfaces
 export type {
