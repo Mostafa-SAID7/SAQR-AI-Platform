@@ -3,6 +3,9 @@ name: Release - Semantic Versioning & GitHub Release
 on:
   push:
     branches: [main, develop]
+    paths-ignore:
+      - 'package*.json'
+      - '.releaserc.json'
   workflow_dispatch:
 
 permissions:
