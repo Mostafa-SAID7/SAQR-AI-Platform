@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { SITE_NAVIGATION } from '../../core/navigation/site-navigation';
+import { SITE_NAVIGATION } from '../../core/data/navigation.data';
 
 @Component({
   selector: 'app-site-footer',

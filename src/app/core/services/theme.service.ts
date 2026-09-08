@@ -1,9 +1,9 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
-export type NexusTheme = 'dark' | 'light';
+export type SaqrTheme = 'dark' | 'light';
 
-const THEME_STORAGE_KEY = 'nexus-theme';
+const THEME_STORAGE_KEY = 'saqr-theme';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -24,7 +24,7 @@ export class ThemeService {
     this.setTheme(this.isLight() ? 'dark' : 'light');
   }
 
-  private setTheme(theme: NexusTheme, persist = true): void {
+  private setTheme(theme: SaqrTheme, persist = true): void {
     this.isLight.set(theme === 'light');
     this.document.documentElement.setAttribute('data-theme', theme);
 

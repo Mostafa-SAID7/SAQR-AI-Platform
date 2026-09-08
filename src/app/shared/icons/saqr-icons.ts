@@ -20,7 +20,7 @@ import {
   LucideMoon,
 } from '@lucide/angular';
 
-export const NEXUS_ICONS = [
+export const SAQR_ICONS = [
   LucideActivity,
   LucideArrowDown,
   LucideArrowUpRight,

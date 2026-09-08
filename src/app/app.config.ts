@@ -3,12 +3,12 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { NexusErrorHandler } from './core/services/nexus-error-handler';
+import { SaqrErrorHandler } from './core/services/saqr-error-handler';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    { provide: ErrorHandler, useClass: NexusErrorHandler },
+    { provide: ErrorHandler, useClass: SaqrErrorHandler },
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
   ],

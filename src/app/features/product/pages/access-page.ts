@@ -2,12 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 import { createAccessRequestForm } from '../../../shared/forms/lead-capture.form';
-import { NEXUS_ICONS } from '../../../shared/icons/nexus-icons';
+import { SAQR_ICONS } from '../../../shared/icons/saqr-icons';
 import { ProductLayout } from '../layout/product-layout';
 
 @Component({
   selector: 'app-access-page',
-  imports: [ReactiveFormsModule, ProductLayout, ...NEXUS_ICONS],
+  imports: [ReactiveFormsModule, ProductLayout, ...SAQR_ICONS],
   templateUrl: './access-page.html',
 })
 export class AccessPage {

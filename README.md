@@ -1,6 +1,6 @@
-# 🚀 Lead Gen Landing
+# 🦅 SAQR — Smart Intelligence Platform
 
-> A modern, high-performance Angular landing page designed for lead generation and conversion optimization.
+> A modern, high-performance Angular landing page for SAQR, a next-generation Web3 intelligence platform built with Saudi innovation and ambition.
 
 [![Angular](https://img.shields.io/badge/Angular-21.2-red?logo=angular)](https://angular.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -8,7 +8,8 @@
 
 ## ✨ Features
 
-- 🎨 **Modern UI/UX** - Clean, responsive design optimized for conversions
+- 🦅 **Saudi-Inspired Design** - Modern UI/UX with regional cultural identity
+- 🧠 **AI-Powered Intelligence** - Real-time on-chain signal analysis
 - ⚡ **High Performance** - Built with Angular 21 for blazing-fast load times
 - 📱 **Fully Responsive** - Perfect experience across all devices
 - 🔧 **Easy Customization** - Well-structured codebase for quick modifications
@@ -40,10 +41,10 @@ Before you begin, ensure you have:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Mostafa-SAID7/lead-geny-landing.git
+git clone https://github.com/Mostafa-SAID7/lead-geny-F.git
 
 # Navigate to project directory
-cd lead-geny-landing
+cd lead-geny-F
 
 # Install dependencies
 npm install
@@ -66,7 +67,7 @@ npm run build
 ## 📁 Project Structure
 
 ```
-lead-gen-landing/
+lead-geny-F/
 ├── src/                    # Source files
 │   ├── app/               # Application components
 │   ├── assets/            # Static assets
@@ -165,10 +166,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 If you have any questions or need help, please:
 
-- Open an [issue](https://github.com/Mostafa-SAID7/lead-geny-landing/issues)
+- Open an [issue](https://github.com/Mostafa-SAID7/lead-geny-F/issues)
 - Check the [documentation](docs/)
 - Contact the maintainers
 
 ---
 
-<p align="center">Made with ❤️ by Mostafa SAID</p>
+<p align="center">Built with 🦅 ambition by Mostafa SAID</p>

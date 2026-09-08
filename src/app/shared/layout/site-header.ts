@@ -1,13 +1,13 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { SITE_NAVIGATION } from '../../core/navigation/site-navigation';
+import { SITE_NAVIGATION } from '../../core/data/navigation.data';
 import { ThemeService } from '../../core/services/theme.service';
-import { NEXUS_ICONS } from '../icons/nexus-icons';
+import { SAQR_ICONS } from '../icons/saqr-icons';
 
 @Component({
   selector: 'app-site-header',
-  imports: [RouterLink, RouterLinkActive, ...NEXUS_ICONS],
+  imports: [RouterLink, RouterLinkActive, ...SAQR_ICONS],
   templateUrl: './site-header.html',
 })
 export class SiteHeader {

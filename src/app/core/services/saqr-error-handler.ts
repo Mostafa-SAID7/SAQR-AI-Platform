@@ -2,7 +2,7 @@ import { ErrorHandler, Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class NexusErrorHandler implements ErrorHandler {
+export class SaqrErrorHandler implements ErrorHandler {
   private readonly router = inject(Router);
 
   handleError(error: unknown): void {

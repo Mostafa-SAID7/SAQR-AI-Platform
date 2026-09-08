@@ -8,41 +8,43 @@ import { PlatformPage } from './features/product/pages/platform-page';
 import { ErrorPage } from './features/system/pages/error-page';
 import { NotFoundPage } from './features/system/pages/not-found-page';
 
+import { SAQR_BRANDING } from './core/data/branding.data';
+
 export const routes: Routes = [
-  { path: '', component: HomePage, title: 'Nexus AI — Intelligence for the open internet' },
+  { path: '', component: HomePage, title: SAQR_BRANDING.pageTitle.home },
   {
     path: 'platform',
     component: PlatformPage,
-    title: 'Platform — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.platform,
   },
   {
     path: 'agents',
     component: AgentsPage,
-    title: 'AI Agents — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.agents,
   },
   {
     path: 'ecosystem',
     component: EcosystemPage,
-    title: 'Ecosystem — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.ecosystem,
   },
   {
     path: 'insights',
     component: InsightsPage,
-    title: 'Insights — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.insights,
   },
   {
     path: 'access',
     component: AccessPage,
-    title: 'Request access — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.access,
   },
   {
     path: 'error',
     component: ErrorPage,
-    title: 'System error — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.error,
   },
   {
     path: '**',
     component: NotFoundPage,
-    title: 'Page not found — Nexus AI',
+    title: SAQR_BRANDING.pageTitle.notFound,
   },
 ];
