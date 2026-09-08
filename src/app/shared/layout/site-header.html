@@ -15,9 +15,11 @@
     @for (item of navigation; track item.path) {
       <a
         [routerLink]="item.path"
-        [class.text-acid]="activePage() === item.path.slice(1)"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
         (click)="closeMenu()"
-        class="rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent"
+        class="site-nav-link rounded-xl px-3 py-2 text-xs tracking-wide text-muted transition hover:bg-surface-raised hover:text-acid md:px-0 md:py-1 md:hover:bg-transparent"
       >{{ item.label }}</a>
     }
   </nav>
@@ -32,7 +34,7 @@
       @if (theme.isLight()) { <svg lucideMoon size="16" strokeWidth="1.8" aria-hidden="true"></svg> } @else { <svg lucideSun size="16" strokeWidth="1.8" aria-hidden="true"></svg> }
       <span class="hidden sm:inline">{{ theme.isLight() ? 'Light' : 'Night' }}</span>
     </button>
-    <a routerLink="/access" class="hidden items-center gap-3 rounded-xl bg-copy px-4 py-3 text-xs font-semibold tracking-wide text-ink transition hover:-translate-y-0.5 hover:bg-acid sm:inline-flex">
+    <a routerLink="/access" class="site-header-cta hidden items-center gap-3 rounded-xl px-4 py-3 text-xs font-semibold tracking-wide transition hover:-translate-y-0.5 sm:inline-flex">
       Launch app <svg lucideArrowUpRight size="15" strokeWidth="2" aria-hidden="true"></svg>
     </a>
     <button type="button" class="inline-flex min-h-10 min-w-10 items-center justify-center rounded-xl border border-line-strong text-copy transition hover:border-acid hover:text-acid md:hidden" aria-label="Toggle navigation" [attr.aria-expanded]="menuOpen()" (click)="toggleMenu()">
