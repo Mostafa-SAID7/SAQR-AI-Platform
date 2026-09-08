@@ -38,7 +38,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Run full npm audit
         run: npm audit --json > audit-report.json 2>&1 || true
@@ -103,7 +103,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Check for GPL/AGPL licenses
         run: |
@@ -137,7 +137,7 @@ jobs:
       - name: Validate package-lock.json signature
         run: |
           echo "Validating package-lock.json integrity..."
-          npm ci --legacy-peer-deps 2>&1 | head -10
+          npm install --legacy-peer-deps 2>&1 | head -10
           echo "✓ package-lock.json is valid and consistent"
 
       - name: Check for modifications to package-lock.json
@@ -166,7 +166,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Check for recently updated high-risk packages
         run: |
@@ -205,7 +205,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Generate outdated packages report
         run: |
