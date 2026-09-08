@@ -10,7 +10,6 @@ type ProductPageKey = 'platform' | 'agents' | 'ecosystem' | 'insights' | 'access
   selector: 'app-product-page',
   imports: [RouterLink, ReactiveFormsModule, ...NEXUS_ICONS],
   templateUrl: './product-page.html',
-  styleUrls: ['./app.css', './product-page.css'],
 })
 export class ProductPage {
   protected readonly theme = inject(ThemeService);
